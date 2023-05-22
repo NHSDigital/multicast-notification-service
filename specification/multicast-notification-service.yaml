@@ -1,28 +1,42 @@
 # This is an OpenAPI Specification (https://swagger.io/specification/)
-# for multicast-notification-service owned by NHS Digital (https://digital.nhs.uk/)
+# for the multicast-notification-service owned by NHS Digital (https://digital.nhs.uk/)
 openapi: '3.0.0'
 info:
-  title: 'multicast-notification-service'
+  title: 'Multicast Notification Service - REST API'
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    Add a fully fledged description here with markdown syntax.
-    For help completing the content of your API spec, see our guidance on the minimum standard (bronze) details 
-    to include [here](https://nhsd-confluence.digital.nhs.uk/display/APM/Writing+a+bronze+API+cover+page). You should also base your content on our exemplar API - [PDS FHIR](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir).
+    Use this API to publish, subscribe to and receive patient-related events. The events do not contain clinical information; they simply describe what happened (the type of event) to whom and where. Where possible, a pointer will be provided in the event to retrieve the associated payload.
+
+    You can:
+      - publish events
+
+    In future, you will be able to:
+      - subscribe to events based on criteria such as NHS Number
+      - receive event notifications
     ## Who can use this API
-    To be completed.
+    This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You must do this before you can go live (see ‘Onboarding’ below)
+
+    Note: during Beta, this API will only be used by NHSE product teams with a valid use case.
     ## Related APIs
-    To be completed.
+    The following API also gives access to patient-related events:
+      - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National Events Management Service - FHIR API")
     ## API status and roadmap
-    To be completed.
+    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
+
+    You can comment, upvote and view progress using our [roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/440034/multicast-notification-service-event-management-api).
     ## Service level
-    To be completed.
+    N.A - not yet in an integration or production environment.
     ## Technology
-    To be completed.
+    This API is a REST-based [publish-subscribe](https://digital.nhs.uk/developer/guides-and-documentation/introduction-to-healthcare-technology/integration-and-apis#publish-subscribe-events) API.
+
+    The event structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/)
     ## Network access
-    To be completed.
+    This API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).
+
+    For more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
     ## Security and authorisation
-    To be completed.
+    To be completed. (Will be application-based access.)
     ## Environments and testing
     To be completed.
     ## Onboarding

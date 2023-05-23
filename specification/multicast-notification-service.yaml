@@ -6,25 +6,25 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    Use this API to publish, subscribe to and receive patient-related events. The events do not contain clinical information; they simply describe what happened (the type of event) to whom and where. Where possible, a pointer will be provided in the event to retrieve the associated payload.
+    Use this API to publish, subscribe to and receive patient-related events. The events do not contain clinical information; they simply describe what type of event occured to whom and where. Where possible, a pointer will be provided to enable retrieval the associated payload.
 
     You can:
       - publish events
 
     In future, you will be able to:
-      - subscribe to events based on criteria such as NHS Number
+      - subscribe to events based on certain criteria such as NHS Number
       - receive event notifications
     ## Who can use this API
     This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You must do this before you can go live (see ‘Onboarding’ below)
 
     Note: during Beta, this API will only be used by NHSE product teams with a valid use case.
     ## Related APIs
-    The following API also gives access to patient-related events:
+    The following API also provides access to patient-related events:
       - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National Events Management Service - FHIR API")
     ## API status and roadmap
     This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
-    You can comment, upvote and view progress using our [roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/440034/multicast-notification-service-event-management-api).
+    You can comment, upvote and view progress on our [roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/440034/multicast-notification-service-event-management-api).
     ## Service level
     N.A - not yet in an integration or production environment.
     ## Technology
@@ -40,7 +40,7 @@ info:
     ## Environments and testing
     To be completed.
     ## Onboarding
-    To be completed.
+    During our planned private Beta this service will only be available to NHSE product teams.The onboarding process is in development and we will be improving it iteratively as we gather feedback from our first set of users.
   contact:
     name: 'multicast-notification-service API Support'
     url: 'https://digital.nhs.uk/developer/help-and-support'
@@ -52,4 +52,270 @@ servers:
     description: Integration test environment.
   - url: 'https://api.service.nhs.uk/multicast-notification-service'
     description: Production environment.
-paths: {}
+paths:
+  /events:
+    post:
+      summary: "Publish an event"
+      description: |
+        ## Overview
+        Use this endpoint to publish a patient-related event.
+
+        You have the option to provide your payload in two different formats: FHIR STU3 JSON or a simple non-FHIR JSON event.
+
+        ## FHIR Payload
+        The FHIR payload follows the structure of the events that [NEMS currently receives](https://developer.nhs.uk/apis/ems-beta/explore_generic_event_requirements.html) from PDS, in JSON. The __only__ sender of these events is PDS. The Private Beta will focus on Change of GP Registration events.
+
+        ## Non-FHIR Payload (CloudEvent)
+        The non-FHIR event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure) for more info.
+
+        ## Request Body Fields
+
+        ### ID
+        Producers must ensure that the id is unique within their system to ensure that when we are tracing messages, we can be certain that source + id will be unique.
+
+        From our discovery so far and based on the NHS event ids we've seen, we would recommend only accepting version 4 UUIDs.
+
+        ### Type
+        A unique string representing the event type. For our initial private beta, we will only accept "pds-change-of-gp-1".
+
+        ### Subject - NHS Number
+        NHS Number – patient whom the event concerns. Validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html.
+
+        ### Subject - Given Name
+        First name.
+
+        ### Subject - Family Name
+        Last name, capitalised.
+
+        ### Subject - Date of Birth
+        ISO-8601 date.
+
+        ### Source
+        Organisation responsible for generating the patient event. Must follow this identifier system: https://fhir.nhs.uk/Id/ods-organization-code and provide the ODS Code + Organisation name. E.g. 
+        ```json
+        { "name": "The GP Practice", "identifier": { "system": "https://fhir.nhs.uk/{Id}/ods-organization-code", "value": "A12" // ODS Code }
+        ```
+
+        ### Time
+        ISO-8601 datetime.
+
+        ### Data content type
+        Optional. This field describes the content type of the original event payload, if it's available e.g. text/xml, application/json, application/xml+FHIR.
+
+        ### Data
+        String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would result in a pointer to the patient's PDS Record. The decision is for our events to be purely a notification and not contain any payload. A subscribing system would have to query the source of truth (in our example, PDS) to find what has changed.
+      
+      parameters:
+        - in: header
+          name: somethingForAuth
+          schema:
+            type: string
+          required: true
+          description: TODO
+      requestBody:
+        required: true
+        content:
+          application/fhir+json:
+            schema:
+              type: "object"
+              example:
+                id: 236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b
+                meta:
+                  profile:
+                  - http://hl7.org/fhir/STU3/StructureDefinition/Bundle
+                type: message
+                entry:
+                - fullUrl: 3cfdf880-13e9-4f6b-8299-53e96ef5ec02
+                  resource:
+                    timestamp: '2019-11-01T15:00:00+00:00'
+                    focus:
+                    - reference: urn:uuid:7b0c7720-d1ed-11e8-a8d5-f2801f1b9fd1
+                    source:
+                      endpoint: urn:nhs:addressing:asid:477121000323
+                      contact:
+                        value: ssd.nationalservicedesk@nhs.net
+                        system: email
+                    resourceType: MessageHeader
+                    id: 3cfdf880-13e9-4f6b-8299-53e96ef5ec02
+                    meta:
+                      profile:
+                      - https://fhir.nhs.uk/STU3/StructureDefinition/Event-MessageHeader-1
+                    extension:
+                    - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-RoutingDemographics-1
+                      extension:
+                      - url: nhsNumber
+                        valueIdentifier:
+                          value: '9912003444'
+                          system: https://fhir.nhs.uk/Id/nhs-number
+                      - url: name
+                        valueHumanName:
+                          use: official
+                          given:
+                          - Jack
+                          family: DAWKINS
+                      - url: birthDateTime
+                        valueDateTime: '2017-10-02T12:00:00+00:00'
+                    - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-MessageEventType-1
+                      valueCodeableConcept:
+                        coding:
+                        - system: https://fhir.nhs.uk/STU3/CodeSystem/MessageEventType-1
+                          display: New event message
+                          code: new
+                    responsible:
+                      reference: https://directory.spineservices.nhs.uk/STU3/Organization/X26
+                      display: NHS DIGITAL
+                    event:
+                      system: https://fhir.nhs.uk/STU3/CodeSystem/EventType-1
+                      display: PDS Record Change
+                      code: pds-record-change-1
+                - fullUrl: urn:uuid:7b0c7720-d1ed-11e8-a8d5-f2801f1b9fd1
+                  resource:
+                    identifier:
+                    - value: '9912003888'
+                      extension:
+                      - url: https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-NHSNumberVerificationStatus-1
+                        valueCodeableConcept:
+                          coding:
+                          - system: https://fhir.hl7.org.uk/STU3/CareConnect-NHSNumberVerificationStatus-1
+                            display: Number present and verified
+                            code: '01'
+                      system: https://fhir.nhs.uk/Id/nhs-number
+                    id: 7b0c7720-d1ed-11e8-a8d5-f2801f1b9fd1
+                    meta:
+                      profile:
+                      - https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1
+                      versionId: '1'
+                    resourceType: Patient
+                    name:
+                    - use: official
+                      given:
+                      - Jack
+                      family: DAWKINS
+                    birthDate: '2017-10-02'
+                - fullUrl: urn:uuid:7bc8c1bc-e54c-11eb-ba80-0242ac130004
+                  resource:
+                    id: 7bc8c1bc-e54c-11eb-ba80-0242ac130004
+                    recorded: '2021-07-15T08:39:24+00:00'
+                    target:
+                    - reference: urn:uuid:7b0c7720-d1ed-11e8-a8d5-f2801f1b9fd1
+                    agent:
+                    - role:
+                      - coding:
+                        - code: AUT
+                          system: http://hl7.org/fhir/v3/ParticipationType
+                      whoReference:
+                        reference: urn:uuid:7b0c7720-d1ed-11e8-a8d5-f2801f1b9fd1
+                    resourceType: Provenance
+                resourceType: Bundle
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - "id"
+                - "type"
+                - "subject"
+                - "source"
+                - "time"
+              properties:
+                id:
+                  type: "string"
+                  example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                  description: "test"
+                type:
+                  type: "string"
+                  example: "pds-record-change-1"
+                subject:
+                  type: "object"
+                  required:
+                    - "nhsNumber"
+                    - "givenName"
+                    - "familyName"
+                    - "dob"
+                  properties:
+                    nhsNumber:
+                      type: "string"
+                      example: "9912003888"
+                    givenName:
+                      type: "string"
+                      example: "Jack"
+                    familyName:
+                      type: "string"
+                      example: "DAWKINS"
+                    dob:
+                      type: "string"
+                      format: "date"
+                      example: "2017-10-02"
+                source:
+                  type: "object"
+                  required:
+                    - "name"
+                    - "identifier"
+                  properties:
+                    name:
+                      type: "string"
+                      example: "The Organisation"
+                    identifier:
+                      type: "object"
+                      required:
+                        - "system"
+                        - "value"
+                      properties:
+                        system:
+                          type: "string"
+                          example: "https://fhir.nhs.uk/{Id}/ods-organization-code"
+                        value:
+                          type: "string"
+                          example: "ABC123"
+                time:
+                  type: "string"
+                  format: "date-time"
+                  example: "2022-04-05T17:31:00Z"
+                dataContentType:
+                  type: "string"
+                  example: "application/fhir+json"
+                data:
+                  type: "string"
+                  example: "https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/5323035280"
+              
+      responses:
+        200:
+          description: Success - the event is accepted and will be multicast to subscribers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether or not the action was successful
+                  id:
+                    type: string
+                    description: The id provided in the user's payload
+                    example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5c"
+        400:
+          description: Invalid user input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  validationErrors:
+                    type: object
+                    description: Object containing the different errors on a per key basis
+                    properties:
+                      type:
+                        type: string
+                        example: Please provide a valid event type
+        401:
+          description: "TODO"
+        500:
+          description: "Internal error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    description: Object containing the different errors on a per key basis
+                    example: Internal server error

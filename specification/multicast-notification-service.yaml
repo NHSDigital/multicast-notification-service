@@ -6,7 +6,8 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    Use this API to publish, subscribe to and receive patient-related events. The events do not contain clinical information; they simply describe what type of event occured to whom and where. Where possible, a pointer will be provided to enable retrieval the associated payload.
+    Use this API to publish, subscribe to and receive patient-related events. The events do not contain clinical information; they simply describe what 
+    type of event occured to whom and where. Where possible, a pointer will be provided to enable retrieval the associated payload.
 
     You can:
       - publish events
@@ -15,12 +16,14 @@ info:
       - subscribe to events based on certain criteria such as NHS Number
       - receive event notifications
     ## Who can use this API
-    This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You must do this before you can go live (see ‘Onboarding’ below)
+    This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You 
+    must do this before you can go live (see ‘Onboarding’ below)
 
     Note: during Beta, this API will only be used by NHSE product teams with a valid use case.
     ## Related APIs
     The following API also provides access to patient-related events:
-      - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National Events Management Service - FHIR API")
+      - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National 
+      Events Management Service - FHIR API")
     ## API status and roadmap
     This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
@@ -40,7 +43,8 @@ info:
     ## Environments and testing
     To be completed.
     ## Onboarding
-    During our planned private Beta this service will only be available to NHSE product teams.The onboarding process is in development and we will be improving it iteratively as we gather feedback from our first set of users.
+    During our planned private Beta this service will only be available to NHSE product teams.The onboarding process is in development and we will be 
+    improving it iteratively as we gather feedback from our first set of users.
   contact:
     name: 'multicast-notification-service API Support'
     url: 'https://digital.nhs.uk/developer/help-and-support'
@@ -71,7 +75,8 @@ paths:
         ## Request Body Fields
 
         ### ID
-        Producers must ensure that the id is unique within their system to ensure that when we are tracing messages, we can be certain that source + id will be unique.
+        Producers must ensure that the id is unique within their system to ensure that when we are tracing messages, we can be certain that source + id 
+        will be unique.
 
         From our discovery so far and based on the NHS event ids we've seen, we would recommend only accepting version 4 UUIDs.
 
@@ -91,7 +96,8 @@ paths:
         ISO-8601 date.
 
         ### Source
-        Organisation responsible for generating the patient event. Must follow this identifier system: https://fhir.nhs.uk/Id/ods-organization-code and provide the ODS Code + Organisation name. E.g. 
+        Organisation responsible for generating the patient event. Must follow this identifier system: https://fhir.nhs.uk/Id/ods-organization-code and 
+        provide the ODS Code + Organisation name. E.g. 
         ```json
         { "name": "The GP Practice", "identifier": { "system": "https://fhir.nhs.uk/{Id}/ods-organization-code", "value": "A12" // ODS Code }
         ```
@@ -100,10 +106,13 @@ paths:
         ISO-8601 datetime.
 
         ### Data content type
-        Optional. This field describes the content type of the original event payload, if it's available e.g. text/xml, application/json, application/xml+FHIR.
+        Optional. This field describes the content type of the original event payload, if it's available e.g. text/xml, application/json, 
+        application/xml+FHIR.
 
         ### Data
-        String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would result in a pointer to the patient's PDS Record. The decision is for our events to be purely a notification and not contain any payload. A subscribing system would have to query the source of truth (in our example, PDS) to find what has changed.
+        String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would
+         result in a pointer to the patient's PDS Record. The decision is for our events to be purely a notification and not contain any payload. A 
+         subscribing system would have to query the source of truth (in our example, PDS) to find what has changed.
       
       parameters:
         - in: header

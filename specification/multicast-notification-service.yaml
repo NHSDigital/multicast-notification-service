@@ -120,7 +120,7 @@ paths:
           schema:
             type: string
           required: true
-          description: TODO
+          description: TODO - EM-278 - add auth
       requestBody:
         required: true
         content:
@@ -154,7 +154,7 @@ paths:
                       extension:
                       - url: nhsNumber
                         valueIdentifier:
-                          value: '9912003444'
+                          value: '9048479894'
                           system: https://fhir.nhs.uk/Id/nhs-number
                       - url: name
                         valueHumanName:
@@ -316,7 +316,7 @@ paths:
                         type: string
                         example: Please provide a valid event type
         401:
-          description: "TODO"
+          description: "TODO - EM-278 - add auth"
         500:
           description: "Internal error"
           content:

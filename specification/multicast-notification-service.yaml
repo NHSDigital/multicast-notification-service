@@ -15,7 +15,7 @@ info:
     In future, you will be able to:
       - subscribe to events based on certain criteria such as NHS Number
       - receive event notifications
-    ![MNS High-level Diagram](../assets/images/mns-high-level-diagram.png)
+    ![MNS High-level Diagram](/../assets/images/mns-high-level-diagram.png)
     ## Who can use this API
     This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You 
     must do this before you can go live (see ‘Onboarding’ below)

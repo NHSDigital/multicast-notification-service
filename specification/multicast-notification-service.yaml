@@ -76,13 +76,13 @@ paths:
         ## Request Body Fields
 
         ### ID
-        Producers must ensure that the id is unique within their system to ensure that when we are tracing messages, we can be certain that source + id 
+        Producers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id 
         will be unique.
 
-        From our discovery so far and based on the NHS event ids we've seen, we would recommend only accepting version 4 UUIDs.
+        From the discovery so far and based on the NHS event ids seen, the team would recommend only accepting version 4 UUIDs.
 
         ### Type
-        A unique string representing the event type. For our initial private beta, we will only accept "pds-change-of-gp-1".
+        A unique string representing the event type. For the initial private beta, the API will only accept ``pds-change-of-gp-1``.
 
         ### Subject - NHS Number
         NHS Number – patient whom the event concerns. Validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html.
@@ -112,7 +112,7 @@ paths:
 
         ### Data
         String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would
-         result in a pointer to the patient's PDS Record. The decision is for our events to be purely a notification and not contain any payload. A 
+         result in a pointer to the patient's PDS Record. The decision is for the events to be purely a notification and not contain any payload. A 
          subscribing system would have to query the source of truth (in our example, PDS) to find what has changed.
       
       parameters:

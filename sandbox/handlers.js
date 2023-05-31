@@ -62,7 +62,53 @@ async function hello(req, res, next) {
     next();
 }
 
+async function events(req, res, next) {
+    write_log(res, "info", {
+        message: "events endpoint",
+        req: {
+            path: req.path,
+            body: req.body,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const eventType = retrieveEventTypeFromRequest(req.body, req.get("Content-Type")),
+        acceptedEventTypes = ["pds-change-of-gp-1"];
+
+    if (!acceptedEventTypes.includes(eventType)) {
+        res.json({
+            "validationErrors": {
+                "type": "Please provide a valid event type"
+            }
+        });
+    }   else {
+        res.json({
+            "success": true,
+            "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5c"
+        });
+    }
+
+    res.end();
+    next();
+}
+
+function retrieveEventTypeFromRequest(reqBody, reqContentType) {
+    const acceptedTypes = ["application/json", "application/fhir+json"];
+
+    if (!acceptedTypes.includes(reqContentType)) {
+        return "";
+    }
+
+    if (reqContentType == "application/json") {
+        return reqBody["type"];
+    }
+
+    // Parsing the FHIR payload like this is flimsy but acceptable for sandbox
+    return reqBody["entry"][0]["resource"]["event"]["code"];
+}
+
 module.exports = {
     status: status,
-    hello: hello
+    hello: hello,
+    events: events
 };

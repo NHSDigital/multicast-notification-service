@@ -45,7 +45,7 @@ info:
 
     | Environment       | Base URL                                                               |
     | ----------------- | ---------------------------------------------------------------------- |
-    | Sandbox           | `https://sandbox.api.service.nhs.uk/personal-demographics/FHIR/R4/`    |
+    | Sandbox           | `https://sandbox.api.service.nhs.uk/multicast-notification-service`    |
     | Integration test  | TODO                                                                   |
     | Production        | TODO                                                                   |
 

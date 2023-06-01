@@ -44,8 +44,8 @@ info:
     ## Environments and testing
     To be completed.
     ## Onboarding
-    During our planned private Beta this service will only be available to NHSE product teams.The onboarding process is in development and we will be 
-    improving it iteratively as we gather feedback from our first set of users.
+    During the planned private Beta this service will only be available to NHSE product teams. The onboarding process is in development and we will be 
+    improving it iteratively as we gather feedback from the first set of users.
   contact:
     name: 'multicast-notification-service API Support'
     url: 'https://digital.nhs.uk/developer/help-and-support'

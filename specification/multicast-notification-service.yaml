@@ -42,7 +42,21 @@ info:
     ## Security and authorisation
     To be completed. (Will be application-based access.)
     ## Environments and testing
-    To be completed.
+
+    | Environment       | Base URL                                                               |
+    | ----------------- | ---------------------------------------------------------------------- |
+    | Sandbox           | `https://sandbox.api.service.nhs.uk/personal-demographics/FHIR/R4/`    |
+    | Integration test  | TODO                                                                   |
+    | Production        | TODO                                                                   |
+
+    ### Sandbox testing
+    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
+    * is for early developer testing
+    * only covers a limited set of scenarios
+    * is stateless, so does not actually persist any updates
+    * is open access, so does not allow you to test authorisation
+
+    For details of sandbox test scenarios, or to try out the sandbox using our 'Try this API' feature, see the documentation for each endpoint.
     ## Onboarding
     During the planned private Beta this service will only be available to NHSE product teams. The onboarding process is in development and we will be 
     improving it iteratively as we gather feedback from the first set of users.
@@ -114,6 +128,17 @@ paths:
         String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would
          result in a pointer to the patient's PDS Record. The decision is for the events to be purely a notification and not contain any payload. A 
          subscribing system would have to query the source of truth (in our example, PDS) to find what has changed.
+
+        ### Sandbox testing
+        You can test the following scenarios in our sandbox environment:
+
+        | Scenario                                  | Request                                                                 | Response                                                       |
+        | ----------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- |
+        | Publish a JSON FHIR Event (GP Reg Change) | Content-Type: `application/fhir+json` Event Type: `pds-change-of-gp-1`  | HTTP Status 200 and response containing id and success status. |
+        | Publish an MDS Event (GP Reg Change)      | Content-Type: `application/json` Event Type: `pds-change-of-gp-1`       | HTTP Status 200 and response containing id and success status. |
+        | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |                                    |
+
+        You can try out the sandbox using the 'Try this API' feature on this page.
       
       parameters:
         - in: header

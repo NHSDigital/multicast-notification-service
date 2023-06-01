@@ -136,7 +136,7 @@ paths:
         | ----------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- |
         | Publish a JSON FHIR Event (GP Reg Change) | Content-Type: `application/fhir+json` Event Type: `pds-change-of-gp-1`  | HTTP Status 200 and response containing id and success status. |
         | Publish an MDS Event (GP Reg Change)      | Content-Type: `application/json` Event Type: `pds-change-of-gp-1`       | HTTP Status 200 and response containing id and success status. |
-        | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |                                    |
+        | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       

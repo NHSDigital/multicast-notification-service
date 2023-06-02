@@ -1,4 +1,4 @@
-
+const mocks = require("./mockEvents");
 const request = require("supertest");
 const assert = require("chai").assert;
 // const expect = require("chai").expect;
@@ -63,5 +63,39 @@ describe("app handler tests", function () {
             .get("/hello")
             .expect(200, done);
     });
-});
 
+    it("responds with a success when the pre-canned MDS event is published to /events", (done) => {
+        request(server)
+            .post("/events")
+            .send(mocks.minimumDataSetEvent)
+            .expect(200, {
+                "success": true,
+                "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5c"
+            },done);
+    });
+
+    it("responds with a success when the FHIR GP Change event is published to /events", (done) => {
+        request(server)
+            .post("/events")
+            .set("Content-Type", "application/fhir+json")
+            .send(mocks.changeOfGPFHIREvent)
+            .expect(200, {
+                "success": true,
+                "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5c"
+            },done);
+    });
+
+    it("responds with a validation error when an event of an invalid type is published to /events", (done) => {
+        let invalidEvent = mocks.minimumDataSetEvent;
+        invalidEvent["type"] = "test-invalid-type-1";
+
+        request(server)
+            .post("/events")
+            .send(mocks.minimumDataSetEvent)
+            .expect(200, {
+                "validationErrors": {
+                    "type": "Please provide a valid event type"
+                }
+            },done);
+    });
+});

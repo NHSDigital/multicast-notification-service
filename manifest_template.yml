@@ -15,10 +15,10 @@ APIGEE_ENVIRONMENTS:
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
     portal_visibility: false
-  # - name: internal-qa
-  #   display_name: Internal QA
-  #   has_mock_auth: true
-  #   portal_visibility: false
+  - name: internal-qa
+    display_name: Internal QA
+    has_mock_auth: true
+    portal_visibility: false
   - name: internal-qa-sandbox
     display_name: Internal QA Sandbox
     portal_visibility: false

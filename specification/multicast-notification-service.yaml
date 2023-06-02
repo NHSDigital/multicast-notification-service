@@ -140,7 +140,6 @@ paths:
         | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
-      
       parameters:
         - in: header
           name: somethingForAuth

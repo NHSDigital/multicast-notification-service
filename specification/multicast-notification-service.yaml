@@ -58,6 +58,11 @@ info:
     * is open access, so does not allow you to test authorisation
 
     For details of sandbox test scenarios, or to try out the sandbox using our 'Try this API' feature, see the documentation for each endpoint.
+
+    Alternatively, you can try out the sandbox using our Postman collection (simply download the file from the link and import it into Postman):
+
+        
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://github.com/NHSDigital/multicast-notification-service/blob/master/postman/sandbox/Multicast_Notification_Sandbox.postman_collection.json)
     ## Onboarding
     During the planned private Beta this service will only be available to NHSE product teams. The onboarding process is in development and we will be 
     improving it iteratively as we gather feedback from the first set of users.

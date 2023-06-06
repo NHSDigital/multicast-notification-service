@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "e51f428b-de54-4e3f-bc99-afa32e3079ba",
+		"name": "Multicast Notification Sandbox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Publish an event",
+			"item": [
+				{
+					"name": "Change of GP: Publish a non-FHIR event (based on CloudEvents)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b\",\r\n  \"type\": \"pds-change-of-gp-1\",\r\n  \"subject\": {\r\n    \"nhsNumber\": \"9912003888\",\r\n    \"givenName\": \"Jack\",\r\n    \"familyName\": \"DAWKINS\",\r\n    \"dob\": \"2017-10-02\"\r\n  },\r\n  \"source\": {\r\n    \"name\": \"The Organisation\",\r\n    \"identifier\": {\r\n      \"system\": \"https://fhir.nhs.uk/{Id}/ods-organization-code\",\r\n      \"value\": \"ABC123\"\r\n    }\r\n  },\r\n  \"time\": \"2022-04-05T17:31:00Z\",\r\n  \"dataContentType\": \"application/fhir+json\",\r\n  \"data\": \"https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change of GP: Publish a FHIR STU3 event",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/fhir+json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b\",\r\n  \"meta\": {\r\n    \"profile\": [\r\n      \"http://hl7.org/fhir/STU3/StructureDefinition/Bundle\"\r\n    ]\r\n  },\r\n  \"entry\": [\r\n    {\r\n      \"fullUrl\": \"3cfdf880-13e9-4f6b-8299-53e96ef5ec02\",\r\n      \"resource\": {\r\n        \"responsible\": {\r\n          \"reference\": \"https://directory.spineservices.nhs.uk/STU3/Organization/X26\",\r\n          \"display\": \"NHS DIGITAL\"\r\n        },\r\n        \"timestamp\": \"2019-11-01T15:00:00+00:00\",\r\n        \"event\": {\r\n          \"display\": \"PDS Change of GP\",\r\n          \"system\": \"https://fhir.nhs.uk/STU3/CodeSystem/EventType-1\",\r\n          \"code\": \"pds-change-of-gp-1\"\r\n        },\r\n        \"source\": {\r\n          \"endpoint\": \"urn:nhs:addressing:asid:477121000323\",\r\n          \"contact\": {\r\n            \"system\": \"email\",\r\n            \"value\": \"ssd.nationalservicedesk@nhs.net\"\r\n          }\r\n        },\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"https://fhir.nhs.uk/STU3/StructureDefinition/Event-MessageHeader-1\"\r\n          ],\r\n          \"versionId\": \"1\",\r\n          \"lastUpdated\": \"2017-11-01T15:00:33+00:00\"\r\n        },\r\n        \"focus\": [\r\n          {\r\n            \"reference\": \"urn:uuid:3f98da8c-3fe9-430e-8e7c-6edd078622f0\"\r\n          }\r\n        ],\r\n        \"extension\": [\r\n          {\r\n            \"extension\": [\r\n              {\r\n                \"valueIdentifier\": {\r\n                  \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\r\n                  \"value\": \"9912003888\"\r\n                },\r\n                \"url\": \"nhsNumber\"\r\n              },\r\n              {\r\n                \"valueHumanName\": {\r\n                  \"use\": \"official\",\r\n                  \"given\": [\r\n                    \"Jack\"\r\n                  ],\r\n                  \"family\": \"DAWKINS\"\r\n                },\r\n                \"url\": \"name\"\r\n              },\r\n              {\r\n                \"valueDateTime\": \"2017-10-02T12:00:00+00:00\",\r\n                \"url\": \"birthDateTime\"\r\n              }\r\n            ],\r\n            \"url\": \"https://fhir.nhs.uk/STU3/StructureDefinition/Extension-RoutingDemographics-1\"\r\n          },\r\n          {\r\n            \"valueCodeableConcept\": {\r\n              \"coding\": [\r\n                {\r\n                  \"display\": \"New event message\",\r\n                  \"system\": \"https://fhir.nhs.uk/STU3/CodeSystem/MessageEventType-1\",\r\n                  \"code\": \"new\"\r\n                }\r\n              ]\r\n            },\r\n            \"url\": \"https://fhir.nhs.uk/STU3/StructureDefinition/Extension-MessageEventType-1\"\r\n          }\r\n        ],\r\n        \"id\": \"3cfdf880-13e9-4f6b-8299-53e96ef5ec02\",\r\n        \"resourceType\": \"MessageHeader\"\r\n      }\r\n    },\r\n    {\r\n      \"fullUrl\": \"urn:uuid:4c687299-3693-47f0-b477-562b0784d225\",\r\n      \"resource\": {\r\n        \"id\": \"4c687299-3693-47f0-b477-562b0784d225\",\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-HealthcareService-1\"\r\n          ]\r\n        },\r\n        \"identifier\": [\r\n          {\r\n            \"system\": \"https://fhir.nhs.uk/STU3/CodeSystem/EMS-HealthcareServiceType-1\",\r\n            \"value\": \"PDS\"\r\n          }\r\n        ],\r\n        \"type\": [\r\n          {\r\n            \"coding\": [\r\n              {\r\n                \"display\": \"Personal Demographics Service\",\r\n                \"system\": \"https://fhir.nhs.uk/STU3/CodeSystem/EMS-HealthcareServiceType-1\",\r\n                \"code\": \"PDS\"\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"providedBy\": {\r\n          \"reference\": \"https://directory.spineservices.nhs.uk/STU3/Organization/X26\",\r\n          \"display\": \"NHS DIGITAL\"\r\n        },\r\n        \"resourceType\": \"HealthcareService\"\r\n      }\r\n    },\r\n    {\r\n      \"fullUrl\": \"urn:uuid:3f98da8c-3fe9-430e-8e7c-6edd078622f0\",\r\n      \"resource\": {\r\n        \"id\": \"3f98da8c-3fe9-430e-8e7c-6edd078622f0\",\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Communication-1\"\r\n          ]\r\n        },\r\n        \"subject\": {\r\n          \"reference\": \"urn:uuid:dffd2ca0-dc21-11e7-9296-cec278b6b50a\",\r\n          \"display\": \"DAWKINS, Jack\"\r\n        },\r\n        \"payload\": [\r\n          {\r\n            \"contentReference\": {\r\n              \"reference\": \"urn:uuid:dffd2ca0-dc21-11e7-9296-cec278b6b50a\",\r\n              \"display\": \"DAWKINS, Jack\"\r\n            }\r\n          }\r\n        ],\r\n        \"status\": \"completed\",\r\n        \"sent\": \"2019-12-01\",\r\n        \"resourceType\": \"Communication\"\r\n      }\r\n    },\r\n    {\r\n      \"fullUrl\": \"urn:uuid:dffd2ca0-dc21-11e7-9296-cec278b6b50a\",\r\n      \"resource\": {\r\n        \"generalPractitioner\": [\r\n          {\r\n            \"reference\": \"urn:uuid:59a63170-b769-44f7-acb1-95cc3a0cb067\",\r\n            \"display\": \"SHADWELL MEDICAL CENTRE\"\r\n          }\r\n        ],\r\n        \"name\": [\r\n          {\r\n            \"use\": \"official\",\r\n            \"given\": [\r\n              \"Jack\"\r\n            ],\r\n            \"family\": \"DAWKINS\"\r\n          }\r\n        ],\r\n        \"identifier\": [\r\n          {\r\n            \"extension\": [\r\n              {\r\n                \"valueCodeableConcept\": {\r\n                  \"coding\": [\r\n                    {\r\n                      \"display\": \"Number present and verified\",\r\n                      \"system\": \"https://fhir.hl7.org.uk/STU3/CareConnect-NHSNumberVerificationStatus-1\",\r\n                      \"code\": \"01\"\r\n                    }\r\n                  ]\r\n                },\r\n                \"url\": \"https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-NHSNumberVerificationStatus-1\"\r\n              }\r\n            ],\r\n            \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\r\n            \"value\": \"9912003888\"\r\n          }\r\n        ],\r\n        \"address\": [\r\n          {\r\n            \"use\": \"home\",\r\n            \"postalCode\": \"LS17 7DF\",\r\n            \"line\": [\r\n              \"4 Sandmoor Drive\",\r\n              \"LEEDS\"\r\n            ]\r\n          }\r\n        ],\r\n        \"_birthDate\": {\r\n          \"extension\": [\r\n            {\r\n              \"valueDateTime\": \"2017-10-02T20:12:00+00:00\",\r\n              \"url\": \"http://hl7.org/fhir/StructureDefinition/patient-birthTime\"\r\n            }\r\n          ]\r\n        },\r\n        \"id\": \"dffd2ca0-dc21-11e7-9296-cec278b6b50a\",\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1\"\r\n          ]\r\n        },\r\n        \"birthDate\": \"2017-10-02\",\r\n        \"gender\": \"male\",\r\n        \"resourceType\": \"Patient\"\r\n      }\r\n    },\r\n    {\r\n      \"fullUrl\": \"urn:uuid:59a63170-b769-44f7-acb1-95cc3a0cb067\",\r\n      \"resource\": {\r\n        \"id\": \"59a63170-b769-44f7-acb1-95cc3a0cb067\",\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1\"\r\n          ]\r\n        },\r\n        \"name\": \"SHADWELL MEDICAL CENTRE\",\r\n        \"identifier\": [\r\n          {\r\n            \"system\": \"https://fhir.nhs.uk/Id/ods-organization-code\",\r\n            \"value\": \"B86056\"\r\n          }\r\n        ],\r\n        \"partOf\": {\r\n          \"reference\": \"https://directory.spineservices.nhs.uk/STU3/Organization/02V\",\r\n          \"display\": \"NHS LEEDS NORTH ICB\"\r\n        },\r\n        \"resourceType\": \"Organization\"\r\n      }\r\n    },\r\n    {\r\n      \"fullUrl\": \"urn:uuid:b13f45db-bd6d-48ef-bf30-3a4c0904a777\",\r\n      \"resource\": {\r\n        \"id\": \"b13f45db-bd6d-48ef-bf30-3a4c0904a777\",\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-EpisodeOfCare-1\"\r\n          ]\r\n        },\r\n        \"managingOrganization\": {\r\n          \"reference\": \"urn:uuid:e84bfc04-2d79-451e-84ef-a50116506088\",\r\n          \"display\": \"LIVERSEDGE MEDICAL CENTRE\"\r\n        },\r\n        \"patient\": {\r\n          \"reference\": \"urn:uuid:dffd2ca0-dc21-11e7-9296-cec278b6b50a\",\r\n          \"display\": \"DAWKINS, Jack\"\r\n        },\r\n        \"period\": {\r\n          \"end\": \"2017-10-29T15:00:00+00:00\",\r\n          \"start\": \"2017-10-09T15:00:00+00:00\"\r\n        },\r\n        \"status\": \"finished\",\r\n        \"type\": [\r\n          {\r\n            \"coding\": [\r\n              {\r\n                \"display\": \"Primary care\",\r\n                \"system\": \"https://fhir.nhs.uk/STU3/CodeSystem/EMS-PDS-PatientCareProvisionType-1\",\r\n                \"code\": \"1\"\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"resourceType\": \"EpisodeOfCare\"\r\n      }\r\n    },\r\n    {\r\n      \"fullUrl\": \"urn:uuid:e84bfc04-2d79-451e-84ef-a50116506088\",\r\n      \"resource\": {\r\n        \"id\": \"e84bfc04-2d79-451e-84ef-a50116506088\",\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1\"\r\n          ]\r\n        },\r\n        \"name\": \"LIVERSEDGE MEDICAL CENTRE\",\r\n        \"identifier\": [\r\n          {\r\n            \"system\": \"https://fhir.nhs.uk/Id/ods-organization-code\",\r\n            \"value\": \"B85612\"\r\n          }\r\n        ],\r\n        \"partOf\": {\r\n          \"reference\": \"https://directory.spineservices.nhs.uk/STU3/Organization/03J\",\r\n          \"display\": \"NHS NORTH KIRKLEES ICB\"\r\n        },\r\n        \"resourceType\": \"Organization\"\r\n      }\r\n    }\r\n  ],\r\n  \"type\": \"message\",\r\n  \"resourceType\": \"Bundle\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid event type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b\",\r\n  \"type\": \"pds-foo-bar\",\r\n  \"subject\": {\r\n    \"nhsNumber\": \"9912003888\",\r\n    \"givenName\": \"Jack\",\r\n    \"familyName\": \"DAWKINS\",\r\n    \"dob\": \"2017-10-02\"\r\n  },\r\n  \"source\": {\r\n    \"name\": \"The Organisation\",\r\n    \"identifier\": {\r\n      \"system\": \"https://fhir.nhs.uk/{Id}/ods-organization-code\",\r\n      \"value\": \"ABC123\"\r\n    }\r\n  },\r\n  \"time\": \"2022-04-05T17:31:00Z\",\r\n  \"dataContentType\": \"application/fhir+json\",\r\n  \"data\": \"https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://sandbox.api.service.nhs.uk/multicast-notification-service",
+			"type": "default"
+		}
+	]
+}

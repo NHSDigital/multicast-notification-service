@@ -10,7 +10,8 @@ info:
     type of event occured to whom and where. Where possible, a pointer will be provided to enable retrieval the associated payload.
 
     You can:
-      - publish events
+      - publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates e.g.
+        PDS record changes, vaccinations.
 
     In future, you will be able to:
       - subscribe to events based on certain criteria such as NHS Number
@@ -21,7 +22,7 @@ info:
     This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You 
     must do this before you can go live (see ‘Onboarding’ below)
 
-    Note: during Beta, this API will only be used by NHSE product teams with a valid use case.
+    Note: during Beta, this API will only be used by NHS England product teams with a valid use case.
     ## Related APIs
     The following API also provides access to patient-related events:
       - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National 
@@ -33,9 +34,9 @@ info:
     ## Service level
     N.A - not yet in an integration or production environment.
     ## Technology
-    This API is a REST-based [publish-subscribe](https://digital.nhs.uk/developer/guides-and-documentation/introduction-to-healthcare-technology/integration-and-apis#publish-subscribe-events) API.
+    This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) [publish-subscribe](https://digital.nhs.uk/developer/guides-and-documentation/introduction-to-healthcare-technology/integration-and-apis#publish-subscribe-events) API.
 
-    The event structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/)
+    The event structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/) [FHIR STU3](https://hl7.org/fhir/stu3/) events can also be published.
     ## Network access
     This API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).
 
@@ -47,8 +48,8 @@ info:
     | Environment       | Base URL                                                               |
     | ----------------- | ---------------------------------------------------------------------- |
     | Sandbox           | `https://sandbox.api.service.nhs.uk/multicast-notification-service`    |
-    | Integration test  | TODO                                                                   |
-    | Production        | TODO                                                                   |
+    | Integration test  | Not yet available                                                      |
+    | Production        | Not yet available                                                      |
 
     ### Sandbox testing
     Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
@@ -64,7 +65,7 @@ info:
         
     [![Run in Postman](https://run.pstmn.io/button.svg)](https://github.com/NHSDigital/multicast-notification-service/blob/master/postman/sandbox/Multicast_Notification_Sandbox.postman_collection.json)
     ## Onboarding
-    During the planned private Beta this service will only be available to NHSE product teams. The onboarding process is in development and we will be 
+    During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be 
     improving it iteratively as we gather feedback from the first set of users.
   contact:
     name: 'multicast-notification-service API Support'
@@ -82,58 +83,16 @@ paths:
     post:
       summary: "Publish an event"
       description: |
-        ## Overview
+        ### Overview
         Use this endpoint to publish a patient-related event.
 
         You have the option to provide your payload in two different formats: FHIR STU3 JSON or a simple non-FHIR JSON event.
 
-        ## FHIR Payload
+        ### FHIR payload
         The FHIR payload follows the structure of the events that [NEMS currently receives](https://developer.nhs.uk/apis/ems-beta/explore_generic_event_requirements.html) from PDS, in JSON. The __only__ sender of these events is PDS. The Private Beta will focus on Change of GP Registration events.
 
-        ## Non-FHIR Payload (CloudEvent)
+        ### Non-FHIR payload (CloudEvent)
         The non-FHIR event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure) for more info.
-
-        ## Request Body Fields
-
-        ### ID
-        Producers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id 
-        will be unique.
-
-        From the discovery so far and based on the NHS event ids seen, the team would recommend only accepting version 4 UUIDs.
-
-        ### Type
-        A unique string representing the event type. For the initial private beta, the API will only accept ``pds-change-of-gp-1``.
-
-        ### Subject - NHS Number
-        NHS Number – patient whom the event concerns. Validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html.
-
-        ### Subject - Given Name
-        First name.
-
-        ### Subject - Family Name
-        Last name, capitalised.
-
-        ### Subject - Date of Birth
-        ISO-8601 date.
-
-        ### Source
-        Organisation responsible for generating the patient event. Must follow this identifier system: https://fhir.nhs.uk/Id/ods-organization-code and 
-        provide the ODS Code + Organisation name. E.g. 
-        ```json
-        { "name": "The GP Practice", "identifier": { "system": "https://fhir.nhs.uk/{Id}/ods-organization-code", "value": "A12" // ODS Code }
-        ```
-
-        ### Time
-        ISO-8601 datetime.
-
-        ### Data content type
-        Optional. This field describes the content type of the original event payload, if it's available e.g. text/xml, application/json, 
-        application/xml+FHIR.
-
-        ### Data
-        String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would
-         result in a pointer to the patient's PDS Record. The decision is for the events to be purely a notification and not contain any payload. A 
-         subscribing system would have to query the source of truth (in our example, PDS) to find what has changed.
 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
@@ -145,6 +104,15 @@ paths:
         | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
+
+        ### Errors
+        We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
+
+        * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
+        * 400 to 499 if it failed because of a client error by your application
+        * 500 to 599 if it failed because of an error on our server
+        
+        Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
       parameters:
         - in: header
           name: somethingForAuth
@@ -260,10 +228,11 @@ paths:
                 id:
                   type: "string"
                   example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-                  description: "test"
+                  description: "Producers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id will be unique."
                 type:
                   type: "string"
                   example: "pds-change-of-gp-1"
+                  description: "A unique string representing the event type. For the initial private beta, the API will only accept `pds-change-of-gp-1`."
                 subject:
                   type: "object"
                   required:
@@ -271,34 +240,42 @@ paths:
                     - "givenName"
                     - "familyName"
                     - "dob"
+                  description: "The NHS patient to whom the event occurred."
                   properties:
                     nhsNumber:
                       type: "string"
                       example: "9912003888"
+                      description: "NHS Number validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html."
                     givenName:
                       type: "string"
                       example: "Jack"
+                      description: "First name"
                     familyName:
                       type: "string"
                       example: "DAWKINS"
+                      description: "Last name, capitalised"
                     dob:
                       type: "string"
                       format: "date"
                       example: "2017-10-02"
+                      description: "ISO-8601 date."
                 source:
                   type: "object"
                   required:
                     - "name"
                     - "identifier"
+                  description: "Organisation responsible for generating the patient-related event."
                   properties:
                     name:
                       type: "string"
                       example: "The Organisation"
+                      description: "Organisation name"
                     identifier:
                       type: "object"
                       required:
                         - "system"
                         - "value"
+                      description: "Must follow this identifier system: https://fhir.nhs.uk/Id/ods-organization-code and provide the ODS Code as the value."
                       properties:
                         system:
                           type: "string"
@@ -310,12 +287,15 @@ paths:
                   type: "string"
                   format: "date-time"
                   example: "2022-04-05T17:31:00Z"
+                  description: "ISO-8601 datetime."
                 dataContentType:
                   type: "string"
                   example: "application/fhir+json"
+                  description: "This field describes the content type of the original event payload, if it's available e.g. text/xml, application/json, application/xml+FHIR."
                 data:
                   type: "string"
                   example: "https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
+                  description: "String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would result in a pointer to the patient's PDS Record. The decision is for the events to be purely a notification and not contain any payload. A subscribing system would have to query the source of truth (in our example, PDS) to find what has changed."
               
       responses:
         200:

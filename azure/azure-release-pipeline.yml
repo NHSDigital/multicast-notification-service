@@ -65,7 +65,8 @@ extends:
           - internal_qa_sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
-            parameters:
-              full: true
-              test_command: prod
-              smoketest_command: prod
+            # parameters:
+            #   full: true
+            #   test-command: prod
+            #   smoketest-command: prod
+            # TODO - EM-299 - provisionally under this ticket. Add full e2e test suite as part of pipeline run

@@ -71,7 +71,7 @@ info:
     During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be 
     improving it iteratively as we gather feedback from the first set of users.
 
-    ### Errors
+    ## Errors
     We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
 
     * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action

@@ -70,6 +70,15 @@ info:
     ## Onboarding
     During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be 
     improving it iteratively as we gather feedback from the first set of users.
+
+    ### Errors
+    We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
+
+    * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
+    * 400 to 499 if it failed because of a client error by your application
+    * 500 to 599 if it failed because of an error on our server
+    
+    Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
   contact:
     name: 'multicast-notification-service API Support'
     url: 'https://digital.nhs.uk/developer/help-and-support'
@@ -107,15 +116,6 @@ paths:
         | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
-
-        ### Errors
-        We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
-
-        * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
-        * 400 to 499 if it failed because of a client error by your application
-        * 500 to 599 if it failed because of an error on our server
-        
-        Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
       parameters:
         - in: header
           name: somethingForAuth

@@ -75,7 +75,6 @@ apigee:
 {% endif %}
         scopes:
           - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
-          # - 'urn:nhsd:apim:user-nhs-cis2:aal3:{{ SERVICE_NAME }}' The /subscriptions endpoint may require use auth
     specs:
       - name: {{ NAME }}
         path: {{ SERVICE_NAME }}.json

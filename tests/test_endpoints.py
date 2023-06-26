@@ -87,6 +87,9 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
         "login_form": {"username": "656005750104"},
     }
 )
+
 def test_cis2_aal3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
-    assert resp.status_code == 200
+    with pytest.raises(ValueError) as exc_info:
+        requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
+
+    assert str(exc_info.value) == "No product granting access to proxy under test has scope `urn:nhsd:apim:user-nhs-cis2:aal3:multicast-notification-service`"

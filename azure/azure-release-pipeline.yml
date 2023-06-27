@@ -57,14 +57,14 @@ extends:
           - template: ./templates/run-tests.yml
       - environment: sandbox
         proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-tests.yml
+        # post_deploy:
+        #   - template: ./templates/run-tests.yml TODO - EM-299 - is this required for sandbox?
       - environment: int
         depends_on:
           - internal_qa
           - internal_qa_sandbox
-        post_deploy:
-          - template: ./templates/run-tests.yml
+        # post_deploy:
+        #   - template: ./templates/run-tests.yml TODO - EM-299 - need to create and then supply App ID as this is APIGEE Prod
             # parameters:
             #   full: true
             #   test-command: prod

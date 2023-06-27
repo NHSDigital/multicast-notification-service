@@ -18,13 +18,13 @@ def test_ping(nhsd_apim_proxy_url):
 def test_wait_for_ping(nhsd_apim_proxy_url):
     retries = 0
     resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
-    deployed_commitId = resp.json().get("commitId")
+    deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commitId != getenv('SOURCE_COMMIT_ID')
-            and retries <= 30
-            and resp.status_code == 200):
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
+           and retries <= 30
+           and resp.status_code == 200):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
-        deployed_commitId = resp.json().get("commitId")
+        deployed_commit_id = resp.json().get("commitId")
         retries += 1
 
     if resp.status_code != 200:
@@ -32,7 +32,7 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
     elif retries >= 30:
         pytest.fail("Timeout Error - max retries")
 
-    assert deployed_commitId == getenv('SOURCE_COMMIT_ID')
+    assert deployed_commit_id == getenv('SOURCE_COMMIT_ID')
 
 
 @pytest.mark.smoketest
@@ -40,22 +40,34 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     resp = requests.get(
         f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers
     )
+    resp_content = resp.json()
+    healthcheck_resp = resp.json().get("checks").get("healthcheck")
+
     assert resp.status_code == 200
-    # Make some additional assertions about your status response here!
+    assert resp_content.get("commitId") == getenv('SOURCE_COMMIT_ID')
+    assert healthcheck_resp == {
+        'links': {
+            'self': 'http://mocktarget.apigee.net/'
+        },
+        'outcome': 'Hello, Guest!',
+        'responseCode': 200,
+        'status': 'pass',
+        'timeout': 'false'
+    }
 
 
 @pytest.mark.smoketest
 def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     retries = 0
     resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
-    deployed_commitId = resp.json().get("commitId")
+    deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commitId != getenv('SOURCE_COMMIT_ID')
-            and retries <= 30
-            and resp.status_code == 200
-            and resp.json().get("version")):
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
+           and retries <= 30
+           and resp.status_code == 200
+           and resp.json().get("version")):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
-        deployed_commitId = resp.json().get("commitId")
+        deployed_commit_id = resp.json().get("commitId")
         retries += 1
 
     if resp.status_code != 200:
@@ -65,16 +77,25 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     elif not resp.json().get("version"):
         pytest.fail("version not found")
 
-    assert deployed_commitId == getenv('SOURCE_COMMIT_ID')
+    assert deployed_commit_id == getenv('SOURCE_COMMIT_ID')
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
 def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
-    assert resp.status_code == 401  # unauthorized
+    assert resp.status_code == 401
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 200
+    assert resp.text == "Hello, Guest!"
+
+
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_events_endpoint(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/events", headers=nhsd_apim_auth_headers)
+
+    assert resp.status_code == 404
+    # TODO - EM-299 - improve e2e tests once we are linked to a backend

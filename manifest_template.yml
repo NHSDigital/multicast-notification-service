@@ -7,7 +7,7 @@ APIGEE_ENVIRONMENTS:
     has_mock_auth: true
   - name: internal-qa
     display_name: Internal QA
-    has_mock_auth: true 
+    has_mock_auth: true
   - name: ref
     display_name: Reference
     has_mock_auth: true
@@ -75,7 +75,6 @@ apigee:
 {% endif %}
         scopes:
           - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
-          - 'urn:nhsd:apim:user-nhs-cis2:aal3:{{ SERVICE_NAME }}'
     specs:
       - name: {{ NAME }}
         path: {{ SERVICE_NAME }}.json

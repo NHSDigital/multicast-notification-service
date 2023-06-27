@@ -16,7 +16,7 @@ info:
         PDS record changes, vaccinations.
 
     In future, you will be able to:
-      - subscribe to events based on certain criteria such as the event type.
+      - subscribe to events based on certain criteria such as the event type
 
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.png )
     ## Who can use this API

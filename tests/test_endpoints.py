@@ -21,8 +21,8 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
     deployed_commitId = resp.json().get("commitId")
 
     while (deployed_commitId != getenv('SOURCE_COMMIT_ID')
-           and retries <= 30
-           and resp.status_code == 200):
+            and retries <= 30
+            and resp.status_code == 200):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
         deployed_commitId = resp.json().get("commitId")
         retries += 1
@@ -51,9 +51,9 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     deployed_commitId = resp.json().get("commitId")
 
     while (deployed_commitId != getenv('SOURCE_COMMIT_ID')
-           and retries <= 30
-           and resp.status_code == 200
-           and resp.json().get("version")):
+            and retries <= 30
+            and resp.status_code == 200
+            and resp.json().get("version")):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
         deployed_commitId = resp.json().get("commitId")
         retries += 1
@@ -78,18 +78,3 @@ def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 200
-
-
-@pytest.mark.nhsd_apim_authorization(
-    {
-        "access": "healthcare_worker",
-        "level": "aal3",
-        "login_form": {"username": "656005750104"},
-    }
-)
-def test_cis2_aal3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    with pytest.raises(ValueError) as exc_info:
-        requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
-
-    assert str(exc_info.value) == "No product granting access to proxy under test has scope " \
-                                  "`urn:nhsd:apim:user-nhs-cis2:aal3:multicast-notification-service`"

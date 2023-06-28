@@ -2,7 +2,7 @@
 # for the multicast-notification-service owned by NHS Digital (https://digital.nhs.uk/)
 openapi: '3.0.0'
 info:
-  title: 'Multicast Notification Service - REST API'
+  title: 'Multicast Notification Service (MNS) - REST API'
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview

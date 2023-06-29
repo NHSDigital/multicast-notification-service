@@ -2,14 +2,14 @@
 # for the multicast-notification-service owned by NHS Digital (https://digital.nhs.uk/)
 openapi: '3.0.0'
 info:
-  title: 'Multicast Notification Service - REST API'
+  title: 'Multicast Notification Service (MNS) - REST API'
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
     Use this API to publish and subscribe to patient-related events. The events do not contain clinical information; they simply describe what 
     type of event occured to whom and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
 
-    This API is intended for NHS England internal product teams as a means of decoupling systems and providing streams of data.
+    This API is intended for NHS England internal product teams as a means of decoupling systems by providing lightweight access to streams of data from various sources without the need for direct integration.
 
     You can:
       - Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates e.g.
@@ -18,7 +18,7 @@ info:
     In future, you will be able to:
       - subscribe to events based on certain criteria such as the event type
 
-    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.png )
+    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You 
     must do this before you can go live (see ‘Onboarding’ below).
@@ -28,8 +28,7 @@ info:
     The following API also provides access to patient-related events:
       - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National 
       Events Management Service - FHIR API")
-    The difference is that NEMS delivers events to external consumer systems whereas MNS is intended only for use by internal NHS England product teams. The payloads MNS delivers will be event signals
-    rather than payloads containing clinical information. The two systems will be complementary.
+    The difference is that the payloads MNS delivers will be event signals: lightweight events that do not contain any clinical information, they 'signal' a state has changed. NEMS delivers events to external consumer systems whereas MNS is intended only for use by internal NHS England product teams. The two systems will be complementary.
     ## API status and roadmap
     This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 

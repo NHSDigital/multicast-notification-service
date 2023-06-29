@@ -18,7 +18,7 @@ info:
     In future, you will be able to:
       - subscribe to events based on certain criteria such as the event type
 
-    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.png )
+    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You 
     must do this before you can go live (see ‘Onboarding’ below).

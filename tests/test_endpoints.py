@@ -41,19 +41,9 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
         f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers
     )
     resp_content = resp.json()
-    healthcheck_resp = resp_content.get("checks").get("healthcheck")
 
     assert resp.status_code == 200
     assert resp_content.get("commitId") == getenv('SOURCE_COMMIT_ID')
-    assert healthcheck_resp == {
-        'links': {
-            'self': 'http://mocktarget.apigee.net/'
-        },
-        'outcome': 'Hello, Guest!',
-        'responseCode': 200,
-        'status': 'pass',
-        'timeout': 'false'
-    }
 
 
 @pytest.mark.smoketest

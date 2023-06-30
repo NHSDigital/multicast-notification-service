@@ -41,7 +41,7 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
         f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers
     )
     resp_content = resp.json()
-    healthcheck_resp = resp.json().get("checks").get("healthcheck")
+    healthcheck_resp = resp_content.get("checks").get("healthcheck")
 
     assert resp.status_code == 200
     assert resp_content.get("commitId") == getenv('SOURCE_COMMIT_ID')

@@ -3,9 +3,34 @@ See
 https://github.com/NHSDigital/pytest-nhsd-apim/blob/main/tests/test_examples.py
 for more ideas on how to test the authorization of your API.
 """
+import json
+import os
 import requests
 import pytest
 from os import getenv
+
+
+def read_json_file(current_file: str, filename: str):
+    """
+    read a test data json file
+    """
+
+    filepath = os.path.join(os.path.dirname(current_file), "data", filename)
+
+    with open(filepath, "r", encoding='utf8') as json_file:
+        content = json.loads(json_file.read())
+
+    return content
+
+
+@pytest.fixture
+def pds_change_of_gp_fhir_event_mock() -> dict:
+    return read_json_file(__file__, "pds-change-of-gp-event-fhir.json")
+
+
+@pytest.fixture
+def pds_change_of_gp_mds_event_mock() -> dict:
+    return read_json_file(__file__, "pds-change-of-gp-event-mds.json")
 
 
 @pytest.mark.smoketest
@@ -78,14 +103,57 @@ def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 200
-    assert resp.text == "Hello, Guest!"
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_events_endpoint(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.post(f"{nhsd_apim_proxy_url}/events", headers=nhsd_apim_auth_headers)
+def test_events_endpoint_accepts_valid_fhir_payload(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    pds_change_of_gp_fhir_event_mock
+):
+    nhsd_apim_auth_headers["Content-Type"] = "application/fhir+json"
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=pds_change_of_gp_fhir_event_mock
+    )
 
-    assert resp.status_code == 404
-    # TODO - EM-299 - improve e2e tests once we are linked to a backend
+    assert resp.status_code == 200
+    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b", "success": "true"}
+
+
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_events_endpoint_accepts_valid_mds_payload(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    pds_change_of_gp_mds_event_mock
+):
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=pds_change_of_gp_mds_event_mock
+    )
+
+    assert resp.status_code == 200
+    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b", "success": "true"}
+
+
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_events_endpoint_rejects_invalid_payload(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    pds_change_of_gp_mds_event_mock
+):
+    invalid_payload = pds_change_of_gp_mds_event_mock
+    invalid_payload["type"] = "event-type-not-accepted"
+
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=pds_change_of_gp_mds_event_mock
+    )
+
+    assert resp.status_code == 400
+    assert resp.json() == {"validationErrors": {"type": "Please provide a valid event type"}}

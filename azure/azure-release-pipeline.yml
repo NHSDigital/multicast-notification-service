@@ -35,6 +35,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              app_id: "73ee66da-247c-49be-8822-d23aaf4823ec"
               full: true
       - environment: internal-dev-sandbox
         proxy_path: sandbox
@@ -63,10 +64,10 @@ extends:
         depends_on:
           - internal_qa
           - internal_qa_sandbox
-        # post_deploy:
-        #   - template: ./templates/run-tests.yml TODO - EM-299 - need to create and then supply App ID as this is APIGEE Prod
-            # parameters:
-            #   full: true
-            #   test-command: prod
-            #   smoketest-command: prod
-            # TODO - EM-299 - provisionally under this ticket. Add full e2e test suite as part of pipeline run
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
+              full: true
+              test-command: prod
+              smoketest-command: prod

@@ -1,4 +1,7 @@
 parameters:
+  - name: app_id
+    type: string
+    default: "MY APP ID"
   - name: full
     type: boolean
     default: false
@@ -22,7 +25,7 @@ steps:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
-        export APIGEE_APP_ID="MY APP ID"
+        export APIGEE_APP_ID="$(parameters.app_id)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
         ${{ parameters.test_command }}
@@ -40,7 +43,7 @@ steps:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
-        export APIGEE_APP_ID="MY APP ID"
+        export APIGEE_APP_ID="$(parameters.app_id)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
         ${{ parameters.smoketest_command }}

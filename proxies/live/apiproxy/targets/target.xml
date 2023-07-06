@@ -25,7 +25,7 @@
       <Enabled>true</Enabled>
     </SSLInfo>
     <LoadBalancer>
-      <Server name="nhs-demo-events-internal-dev" />
+      <Server name="multicast-notification-service" />
     </LoadBalancer>
   </HTTPTargetConnection>
 </TargetEndpoint>

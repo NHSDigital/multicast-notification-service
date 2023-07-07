@@ -41,11 +41,12 @@ extends:
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
-      # - environment: internal-qa
-      #   post_deploy:
-      #     - template: ./templates/run-tests.yml
-      #       parameters:
-      #         full: true
+      - environment: internal-qa
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              app_id: "73ee66da-247c-49be-8822-d23aaf4823ec"
+              full: true
       - environment: internal-qa-sandbox
         proxy_path: sandbox
         post_deploy:

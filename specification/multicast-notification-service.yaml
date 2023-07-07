@@ -8,8 +8,8 @@ info:
     ## Overview
     Use this API to publish and subscribe to patient-related events. The events do not contain clinical information; they simply describe what 
     type of event occured to whom and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
-
-    This API is intended for NHS England internal product teams as a means of decoupling systems by providing lightweight access to streams of data from various sources without the need for direct integration.
+ 
+    This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
 
     You can:
       - Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates e.g.

@@ -69,4 +69,4 @@ extends:
             parameters:
               app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
               full: true
-              test_command: test-prod
+              test_command: make test-prod

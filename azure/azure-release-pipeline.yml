@@ -62,7 +62,6 @@ extends:
         #   - template: ./templates/run-tests.yml TODO - EM-299 - is this required for sandbox?
       - environment: int
         depends_on:
-          - internal_qa
           - internal_qa_sandbox
         post_deploy:
           - template: ./templates/run-tests.yml

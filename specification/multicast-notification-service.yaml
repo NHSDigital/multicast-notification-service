@@ -169,21 +169,6 @@ paths:
                       - $ref: "components/schemas/OrganisationExampleOne.yaml"
                       - $ref: "components/schemas/EpisodeOfCare.yaml"
                       - $ref: "components/schemas/OrganisationExampleTwo.yaml"
-                  example:
-                    MessageHeader:
-                      - $ref: "components/schemas/MessageHeader.yaml"
-                    HealthService:
-                      - $ref: "components/schemas/HealthService.yaml"
-                    Communication:
-                      - $ref: "components/schemas/Communication.yaml"
-                    Patient:
-                      - $ref: "components/schemas/Patient.yaml"
-                    OrganisationExampleOne:
-                      - $ref: "components/schemas/OrganisationExampleOne.yaml"
-                    EpisodeOfCare:
-                      - $ref: "components/schemas/EpisodeOfCare.yaml"
-                    OrganisationExampleTwo:
-                      - $ref: "components/schemas/OrganisationExampleTwo.yaml"
           application/json:
             schema:
               type: "object"

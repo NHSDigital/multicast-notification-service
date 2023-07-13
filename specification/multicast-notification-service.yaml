@@ -169,6 +169,14 @@ paths:
                       - $ref: "components/schemas/OrganisationExampleOne.yaml"
                       - $ref: "components/schemas/EpisodeOfCare.yaml"
                       - $ref: "components/schemas/OrganisationExampleTwo.yaml"
+                  example:
+                    - $ref: "components/schemas/MessageHeader.yaml"
+                    - $ref: "components/schemas/HealthService.yaml"
+                    - $ref: "components/schemas/Communication.yaml"
+                    - $ref: "components/schemas/Patient.yaml"
+                    - $ref: "components/schemas/OrganisationExampleOne.yaml"
+                    - $ref: "components/schemas/EpisodeOfCare.yaml"
+                    - $ref: "components/schemas/OrganisationExampleTwo.yaml"
           application/json:
             schema:
               type: "object"
@@ -213,6 +221,32 @@ paths:
                       format: "date"
                       example: "2017-10-02"
                       description: "ISO-8601 date."
+                    registeredGpPractice:
+                      type: "object"
+                      description: "The patient's registed GP Practice if known"
+                      required:
+                        - "name"
+                        - "identifier"
+                      properties:
+                        name:
+                          type: "string"
+                          example: "SHADWELL MEDICAL CENTRE"
+                          description: "The name of the patient's registered GP Practice"
+                        identifier:
+                          type: "object"
+                          description: "The unique identifier and system used for identifying the GP Practice"
+                          required:
+                            - "system"
+                            - "value"
+                          properties:
+                            system:
+                              type: "string"
+                              example: "https://fhir.nhs.uk/Id/ods-organization-code"
+                              description: "The ODS system is used"
+                            value:
+                              type: "string"
+                              example: "B86056"
+                              description: "The value must be a valid ODS code"
                 source:
                   type: "object"
                   required:

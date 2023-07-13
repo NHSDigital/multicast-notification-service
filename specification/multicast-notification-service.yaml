@@ -33,7 +33,7 @@ info:
 
     You can comment, upvote and view progress on our [roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/440034/multicast-notification-service-event-management-api).
     ## Service level
-    The Multicast Service API is currently not in an integration or production environment.
+    The Multicast Service API is currently not in a production environment.
     ## Technology
     This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) [publish-subscribe](https://digital.nhs.uk/developer/guides-and-documentation/introduction-to-healthcare-technology/integration-and-apis#publish-subscribe-events) API.
 
@@ -49,7 +49,7 @@ info:
     | Environment       | Base URL                                                               |
     | ----------------- | ---------------------------------------------------------------------- |
     | Sandbox           | `https://sandbox.api.service.nhs.uk/multicast-notification-service`    |
-    | Integration test  | Not yet available                                                      |
+    | Integration test  | `https://int.api.service.nhs.uk/multicast-notification-service`                                                     |
     | Production        | Not yet available                                                      |
 
     ### Sandbox testing

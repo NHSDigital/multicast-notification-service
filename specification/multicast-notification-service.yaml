@@ -6,6 +6,8 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
+    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
+
     Use this API to publish and subscribe to patient-related events. The events do not contain clinical information; they simply describe what 
     type of event occured to whom and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
  
@@ -18,7 +20,13 @@ info:
     In future, you will be able to:
       - subscribe to events based on certain criteria such as the event type
 
-    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
+    Data flow:
+      1. An event occurs on a provider system
+      2. MNS is sent an event
+      3. MNS extracts key identifying information from the message, enriches it making up the MDS for this signal
+      4. MNS matches the Signal against subscribing organisations and delivers it to their specified destinations
+        a. For example, in the case of Notify-a-Patient, a Kinesis Firehose is subscribed and receives the Signals
+
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You 
     must do this before you can go live (see ‘Onboarding’ below).

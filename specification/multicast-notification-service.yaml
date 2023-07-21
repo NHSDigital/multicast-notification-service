@@ -14,8 +14,8 @@ info:
     This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
 
     You can:
-      - "Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates, for example:
-        PDS record changes, vaccinations."
+      - Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates, for example:
+        PDS record changes, vaccinations.
 
     In future, you will be able to:
       - subscribe to events based on certain criteria such as the event type

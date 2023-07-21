@@ -14,18 +14,17 @@ info:
     This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
 
     You can:
-      - Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates e.g.
-        PDS record changes, vaccinations.
+      - "Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates, for example:
+        PDS record changes, vaccinations."
 
     In future, you will be able to:
       - subscribe to events based on certain criteria such as the event type
 
     Data flow:
-      1. An event occurs on a provider system
-      2. MNS is sent an event
-      3. MNS extracts key identifying information from the message, enriches it making up the MDS for this signal
-      4. MNS matches the Signal against subscribing organisations and delivers it to their specified destinations
-        a. For example, in the case of Notify-a-Patient, a Kinesis Firehose is subscribed and receives the Signals
+      1. An event occurs on a provider system. The provider system sends MNS the event.
+      2. MNS extracts key identifying information from the message, enriches it making up the MDS for this signal. Enrichment involves taking the patient identifier, usually the NHS Number, and retrieving related patient records from external services. This allows MNS to add additional information not in the initial event, such as post code of the patient's GP, allowing for more fine grained subscription criteria.
+      3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations. For example, in the case of Notify-a-Patient, a Kinesis Firehose is subscribed and receives the signals.
+      4. Consumers can optionally synchronise with event producers to obtain further information.
 
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You 

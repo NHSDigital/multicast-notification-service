@@ -5,7 +5,14 @@ const minimumDataSetEvent = {
       "nhsNumber": "9912003888",
       "givenName": "Jack",
       "familyName": "DAWKINS",
-      "dob": "2017-10-02"
+      "dob": "2017-10-02",
+      "registeredGpPractice": {
+        "name": "SHADWELL MEDICAL CENTRE",
+        "identifier": {
+          "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+          "value": "B86056"
+        }
+      }
     },
     "source": {
       "name": "The Organisation",

@@ -23,7 +23,7 @@ info:
     Data flow:
       1. An event occurs on a provider system. The provider system sends MNS the event.
       2. MNS extracts key identifying information from the message, enriches it making up the MDS for this signal. Enrichment involves taking the patient identifier, usually the NHS Number, and retrieving related patient records from external services. This allows MNS to add additional information not in the initial event, such as post code of the patient's GP, allowing for more fine grained subscription criteria.
-      3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations. For example, in the case of Notify-a-Patient, a Kinesis Firehose is subscribed and receives the signals.
+      3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations, for example an AWS Kinesis Firehose.
       4. Consumers can optionally synchronise with event producers to obtain further information.
 
     ## Who can use this API

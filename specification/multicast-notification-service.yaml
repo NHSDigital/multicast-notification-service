@@ -50,7 +50,25 @@ info:
 
     For more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
     ## Security and authorisation
-    To be completed. (Will be application-based access.)
+
+    This API has one access mode:
+    - application-restricted access
+
+    ### Application-restricted access
+    Use this access mode if you need to publish an event from your system.
+
+    This access mode is [application-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#application-restricted-apis), meaning we authenticate the calling application but not the end user.
+
+    The end user could be:
+    * a healthcare worker - for example they record an event in an application and that application then publishes to MNS
+    * a patient - for example they make a change to their record in a patient-facing application and that application then publishes to MNS
+    * not present at all - for example as part of a back end process where events from an NHS England product or system are generated
+
+    In the above cases you must ensure the users are authenticated and suitably authorised locally
+    
+    To use this access mode, use the following security pattern:
+    * [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) 
+
     ## Environments and testing
 
     | Environment       | Base URL                                                               |
@@ -88,6 +106,7 @@ info:
     name: 'multicast-notification-service API Support'
     url: 'https://digital.nhs.uk/developer/help-and-support'
     email: api.management@nhs.net
+security: []
 servers:
   - url: 'https://sandbox.api.service.nhs.uk/multicast-notification-service'
     description: Sandbox environment.
@@ -121,13 +140,25 @@ paths:
         | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
+      operationId: publish-event
       parameters:
-        - in: header
-          name: somethingForAuth
+        - name: Authorization
+          in: header
+          description: |-
+            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
+            Required in all environments except sandbox.
           schema:
             type: string
-          required: true
-          description: TODO - EM-278 - add auth
+            format: '^Bearer [[:ascii:]]+$'
+            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
+        - name: X-Correlation-ID
+          in: header
+          description: |-
+            An optional ID which you can use to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
+            Mirrored back in a response header.
+          schema:
+            type: string
+            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
       requestBody:
         required: true
         content:

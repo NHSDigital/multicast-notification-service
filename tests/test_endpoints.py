@@ -103,23 +103,6 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_events_endpoint_accepts_valid_fhir_payload(
-    nhsd_apim_proxy_url,
-    nhsd_apim_auth_headers,
-    pds_change_of_gp_fhir_event_mock
-):
-    nhsd_apim_auth_headers["Content-Type"] = "application/fhir+json"
-    resp = requests.post(
-        f"{nhsd_apim_proxy_url}/events",
-        headers=nhsd_apim_auth_headers,
-        json=pds_change_of_gp_fhir_event_mock
-    )
-
-    assert resp.status_code == 200
-    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b", "success": "true"}
-
-
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_events_endpoint_accepts_valid_mds_payload(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,

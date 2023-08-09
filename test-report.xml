@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="9" failures="0" skipped="0" tests="9" time="5.360" timestamp="2023-08-07T15:47:51.007244" hostname="LPT-F63WDK3"><testcase classname="tests.test_endpoints" name="test_ping" time="0.001"><error message="failed on setup with &quot;ValueError: PROXY_NAME is not defined.&quot;">args = ()
+kwargs = {'nhsd_apim_config': {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nh..., 'APIGEE_ORGANIZATION': 'nhsd-nonprod', ...}, 'request': &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_ping&gt;&gt;}
+log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_name': 'nhsd_apim_proxy_name', 'id': '3159152e-c761-4788-9372-125a60ec4d6a', ...}
+
+    @functools.wraps(f)
+    def log_function(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            output = f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:80: in log_function
+    output = f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+nhsd_apim_config = {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nhs.net', 'APIGEE_ORGANIZATION': 'nhsd-nonprod', ...}
+request = &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_ping&gt;&gt;
+
+    @pytest.fixture()
+    @log_method
+    def nhsd_apim_proxy_name(nhsd_apim_config, request):
+        marker = request.node.get_closest_marker("nhsd_apim_proxy_name")
+        if marker:
+            return marker.args[0]
+        if nhsd_apim_config["PROXY_NAME"]:
+            return nhsd_apim_config["PROXY_NAME"]
+&gt;       raise ValueError("PROXY_NAME is not defined.")
+E       ValueError: PROXY_NAME is not defined.
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/config.py:140: ValueError</error></testcase><testcase classname="tests.test_endpoints" name="test_wait_for_ping" time="0.000"><error message="failed on setup with &quot;ValueError: PROXY_NAME is not defined.&quot;">args = ()
+kwargs = {'nhsd_apim_config': {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nh..._ORGANIZATION': 'nhsd-nonprod', ...}, 'request': &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_wait_for_ping&gt;&gt;}
+log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_name': 'nhsd_apim_proxy_name', 'id': 'aed20deb-11d6-4875-a3a6-8d1222b23421', ...}
+
+    @functools.wraps(f)
+    def log_function(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            output = f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:80: in log_function
+    output = f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+nhsd_apim_config = {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nhs.net', 'APIGEE_ORGANIZATION': 'nhsd-nonprod', ...}
+request = &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_wait_for_ping&gt;&gt;
+
+    @pytest.fixture()
+    @log_method
+    def nhsd_apim_proxy_name(nhsd_apim_config, request):
+        marker = request.node.get_closest_marker("nhsd_apim_proxy_name")
+        if marker:
+            return marker.args[0]
+        if nhsd_apim_config["PROXY_NAME"]:
+            return nhsd_apim_config["PROXY_NAME"]
+&gt;       raise ValueError("PROXY_NAME is not defined.")
+E       ValueError: PROXY_NAME is not defined.
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/config.py:140: ValueError</error></testcase><testcase classname="tests.test_endpoints" name="test_status" time="3.219"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+
+    @functools.wraps(f)
+    def log_generator(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            yield from f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
+    yield from f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
+_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+nhsd_apim_pre_create_app = None, _test_app_id = ''
+
+    @pytest.fixture(scope="session")
+    @log_method
+    def _create_test_app(
+        _apigee_app_base_url,
+        _apigee_app_base_url_no_dev,
+        _apigee_edge_session,
+        jwt_public_key_url,
+        nhsd_apim_pre_create_app,
+        _test_app_id,
+    ):
+        """
+        Create an ephemeral app that lasts the duration of the pytest
+        session.
+    
+        Note that a single app can have many sets of credentials.  Each
+        set of credentials can be subscribed to a unique set of products,
+        so one app can test your API against multiple product
+        configurations should you need to do so.  See `app_credentials`
+        for details.
+        """
+    
+        # Retrieving pre-existing app
+        if not _test_app_id == "":
+            get_resp = _apigee_edge_session.get(_apigee_app_base_url_no_dev + "/" + _test_app_id)
+            err_msg = f"Could not GET TestApp: {_test_app_id}.\tReason: {get_resp.text}"
+            assert get_resp.status_code == 200, err_msg
+            yield get_resp.json()
+        else:
+            app = {
+                "name": f"apim-auto-{uuid4()}",
+                "callbackUrl": "https://example.org/callback",
+                "attributes": [{"name": "jwks-resource-url", "value": jwt_public_key_url}],
+            }
+            create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
+            err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
+&gt;           assert create_resp.status_code == 201, err_msg
+E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           assert 401 == 201
+E             +401
+E             -201
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_wait_for_status" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+
+    @functools.wraps(f)
+    def log_generator(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            yield from f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
+    yield from f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
+_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+nhsd_apim_pre_create_app = None, _test_app_id = ''
+
+    @pytest.fixture(scope="session")
+    @log_method
+    def _create_test_app(
+        _apigee_app_base_url,
+        _apigee_app_base_url_no_dev,
+        _apigee_edge_session,
+        jwt_public_key_url,
+        nhsd_apim_pre_create_app,
+        _test_app_id,
+    ):
+        """
+        Create an ephemeral app that lasts the duration of the pytest
+        session.
+    
+        Note that a single app can have many sets of credentials.  Each
+        set of credentials can be subscribed to a unique set of products,
+        so one app can test your API against multiple product
+        configurations should you need to do so.  See `app_credentials`
+        for details.
+        """
+    
+        # Retrieving pre-existing app
+        if not _test_app_id == "":
+            get_resp = _apigee_edge_session.get(_apigee_app_base_url_no_dev + "/" + _test_app_id)
+            err_msg = f"Could not GET TestApp: {_test_app_id}.\tReason: {get_resp.text}"
+            assert get_resp.status_code == 200, err_msg
+            yield get_resp.json()
+        else:
+            app = {
+                "name": f"apim-auto-{uuid4()}",
+                "callbackUrl": "https://example.org/callback",
+                "attributes": [{"name": "jwks-resource-url", "value": jwt_public_key_url}],
+            }
+            create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
+            err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
+&gt;           assert create_resp.status_code == 201, err_msg
+E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           assert 401 == 201
+E             +401
+E             -201
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_app_level0" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+
+    @functools.wraps(f)
+    def log_generator(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            yield from f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
+    yield from f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
+_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+nhsd_apim_pre_create_app = None, _test_app_id = ''
+
+    @pytest.fixture(scope="session")
+    @log_method
+    def _create_test_app(
+        _apigee_app_base_url,
+        _apigee_app_base_url_no_dev,
+        _apigee_edge_session,
+        jwt_public_key_url,
+        nhsd_apim_pre_create_app,
+        _test_app_id,
+    ):
+        """
+        Create an ephemeral app that lasts the duration of the pytest
+        session.
+    
+        Note that a single app can have many sets of credentials.  Each
+        set of credentials can be subscribed to a unique set of products,
+        so one app can test your API against multiple product
+        configurations should you need to do so.  See `app_credentials`
+        for details.
+        """
+    
+        # Retrieving pre-existing app
+        if not _test_app_id == "":
+            get_resp = _apigee_edge_session.get(_apigee_app_base_url_no_dev + "/" + _test_app_id)
+            err_msg = f"Could not GET TestApp: {_test_app_id}.\tReason: {get_resp.text}"
+            assert get_resp.status_code == 200, err_msg
+            yield get_resp.json()
+        else:
+            app = {
+                "name": f"apim-auto-{uuid4()}",
+                "callbackUrl": "https://example.org/callback",
+                "attributes": [{"name": "jwks-resource-url", "value": jwt_public_key_url}],
+            }
+            create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
+            err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
+&gt;           assert create_resp.status_code == 201, err_msg
+E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           assert 401 == 201
+E             +401
+E             -201
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_app_level3" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+
+    @functools.wraps(f)
+    def log_generator(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            yield from f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
+    yield from f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
+_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+nhsd_apim_pre_create_app = None, _test_app_id = ''
+
+    @pytest.fixture(scope="session")
+    @log_method
+    def _create_test_app(
+        _apigee_app_base_url,
+        _apigee_app_base_url_no_dev,
+        _apigee_edge_session,
+        jwt_public_key_url,
+        nhsd_apim_pre_create_app,
+        _test_app_id,
+    ):
+        """
+        Create an ephemeral app that lasts the duration of the pytest
+        session.
+    
+        Note that a single app can have many sets of credentials.  Each
+        set of credentials can be subscribed to a unique set of products,
+        so one app can test your API against multiple product
+        configurations should you need to do so.  See `app_credentials`
+        for details.
+        """
+    
+        # Retrieving pre-existing app
+        if not _test_app_id == "":
+            get_resp = _apigee_edge_session.get(_apigee_app_base_url_no_dev + "/" + _test_app_id)
+            err_msg = f"Could not GET TestApp: {_test_app_id}.\tReason: {get_resp.text}"
+            assert get_resp.status_code == 200, err_msg
+            yield get_resp.json()
+        else:
+            app = {
+                "name": f"apim-auto-{uuid4()}",
+                "callbackUrl": "https://example.org/callback",
+                "attributes": [{"name": "jwks-resource-url", "value": jwt_public_key_url}],
+            }
+            create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
+            err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
+&gt;           assert create_resp.status_code == 201, err_msg
+E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           assert 401 == 201
+E             +401
+E             -201
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_accepts_valid_fhir_payload" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+
+    @functools.wraps(f)
+    def log_generator(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            yield from f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
+    yield from f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
+_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+nhsd_apim_pre_create_app = None, _test_app_id = ''
+
+    @pytest.fixture(scope="session")
+    @log_method
+    def _create_test_app(
+        _apigee_app_base_url,
+        _apigee_app_base_url_no_dev,
+        _apigee_edge_session,
+        jwt_public_key_url,
+        nhsd_apim_pre_create_app,
+        _test_app_id,
+    ):
+        """
+        Create an ephemeral app that lasts the duration of the pytest
+        session.
+    
+        Note that a single app can have many sets of credentials.  Each
+        set of credentials can be subscribed to a unique set of products,
+        so one app can test your API against multiple product
+        configurations should you need to do so.  See `app_credentials`
+        for details.
+        """
+    
+        # Retrieving pre-existing app
+        if not _test_app_id == "":
+            get_resp = _apigee_edge_session.get(_apigee_app_base_url_no_dev + "/" + _test_app_id)
+            err_msg = f"Could not GET TestApp: {_test_app_id}.\tReason: {get_resp.text}"
+            assert get_resp.status_code == 200, err_msg
+            yield get_resp.json()
+        else:
+            app = {
+                "name": f"apim-auto-{uuid4()}",
+                "callbackUrl": "https://example.org/callback",
+                "attributes": [{"name": "jwks-resource-url", "value": jwt_public_key_url}],
+            }
+            create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
+            err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
+&gt;           assert create_resp.status_code == 201, err_msg
+E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           assert 401 == 201
+E             +401
+E             -201
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_accepts_valid_mds_payload" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+
+    @functools.wraps(f)
+    def log_generator(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            yield from f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
+    yield from f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
+_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+nhsd_apim_pre_create_app = None, _test_app_id = ''
+
+    @pytest.fixture(scope="session")
+    @log_method
+    def _create_test_app(
+        _apigee_app_base_url,
+        _apigee_app_base_url_no_dev,
+        _apigee_edge_session,
+        jwt_public_key_url,
+        nhsd_apim_pre_create_app,
+        _test_app_id,
+    ):
+        """
+        Create an ephemeral app that lasts the duration of the pytest
+        session.
+    
+        Note that a single app can have many sets of credentials.  Each
+        set of credentials can be subscribed to a unique set of products,
+        so one app can test your API against multiple product
+        configurations should you need to do so.  See `app_credentials`
+        for details.
+        """
+    
+        # Retrieving pre-existing app
+        if not _test_app_id == "":
+            get_resp = _apigee_edge_session.get(_apigee_app_base_url_no_dev + "/" + _test_app_id)
+            err_msg = f"Could not GET TestApp: {_test_app_id}.\tReason: {get_resp.text}"
+            assert get_resp.status_code == 200, err_msg
+            yield get_resp.json()
+        else:
+            app = {
+                "name": f"apim-auto-{uuid4()}",
+                "callbackUrl": "https://example.org/callback",
+                "attributes": [{"name": "jwks-resource-url", "value": jwt_public_key_url}],
+            }
+            create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
+            err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
+&gt;           assert create_resp.status_code == 201, err_msg
+E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           assert 401 == 201
+E             +401
+E             -201
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_rejects_invalid_payload" time="0.001"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+
+    @functools.wraps(f)
+    def log_generator(*args, **kwargs):
+        log_line = pre_log(f, *args, **kwargs)
+        try:
+            yield from f(*args, **kwargs)
+        except Exception as e:
+&gt;           log_and_reraise(log_line, e)
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
+    raise e
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
+    yield from f(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
+_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+nhsd_apim_pre_create_app = None, _test_app_id = ''
+
+    @pytest.fixture(scope="session")
+    @log_method
+    def _create_test_app(
+        _apigee_app_base_url,
+        _apigee_app_base_url_no_dev,
+        _apigee_edge_session,
+        jwt_public_key_url,
+        nhsd_apim_pre_create_app,
+        _test_app_id,
+    ):
+        """
+        Create an ephemeral app that lasts the duration of the pytest
+        session.
+    
+        Note that a single app can have many sets of credentials.  Each
+        set of credentials can be subscribed to a unique set of products,
+        so one app can test your API against multiple product
+        configurations should you need to do so.  See `app_credentials`
+        for details.
+        """
+    
+        # Retrieving pre-existing app
+        if not _test_app_id == "":
+            get_resp = _apigee_edge_session.get(_apigee_app_base_url_no_dev + "/" + _test_app_id)
+            err_msg = f"Could not GET TestApp: {_test_app_id}.\tReason: {get_resp.text}"
+            assert get_resp.status_code == 200, err_msg
+            yield get_resp.json()
+        else:
+            app = {
+                "name": f"apim-auto-{uuid4()}",
+                "callbackUrl": "https://example.org/callback",
+                "attributes": [{"name": "jwks-resource-url", "value": jwt_public_key_url}],
+            }
+            create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
+            err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
+&gt;           assert create_resp.status_code == 201, err_msg
+E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           assert 401 == 201
+E             +401
+E             -201
+
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase></testsuite></testsuites>

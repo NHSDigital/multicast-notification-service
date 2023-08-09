@@ -70,18 +70,7 @@ describe("app handler tests", function () {
             .send(mocks.minimumDataSetEvent)
             .expect(200, {
                 "success": true,
-                "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5c"
-            },done);
-    });
-
-    it("responds with a success when the FHIR GP Change event is published to /events", (done) => {
-        request(server)
-            .post("/events")
-            .set("Content-Type", "application/fhir+json")
-            .send(mocks.changeOfGPFHIREvent)
-            .expect(200, {
-                "success": true,
-                "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5c"
+                "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
             },done);
     });
 

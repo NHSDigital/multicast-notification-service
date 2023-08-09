@@ -24,11 +24,6 @@ def read_json_file(current_file: str, filename: str):
 
 
 @pytest.fixture
-def pds_change_of_gp_fhir_event_mock() -> dict:
-    return read_json_file(__file__, "pds-change-of-gp-event-fhir.json")
-
-
-@pytest.fixture
 def pds_change_of_gp_mds_event_mock() -> dict:
     return read_json_file(__file__, "pds-change-of-gp-event-mds.json")
 
@@ -130,6 +125,7 @@ def test_events_endpoint_accepts_valid_mds_payload(
     nhsd_apim_auth_headers,
     pds_change_of_gp_mds_event_mock
 ):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/events",
         headers=nhsd_apim_auth_headers,

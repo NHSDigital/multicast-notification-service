@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="9" failures="0" skipped="0" tests="9" time="5.360" timestamp="2023-08-07T15:47:51.007244" hostname="LPT-F63WDK3"><testcase classname="tests.test_endpoints" name="test_ping" time="0.001"><error message="failed on setup with &quot;ValueError: PROXY_NAME is not defined.&quot;">args = ()
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="9" failures="0" skipped="0" tests="9" time="5.247" timestamp="2023-08-09T12:54:02.846874" hostname="LPT-F63WDK3"><testcase classname="tests.test_endpoints" name="test_ping" time="0.001"><error message="failed on setup with &quot;ValueError: PROXY_NAME is not defined.&quot;">args = ()
 kwargs = {'nhsd_apim_config': {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nh..., 'APIGEE_ORGANIZATION': 'nhsd-nonprod', ...}, 'request': &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_ping&gt;&gt;}
-log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_name': 'nhsd_apim_proxy_name', 'id': '3159152e-c761-4788-9372-125a60ec4d6a', ...}
+log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_name': 'nhsd_apim_proxy_name', 'id': '7ace1f4c-ce2e-41c4-a319-2c4b67cd9ebb', ...}
 
     @functools.wraps(f)
     def log_function(*args, **kwargs):
@@ -11,12 +11,12 @@ log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_nam
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:82: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:80: in log_function
     output = f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 nhsd_apim_config = {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nhs.net', 'APIGEE_ORGANIZATION': 'nhsd-nonprod', ...}
 request = &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_ping&gt;&gt;
@@ -34,7 +34,7 @@ E       ValueError: PROXY_NAME is not defined.
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/config.py:140: ValueError</error></testcase><testcase classname="tests.test_endpoints" name="test_wait_for_ping" time="0.000"><error message="failed on setup with &quot;ValueError: PROXY_NAME is not defined.&quot;">args = ()
 kwargs = {'nhsd_apim_config': {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nh..._ORGANIZATION': 'nhsd-nonprod', ...}, 'request': &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_wait_for_ping&gt;&gt;}
-log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_name': 'nhsd_apim_proxy_name', 'id': 'aed20deb-11d6-4875-a3a6-8d1222b23421', ...}
+log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_name': 'nhsd_apim_proxy_name', 'id': 'd5745d5b-a7b4-4080-bd91-c59c44b28d0c', ...}
 
     @functools.wraps(f)
     def log_function(*args, **kwargs):
@@ -45,12 +45,12 @@ log_line = {'args': [], 'exception': 'PROXY_NAME is not defined.', 'function_nam
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:82: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:80: in log_function
     output = f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 nhsd_apim_config = {'APIGEE_ACCESS_TOKEN': '', 'APIGEE_APP_ID': '', 'APIGEE_DEVELOPER': 'apm-testing-internal-dev@nhs.net', 'APIGEE_ORGANIZATION': 'nhsd-nonprod', ...}
 request = &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_wait_for_ping&gt;&gt;
@@ -66,9 +66,9 @@ request = &lt;SubRequest 'nhsd_apim_proxy_name' for &lt;Function test_wait_for_p
 &gt;       raise ValueError("PROXY_NAME is not defined.")
 E       ValueError: PROXY_NAME is not defined.
 
-.venv/lib/python3.10/site-packages/pytest_nhsd_apim/config.py:140: ValueError</error></testcase><testcase classname="tests.test_endpoints" name="test_status" time="3.219"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
-kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
-log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/config.py:140: ValueError</error></testcase><testcase classname="tests.test_endpoints" name="test_status" time="4.101"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd7a7b4e5-1f64-48f9-a66f-690b80f4f7cd', ...}
 
     @functools.wraps(f)
     def log_generator(*args, **kwargs):
@@ -79,17 +79,16 @@ log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
     yield from f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
-_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
-_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
-jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps', _apigee_edge_session = &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJycFR5ZzV5LTMtQVUwVmNKNVhBQ181THdiNGdaV2Z6RVF...JuNVRaRHFLbFRYZlRaRjZDRW9PNnNzV091cyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
 nhsd_apim_pre_create_app = None, _test_app_id = ''
 
     @pytest.fixture(scope="session")
@@ -128,14 +127,14 @@ nhsd_apim_pre_create_app = None, _test_app_id = ''
             create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
             err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
 &gt;           assert create_resp.status_code == 201, err_msg
-E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.	Reason: 
 E           assert 401 == 201
 E             +401
 E             -201
 
-.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_wait_for_status" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
-kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
-log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_wait_for_status" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd7a7b4e5-1f64-48f9-a66f-690b80f4f7cd', ...}
 
     @functools.wraps(f)
     def log_generator(*args, **kwargs):
@@ -146,17 +145,16 @@ log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
     yield from f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
-_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
-_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
-jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps', _apigee_edge_session = &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJycFR5ZzV5LTMtQVUwVmNKNVhBQ181THdiNGdaV2Z6RVF...JuNVRaRHFLbFRYZlRaRjZDRW9PNnNzV091cyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
 nhsd_apim_pre_create_app = None, _test_app_id = ''
 
     @pytest.fixture(scope="session")
@@ -195,14 +193,14 @@ nhsd_apim_pre_create_app = None, _test_app_id = ''
             create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
             err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
 &gt;           assert create_resp.status_code == 201, err_msg
-E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.	Reason: 
 E           assert 401 == 201
 E             +401
 E             -201
 
-.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_app_level0" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
-kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
-log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_app_level0" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd7a7b4e5-1f64-48f9-a66f-690b80f4f7cd', ...}
 
     @functools.wraps(f)
     def log_generator(*args, **kwargs):
@@ -213,17 +211,16 @@ log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
     yield from f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
-_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
-_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
-jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps', _apigee_edge_session = &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJycFR5ZzV5LTMtQVUwVmNKNVhBQ181THdiNGdaV2Z6RVF...JuNVRaRHFLbFRYZlRaRjZDRW9PNnNzV091cyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
 nhsd_apim_pre_create_app = None, _test_app_id = ''
 
     @pytest.fixture(scope="session")
@@ -262,14 +259,14 @@ nhsd_apim_pre_create_app = None, _test_app_id = ''
             create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
             err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
 &gt;           assert create_resp.status_code == 201, err_msg
-E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.	Reason: 
 E           assert 401 == 201
 E             +401
 E             -201
 
-.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_app_level3" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
-kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
-log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_app_level3" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd7a7b4e5-1f64-48f9-a66f-690b80f4f7cd', ...}
 
     @functools.wraps(f)
     def log_generator(*args, **kwargs):
@@ -280,17 +277,16 @@ log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
     yield from f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
-_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
-_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
-jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps', _apigee_edge_session = &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJycFR5ZzV5LTMtQVUwVmNKNVhBQ181THdiNGdaV2Z6RVF...JuNVRaRHFLbFRYZlRaRjZDRW9PNnNzV091cyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
 nhsd_apim_pre_create_app = None, _test_app_id = ''
 
     @pytest.fixture(scope="session")
@@ -329,14 +325,14 @@ nhsd_apim_pre_create_app = None, _test_app_id = ''
             create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
             err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
 &gt;           assert create_resp.status_code == 201, err_msg
-E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.	Reason: 
 E           assert 401 == 201
 E             +401
 E             -201
 
-.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_accepts_valid_fhir_payload" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
-kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
-log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_accepts_valid_fhir_payload" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd7a7b4e5-1f64-48f9-a66f-690b80f4f7cd', ...}
 
     @functools.wraps(f)
     def log_generator(*args, **kwargs):
@@ -347,17 +343,16 @@ log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
     yield from f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
-_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
-_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
-jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps', _apigee_edge_session = &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJycFR5ZzV5LTMtQVUwVmNKNVhBQ181THdiNGdaV2Z6RVF...JuNVRaRHFLbFRYZlRaRjZDRW9PNnNzV091cyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
 nhsd_apim_pre_create_app = None, _test_app_id = ''
 
     @pytest.fixture(scope="session")
@@ -396,14 +391,14 @@ nhsd_apim_pre_create_app = None, _test_app_id = ''
             create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
             err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
 &gt;           assert create_resp.status_code == 201, err_msg
-E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.	Reason: 
 E           assert 401 == 201
 E             +401
 E             -201
 
-.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_accepts_valid_mds_payload" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
-kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
-log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_accepts_valid_mds_payload" time="0.000"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd7a7b4e5-1f64-48f9-a66f-690b80f4f7cd', ...}
 
     @functools.wraps(f)
     def log_generator(*args, **kwargs):
@@ -414,17 +409,16 @@ log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
     yield from f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
-_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
-_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
-jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps', _apigee_edge_session = &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJycFR5ZzV5LTMtQVUwVmNKNVhBQ181THdiNGdaV2Z6RVF...JuNVRaRHFLbFRYZlRaRjZDRW9PNnNzV091cyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
 nhsd_apim_pre_create_app = None, _test_app_id = ''
 
     @pytest.fixture(scope="session")
@@ -463,14 +457,14 @@ nhsd_apim_pre_create_app = None, _test_app_id = ''
             create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
             err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
 &gt;           assert create_resp.status_code == 201, err_msg
-E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.	Reason: 
 E           assert 401 == 201
 E             +401
 E             -201
 
-.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_rejects_invalid_payload" time="0.001"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
-kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;, '_test_app_id': '', ...}
-log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd44cfdf2-c81c-4dd8-8454-af56b543a8cb', ...}
+.venv/lib/python3.10/site-packages/pytest_nhsd_apim/apigee_edge.py:472: AssertionError</error></testcase><testcase classname="tests.test_endpoints" name="test_events_endpoint_rejects_invalid_payload" time="0.001"><error message="failed on setup with &quot;AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.&#09;Reason: &#10;assert 401 == 201&#10;  +401&#10;  -201&quot;">args = ()
+kwargs = {'_apigee_app_base_url': 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-inter...d-nonprod/apps', '_apigee_edge_session': &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;, '_test_app_id': '', ...}
+log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.\tReason: \nassert 401 == 201\n  +401\n  -201', 'function_name': '_create_test_app', 'id': 'd7a7b4e5-1f64-48f9-a66f-690b80f4f7cd', ...}
 
     @functools.wraps(f)
     def log_generator(*args, **kwargs):
@@ -481,17 +475,16 @@ log_line = {'args': [], 'exception': 'Could not CREATE TestApp: `apim-auto-4cf06
 &gt;           log_and_reraise(log_line, e)
 
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:73: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:59: in log_and_reraise
     raise e
 .venv/lib/python3.10/site-packages/pytest_nhsd_apim/log.py:71: in log_generator
     yield from f(*args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _apigee_app_base_url = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/developers/apm-testing-internal-dev@nhs.net/apps'
-_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps'
-_apigee_edge_session = &lt;requests.sessions.Session object at 0x7fbe8b190fa0&gt;
-jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJ4dnZYQm00MkhyTVRNUzBhNkdBQWJGeHNiX0NHRHBTTFN...hSM05OVGZkMnJ3eWdoN1M3MXBqeU5pQlhWayIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
+_apigee_app_base_url_no_dev = 'https://api.enterprise.apigee.com/v1/organizations/nhsd-nonprod/apps', _apigee_edge_session = &lt;requests.sessions.Session object at 0x7f8562d614e0&gt;
+jwt_public_key_url = 'https://internal-dev.api.service.nhs.uk/mock-jwks/eyJrZXlzIjogW3sibiI6ICJycFR5ZzV5LTMtQVUwVmNKNVhBQ181THdiNGdaV2Z6RVF...JuNVRaRHFLbFRYZlRaRjZDRW9PNnNzV091cyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSIsICJraWQiOiAidGVzdC0xIiwgInVzZSI6ICJzaWcifV19'
 nhsd_apim_pre_create_app = None, _test_app_id = ''
 
     @pytest.fixture(scope="session")
@@ -530,7 +523,7 @@ nhsd_apim_pre_create_app = None, _test_app_id = ''
             create_resp = _apigee_edge_session.post(_apigee_app_base_url, json=app)
             err_msg = f"Could not CREATE TestApp: `{app['name']}`.\tReason: {create_resp.text}"
 &gt;           assert create_resp.status_code == 201, err_msg
-E           AssertionError: Could not CREATE TestApp: `apim-auto-4cf06523-e50e-46e5-be2f-0eed73387bbc`.	Reason: 
+E           AssertionError: Could not CREATE TestApp: `apim-auto-0fc53b16-3c74-45e1-89e1-0244663706c7`.	Reason: 
 E           assert 401 == 201
 E             +401
 E             -201

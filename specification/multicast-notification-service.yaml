@@ -22,7 +22,7 @@ info:
 
     Data flow:
       1. An event occurs on a provider system. The provider system sends MNS the event.
-      2. MNS extracts key identifying information from the message, enriches it making up the MDS for this signal. Enrichment involves taking the patient identifier, usually the NHS Number, and retrieving related patient records from external services. This allows MNS to add additional information not in the initial event, such as post code of the patient's GP, allowing for more fine grained subscription criteria.
+      2. MNS validates that the event conforms to the accepted schema and sends it another component to handle subscription matching and onward delivery.
       3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations, for example an AWS Kinesis Firehose.
       4. Consumers can optionally synchronise with event producers to obtain further information.
 
@@ -320,7 +320,41 @@ paths:
                         type: string
                         example: Please provide a valid event type
         401:
-          description: "TODO - EM-278 - add auth"
+          description: "Unauthenticated error."
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    fault:
+                      type: object
+                      properties:
+                        faultstring:
+                          type: string
+                        detail:
+                          type: object
+                          properties:
+                            errorcode:
+                              type: string
+                examples:
+                  invalidToken:
+                    value:
+                      fault:
+                        faultstring: "Invalid access token"
+                        detail:
+                          errorcode: "oauth.v2.InvalidAccessToken"
+                  tokenMissing:
+                    value:
+                      fault:
+                        faultstring: "Missing access token"
+                        detail:
+                          errorcode: "oauth.v2.MissingAccessToken"
+                  tokenExpired:
+                    value:
+                      fault:
+                        faultstring: "Access Token expired"
+                        detail:
+                          errorcode: "keymanagement.service.access_token_expired"
         500:
           description: "Internal error"
           content:

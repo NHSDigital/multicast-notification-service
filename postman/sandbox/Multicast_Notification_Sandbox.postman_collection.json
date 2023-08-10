@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e51f428b-de54-4e3f-bc99-afa32e3079ba",
+		"_postman_id": "4c9be2a8-b599-4a0a-a3ee-e0fbc42c4382",
 		"name": "Multicast Notification Sandbox",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": \"236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b\",\r\n  \"type\": \"pds-change-of-gp-1\",\r\n  \"subject\": {\r\n    \"nhsNumber\": \"9912003888\",\r\n    \"givenName\": \"Jack\",\r\n    \"familyName\": \"DAWKINS\",\r\n    \"dob\": \"2017-10-02\"\r\n  },\r\n  \"source\": {\r\n    \"name\": \"The Organisation\",\r\n    \"identifier\": {\r\n      \"system\": \"https://fhir.nhs.uk/{Id}/ods-organization-code\",\r\n      \"value\": \"ABC123\"\r\n    }\r\n  },\r\n  \"time\": \"2022-04-05T17:31:00Z\",\r\n  \"dataContentType\": \"application/fhir+json\",\r\n  \"data\": \"https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\"\r\n}",
+							"raw": "{\r\n    \"id\": \"236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b\",\r\n    \"type\": \"pds-change-of-gp-1\",\r\n    \"subject\": {\r\n        \"nhsNumber\": \"9912003888\",\r\n        \"familyName\": \"DAWKINS\",\r\n        \"dob\": \"2021-02-28\"\r\n    },\r\n    \"source\": {\r\n        \"name\": \"NHS Digital\",\r\n        \"identifier\": {\r\n        \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n        \"value\": \"477121000323\"\r\n        }\r\n    },\r\n    \"time\": \"2023-04-05T17:31:00.000Z\",\r\n    \"data\": {\r\n        \"fullUrl\": \"https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\",\r\n        \"versionId\": \"W/\\\"2\\\"\",\r\n        \"provenance\": {\r\n        \"name\": \"The GP Practice\",\r\n        \"identifier\": {\r\n            \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n            \"value\": \"477121000324\"\r\n        }\r\n      }\r\n    }\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -41,7 +41,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": \"236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b\",\r\n  \"type\": \"pds-foo-bar\",\r\n  \"subject\": {\r\n    \"nhsNumber\": \"9912003888\",\r\n    \"givenName\": \"Jack\",\r\n    \"familyName\": \"DAWKINS\",\r\n    \"dob\": \"2017-10-02\"\r\n  },\r\n  \"source\": {\r\n    \"name\": \"The Organisation\",\r\n    \"identifier\": {\r\n      \"system\": \"https://fhir.nhs.uk/{Id}/ods-organization-code\",\r\n      \"value\": \"ABC123\"\r\n    }\r\n  },\r\n  \"time\": \"2022-04-05T17:31:00Z\",\r\n  \"dataContentType\": \"application/fhir+json\",\r\n  \"data\": \"https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\"\r\n}",
+							"raw": "{\r\n    \"id\": \"236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b\",\r\n    \"type\": \"pds-foo-bar\",\r\n    \"subject\": {\r\n        \"nhsNumber\": \"9912003888\",\r\n        \"familyName\": \"DAWKINS\",\r\n        \"dob\": \"2021-02-28\"\r\n    },\r\n    \"source\": {\r\n        \"name\": \"NHS Digital\",\r\n        \"identifier\": {\r\n        \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n        \"value\": \"477121000323\"\r\n        }\r\n    },\r\n    \"time\": \"2023-04-05T17:31:00.000Z\",\r\n    \"data\": {\r\n        \"fullUrl\": \"https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\",\r\n        \"versionId\": \"W/\\\"2\\\"\",\r\n        \"provenance\": {\r\n        \"name\": \"The GP Practice\",\r\n        \"identifier\": {\r\n            \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n            \"value\": \"477121000324\"\r\n        }\r\n      }\r\n    }\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"

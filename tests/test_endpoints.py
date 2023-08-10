@@ -125,6 +125,7 @@ def test_events_endpoint_rejects_invalid_payload(
     nhsd_apim_auth_headers,
     pds_change_of_gp_mds_event_mock
 ):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
     invalid_payload = pds_change_of_gp_mds_event_mock
     invalid_payload["type"] = "event-type-not-accepted"
 

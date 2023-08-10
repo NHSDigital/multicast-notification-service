@@ -13,7 +13,7 @@
         "value": "477121000324"
       }
     },
-    "time": "2022-04-05T17:31:00Z",
+    "time": "2022-04-05T17:31:00.000Z",
     "data": {
       "versionId": "W/\"2\"",
       "fullUrl": "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888",

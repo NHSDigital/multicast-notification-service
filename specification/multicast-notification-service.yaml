@@ -244,7 +244,7 @@ paths:
                           required:
                           - "system"
                           - "value"
-                          description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID as the value."
+                          description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID value and name of the system."
                           properties : 
                               system: 
                                 type: "string"
@@ -264,7 +264,7 @@ paths:
                     identifier:
                       system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                       value: "477121000324"
-                  time: "2022-04-05T17:31:00Z"
+                  time: "2022-04-05T17:31:00.000Z"
 
               withData:
                 value:
@@ -279,7 +279,7 @@ paths:
                     identifier:
                       system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                       value: "477121000324"
-                  time: "2022-04-05T17:31:00Z"
+                  time: "2022-04-05T17:31:00.000Z"
                   data:
                     versionId: ' W/"2" '
                     fullUrl: "https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/5323035280"

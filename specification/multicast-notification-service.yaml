@@ -122,7 +122,6 @@ paths:
         ### Overview
         Use this endpoint to publish a patient-related event.
 
-        ### CloudEvent
         The event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure) for more info.
         
         ### Data and Metadata:
@@ -220,33 +219,10 @@ paths:
                   format: "date-time"
                   description: " ISO-8601 compliant datetime. UTC. Milliseconds precision."
                 data:
-                  type: "object"
+                  type: object
                   description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."
-                  properties: 
-                    versionId: 
-                      type: "string"
-                      description: "The versionId/ETAG identifies the version of the resource."
-                    fullUrl: 
-                      type: "string"
-                      description: "The URL where the subscriber can retrieve the source of truth record for the patient or the full event payload."
-                    provenance: 
-                      type: "object"
-                      description: "The provenance describes which organisation was responsible for the creation of the event."
-                      properties:
-                        name: 
-                          type: "string"
-                          description: "The GP Practice name"
-                        identifier: 
-                          type: "object"
-                          required:
-                          - "system"
-                          - "value"
-                          description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID value and name of the system."
-                          properties : 
-                              system: 
-                                type: "string"
-                              value: 
-                                type: "string"
+                  anyOf:
+                    - $ref: "components/schemas/pdsEventData.yaml"
             examples:
               mnsEventWithData:
                 value:

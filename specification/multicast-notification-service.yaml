@@ -122,7 +122,7 @@ paths:
         ### Overview
         Use this endpoint to publish a patient-related event.
 
-        The event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure) for more info.
+        The event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages) for more info.
         
         ### Data and Metadata:
           - Metadata: In the context of an event, metadata refers to the additional information that describes the event and provides context about it. It includes elements such as the family name and date of birth which are primarily for verification. Users must be cautious not to use such metadata to modify a patient's demographic details. Instead, if updates are necessary, users should conduct a full PDS retrieval to ensure accuracy and completeness in their workflows.

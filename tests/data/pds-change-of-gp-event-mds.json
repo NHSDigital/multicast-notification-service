@@ -3,25 +3,26 @@
     "type": "pds-change-of-gp-1",
     "subject": {
       "nhsNumber": "9912003888",
-      "givenName": "Jack",
       "familyName": "DAWKINS",
-      "dob": "2017-10-02",
-      "registeredGpPractice": {
-        "name": "SHADWELL MEDICAL CENTRE",
-        "identifier": {
-          "system": "https://fhir.nhs.uk/Id/ods-organization-code",
-          "value": "B86056"
-        }
-      }
+      "dob": "2017-10-02"
     },
     "source": {
-      "name": "The Organisation",
+      "name": "NHS Digital",
       "identifier": {
-        "system": "https://fhir.nhs.uk/{Id}/ods-organization-code",
-        "value": "ABC123"
+        "system": "https://fhir.nhs.uk/Id/nhsSpineASID",
+        "value": "477121000324"
       }
     },
-    "time": "2022-04-05T17:31:00Z",
-    "dataContentType": "application/fhir+json",
-    "data": "https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
-  }
+    "time": "2022-04-05T17:31:00.000Z",
+    "data": {
+      "versionId": "W/\"2\"",
+      "fullUrl": "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888",
+      "provenance": {
+          "name": "The GP Practice",
+          "identifier": {
+              "system": "https://fhir.nhs.uk/Id/nhsSpineASID",
+              "value": "477121000323"
+          }
+      }
+   }
+}

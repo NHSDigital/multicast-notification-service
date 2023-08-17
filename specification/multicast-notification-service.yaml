@@ -88,7 +88,7 @@ info:
 
     Alternatively, you can try out the sandbox using our Postman collection (simply download the file from the link and import it into Postman):
 
-        
+
     [![Run in Postman](https://run.pstmn.io/button.svg)](https://github.com/NHSDigital/multicast-notification-service/blob/master/postman/sandbox/Multicast_Notification_Sandbox.postman_collection.json)
     ## Onboarding
     During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be 
@@ -100,7 +100,7 @@ info:
     * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
     * 400 to 499 if it failed because of a client error by your application
     * 500 to 599 if it failed because of an error on our server
-    
+
     Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
   contact:
     name: 'multicast-notification-service API Support'
@@ -123,11 +123,11 @@ paths:
         Use this endpoint to publish a patient-related event.
 
         The event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages) for more info.
-        
+
         ### Data and Metadata:
           - Metadata: In the context of an event, metadata refers to the additional information that describes the event and provides context about it. It includes elements such as the family name and date of birth which are primarily for verification. Users must be cautious not to use such metadata to modify a patient's demographic details. Instead, if updates are necessary, users should conduct a full PDS retrieval to ensure accuracy and completeness in their workflows.
           - Data: The inclusion of the data field might vary. Its presence is subject to agreements between the MNS team and the originating system. While the structure of the data might differ across various systems and scenarios, it's a general preference to have a pointer included. This pointer aids subscribers in accessing the entire record when necessary for their workflow.   
-              
+
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
@@ -243,9 +243,9 @@ paths:
                   data:
                     versionId: 'W/"2"'
                     fullUrl: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
-                    provenance: 
+                    provenance:
                       name: "The GP Practice"
-                      identifier:  
+                      identifier:
                         system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                         value: "477121000323"
               mnsEventWithoutData:

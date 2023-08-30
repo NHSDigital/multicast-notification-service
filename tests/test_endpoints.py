@@ -63,7 +63,11 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     resp_content = resp.json()
 
     assert resp.status_code == 200
+
     assert resp_content.get("commitId") == getenv('SOURCE_COMMIT_ID')
+    assert resp_content.get("status") == "pass"
+    assert resp_content["checks"]["healthcheck"]["outcome"] == {"status": "pass"}
+    assert resp_content["checks"]["healthcheck"]["timeout"] == "false"
 
 
 @pytest.mark.smoketest

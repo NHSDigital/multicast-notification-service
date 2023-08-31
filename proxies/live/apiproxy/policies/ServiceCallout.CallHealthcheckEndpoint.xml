@@ -3,6 +3,11 @@
     <DisplayName>ServiceCallout.CallHealthcheckEndpoint</DisplayName>
     <Properties/>
     <Request clearPayload="true" variable="healthcheckRequest">
+        <Set>
+            <Headers>
+                <Header name="User-Agent">{request.header.user-agent}</Header>
+            </Headers>
+        </Set>
         <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
     </Request>
     <Response>healthcheckResponse</Response>

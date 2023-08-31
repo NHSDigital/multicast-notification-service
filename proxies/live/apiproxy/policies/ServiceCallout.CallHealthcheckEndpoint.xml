@@ -3,6 +3,11 @@
     <DisplayName>ServiceCallout.CallHealthcheckEndpoint</DisplayName>
     <Properties/>
     <Request clearPayload="true" variable="healthcheckRequest">
+        <Set>
+            <Headers>
+                <Header name="User-Agent">{request.header.user-agent}</Header>
+            </Headers>
+        </Set>
         <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
     </Request>
     <Response>healthcheckResponse</Response>
@@ -14,11 +19,6 @@
             <Server name="multicast-notification-service" />
         </LoadBalancer>
         <Path>/_ping</Path>
-        <Properties>
-            <Property name="supports.http10">true</Property>
-            <Property name="request.retain.headers">User-Agent,Referer,Accept-Language</Property>
-            <Property name="retain.queryparams">apikey</Property>
-        </Properties>
     </HTTPTargetConnection>
     <Timeout>20000</Timeout>
 </ServiceCallout>

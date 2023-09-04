@@ -1,7 +1,8 @@
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddUserIdHeader">
   <Add>
       <Headers>
-          <Header name="NHSE-Identity-UUID">{accesstoken.id_token}</Header>
+          <Header name="NHSE-Identity-UUID">{developer.app.id}</Header>
+          <Header name="Testing-Header-Forwarding">{developer.app.name}</Header>
       </Headers>
   </Add>
   <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>

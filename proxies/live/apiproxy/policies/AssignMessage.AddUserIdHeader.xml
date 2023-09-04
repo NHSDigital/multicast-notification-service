@@ -3,6 +3,7 @@
       <Headers>
           <Header name="NHSE-Identity-UUID">{developer.app.id}</Header>
           <Header name="Testing-Header-Forwarding">{developer.app.name}</Header>
+          <Header name="Testing-One-MOre">{accesstoken.auth_user_id}</Header>
       </Headers>
   </Add>
   <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>

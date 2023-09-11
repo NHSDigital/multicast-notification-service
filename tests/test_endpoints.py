@@ -128,7 +128,7 @@ def test_events_endpoint_rejects_invalid_payload(
 ):
     nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
     invalid_payload = pds_change_of_gp_mds_event_mock
-    invalid_payload["type"] = "event-type-not-accepted"
+    invalid_payload["time"] = "202-04-05T17:31:00.000Z"
 
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/events",
@@ -137,4 +137,24 @@ def test_events_endpoint_rejects_invalid_payload(
     )
 
     assert resp.status_code == 400
-    assert resp.json() == {"validationErrors": {"type": "Please provide a valid event type"}}
+    assert resp.json() == {"validationErrors": {"time": "Please provide a valid time"}}
+
+
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_events_endpoint_returns_unauthorized_error_when_client_sends_unauthorized_event_type(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    pds_change_of_gp_mds_event_mock
+):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
+    invalid_payload = pds_change_of_gp_mds_event_mock
+    invalid_payload["type"] = "pds-death-notification-1"
+
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=pds_change_of_gp_mds_event_mock
+    )
+
+    assert resp.status_code == 403
+    assert resp.json() == {"errors": "User is not authorized to handle the requested event type"}

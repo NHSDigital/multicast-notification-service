@@ -134,7 +134,7 @@ paths:
         | Scenario                                  | Request                                                                 | Response                                                       |
         | ----------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- |
         | Publish an MDS Event (GP Reg Change)      | Content-Type: `application/json` Event Type: `pds-change-of-gp-1`       | HTTP Status 200 and response containing id and success status. |
-        | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |
+        | Publish an event with invalid data        | E.g. an event with an invalid value for `time`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: publish-event
@@ -294,7 +294,7 @@ paths:
                         type: string
                         example: Please provide a valid event type
         401:
-          description: "Unauthenticated error."
+          description: "Unauthenticated error"
           content:
               application/json:
                 schema:
@@ -329,6 +329,17 @@ paths:
                         faultstring: "Access Token expired"
                         detail:
                           errorcode: "keymanagement.service.access_token_expired"
+        403:
+          description: "Unauthorized error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    description: Object containing the different errors on a per key basis
+                    example: User is not authorized to handle the requested event type
         500:
           description: "Internal error"
           content:

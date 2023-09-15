@@ -69,7 +69,6 @@ describe("app handler tests", function () {
             .post("/events")
             .send(mocks.minimumDataSetEvent)
             .expect(200, {
-                "success": true,
                 "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
             },done);
     });

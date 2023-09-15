@@ -117,7 +117,7 @@ def test_events_endpoint_accepts_valid_mds_payload(
     )
 
     assert resp.status_code == 200
-    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b", "success": "true"}
+    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"}
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})

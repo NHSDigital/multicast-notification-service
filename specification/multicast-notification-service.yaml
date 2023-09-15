@@ -271,10 +271,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Indicates whether or not the action was successful
-                    example: true
                   id:
                     type: string
                     description: The id provided in the user's payload

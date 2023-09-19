@@ -69,21 +69,20 @@ describe("app handler tests", function () {
             .post("/events")
             .send(mocks.minimumDataSetEvent)
             .expect(200, {
-                "success": true,
                 "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
             },done);
     });
 
-    it("responds with a validation error when an event of an invalid type is published to /events", (done) => {
+    it("responds with a validation error when an event with an invalid time is published to /events", (done) => {
         let invalidEvent = mocks.minimumDataSetEvent;
-        invalidEvent["type"] = "test-invalid-type-1";
+        invalidEvent["time"] = "202-04-05T17:31:00.000Z";
 
         request(server)
             .post("/events")
             .send(mocks.minimumDataSetEvent)
             .expect(200, {
                 "validationErrors": {
-                    "type": "Please provide a valid event type"
+                    "time": "Please provide a valid time"
                 }
             },done);
     });

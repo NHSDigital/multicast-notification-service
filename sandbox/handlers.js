@@ -72,18 +72,17 @@ async function events(req, res, next) {
         }
     });
 
-    const eventType = req.body.type,
-        acceptedEventTypes = ["pds-change-of-gp-1"];
+    const eventTime = req.body.time,
+        eventTimeObject = new Date(eventTime);
 
-    if (!acceptedEventTypes.includes(eventType)) {
+    if (eventTimeObject.toString() === 'Invalid Date') {
         res.json({
             "validationErrors": {
-                "type": "Please provide a valid event type"
+                "time": "Please provide a valid time"
             }
         });
     }   else {
         res.json({
-            "success": true,
             "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
         });
     }

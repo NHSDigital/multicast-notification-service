@@ -83,7 +83,6 @@ async function events(req, res, next) {
         });
     }   else {
         res.json({
-            "success": true,
             "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
         });
     }

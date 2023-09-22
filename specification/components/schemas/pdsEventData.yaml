@@ -1,9 +1,10 @@
 type: "object"
 description: ""
 required:
-- versionId
 - fullUrl
 - provenance
+- registrationEncounterCode
+- versionId
 properties: 
   versionId: 
     type: "string"
@@ -13,6 +14,19 @@ properties:
     type: "string"
     example: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
     description: "The URL where the subscriber can retrieve the source of truth record for the patient or the full event payload."
+  registrationEncounterCode:
+    type: "string"
+    example: "03"
+    description: |
+      Numeric code that represents the type of GP registration that occurred. This field is only provided for the pds-change-of-gp-1 event type.
+      The permitted codes are as follows:
+      | Code | Type               | Description                                                                                                      |
+      | ---- | ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+      | 1    |  Birth             | At the time of registration, if the patient has been born in the last year then it is counted as such.           |
+      | 2    |  First Acceptance  | Very rare scenario - patient is a UK National and has never previously been reigistered with an NHS GP Practice. |
+      | 3    |  Transfer In       | Accounts for the vast majority of registrations - a patient registers with a new GP Practice                     |
+      | 4    |  Immigrant         | A patient has moved to the UK and registers with a GP Practice                                                   |
+      | 6    |  Internal Transfer | A deprecated type. In [NHAIS](https://digital.nhs.uk/services/nhais) a transfer between two GP practices in the same NHAIS region is counted as this type within [PCRM](https://digital.nhs.uk/services/primary-care-registration-management) registrations are centralised and will be counted as Type 3 |
   provenance: 
     type: "object"
     description: "The provenance describes which organisation was responsible for the creation of the event."

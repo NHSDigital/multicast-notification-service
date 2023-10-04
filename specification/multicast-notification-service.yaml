@@ -219,7 +219,7 @@ paths:
                 time:
                   type: "string"
                   format: "date-time"
-                  description: " ISO-8601 compliant datetime. UTC. Milliseconds precision."
+                  description: "The time at which the signal is published. ISO-8601 compliant datetime. UTC. Milliseconds precision."
                 data:
                   type: object
                   description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."

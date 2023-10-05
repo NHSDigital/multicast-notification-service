@@ -8,7 +8,7 @@ info:
     ## Overview
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
 
-    Use this API to publish and subscribe to patient-related events. The events do not contain clinical information; they simply describe what 
+    Use this API to publish events and subscribe to patient-related signals. The signals do not contain clinical information; they simply describe what 
     type of event occured to whom and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
  
     This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
@@ -18,7 +18,7 @@ info:
         PDS record changes, vaccinations.
 
     In future, you will be able to:
-      - subscribe to events based on certain criteria such as the event type
+      - subscribe to signals based on certain criteria such as the event type
 
     Data flow:
       1. An event occurs on a provider system. The provider system sends MNS the event.

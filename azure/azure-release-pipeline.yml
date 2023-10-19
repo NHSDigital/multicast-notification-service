@@ -70,3 +70,12 @@ extends:
               app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
               full: true
               test_command: make test-prod
+      - environment: prod
+        depends_on:
+          - int
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              app_id: "TODO - create a test app before merging. Will need manual approval"
+              full: true
+              test_command: make test-prod

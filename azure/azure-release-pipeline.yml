@@ -35,7 +35,6 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              app_id: "73ee66da-247c-49be-8822-d23aaf4823ec"
               full: true
       - environment: internal-dev-sandbox
         proxy_path: sandbox
@@ -45,7 +44,6 @@ extends:
         post_deploy:
           # - template: ./templates/run-tests.yml No target endpoint configured for QA. Not required currently.
           #   parameters:
-          #     app_id: "73ee66da-247c-49be-8822-d23aaf4823ec"
           #     full: true
       - environment: internal-qa-sandbox
         proxy_path: sandbox
@@ -59,14 +57,11 @@ extends:
       #     - template: ./templates/run-tests.yml
       - environment: sandbox
         proxy_path: sandbox
-        # post_deploy:
-        #   - template: ./templates/run-tests.yml TODO - EM-299 - is this required for sandbox?
       - environment: int
         depends_on:
           - internal_qa_sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
               full: true
               test_command: make test-prod

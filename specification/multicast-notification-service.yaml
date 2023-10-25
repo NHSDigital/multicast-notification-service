@@ -6,19 +6,26 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    Use this API to publish and subscribe to patient-related events. The events do not contain clinical information; they simply describe what 
+    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
+
+    Use this API to publish events and subscribe to patient-related signals. The signals do not contain clinical information; they simply describe what 
     type of event occured to whom and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
  
     This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
 
     You can:
-      - Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates e.g.
+      - Publish events. The first planned use case is GP Registration Change events. The team is actively building a backlog of future event candidates, for example:
         PDS record changes, vaccinations.
 
     In future, you will be able to:
-      - subscribe to events based on certain criteria such as the event type
+      - subscribe to signals based on certain criteria such as the event type
 
-    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
+    Data flow:
+      1. An event occurs on a provider system. The provider system sends MNS the event.
+      2. MNS validates that the event conforms to the accepted schema and sends it another component to handle subscription matching and onward delivery.
+      3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations, for example an AWS Kinesis Firehose.
+      4. Subscribers can optionally synchronise with event publishers to obtain further information.
+
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You 
     must do this before you can go live (see ‘Onboarding’ below).
@@ -27,29 +34,47 @@ info:
     ## Related APIs
     The following API also provides access to patient-related events:
       - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National 
-      Events Management Service - FHIR API") - the difference is that the payloads MNS delivers will be event signals: lightweight events that do not contain any clinical information, they 'signal' a state has changed. NEMS delivers events to external consumer systems whereas MNS is intended only for use by internal NHS England product teams. The two systems will be complementary.
+      Events Management Service - FHIR API") - the difference is that the payloads MNS delivers will be event signals: lightweight events that do not contain any clinical information, they 'signal' a state has changed. NEMS delivers events to external subscriber systems whereas MNS is intended only for use by internal NHS England product teams. The two systems will be complementary.
     ## API status and roadmap
     This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
     You can comment, upvote and view progress on our [roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/440034/multicast-notification-service-event-management-api).
     ## Service level
-    The Multicast Service API is currently not in an integration or production environment.
+    The Multicast Service API is currently not in a production environment.
     ## Technology
     This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) [publish-subscribe](https://digital.nhs.uk/developer/guides-and-documentation/introduction-to-healthcare-technology/integration-and-apis#publish-subscribe-events) API.
 
-    The event structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/) [FHIR STU3](https://hl7.org/fhir/stu3/) events can also be published.
+    The signal structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/)
     ## Network access
     This API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).
 
     For more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
     ## Security and authorisation
-    To be completed. (Will be application-based access.)
+
+    This API has one access mode:
+    - application-restricted access
+
+    ### Application-restricted access
+    Use this access mode if you need to publish an event from your system.
+
+    This access mode is [application-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#application-restricted-apis), meaning we authenticate the calling application but not the end user.
+
+    The end user could be:
+    * a healthcare worker - for example they record an event in an application and that application then publishes to MNS
+    * a patient - for example they make a change to their record in a patient-facing application and that application then publishes to MNS
+    * not present at all - for example as part of a back end process where events from an NHS England product or system are generated
+
+    In the above cases you must ensure the users are authenticated and suitably authorised locally
+    
+    To use this access mode, use the following security pattern:
+    * [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) 
+
     ## Environments and testing
 
     | Environment       | Base URL                                                               |
     | ----------------- | ---------------------------------------------------------------------- |
     | Sandbox           | `https://sandbox.api.service.nhs.uk/multicast-notification-service`    |
-    | Integration test  | Not yet available                                                      |
+    | Integration test  | `https://int.api.service.nhs.uk/multicast-notification-service`                                                     |
     | Production        | Not yet available                                                      |
 
     ### Sandbox testing
@@ -63,7 +88,7 @@ info:
 
     Alternatively, you can try out the sandbox using our Postman collection (simply download the file from the link and import it into Postman):
 
-        
+
     [![Run in Postman](https://run.pstmn.io/button.svg)](https://github.com/NHSDigital/multicast-notification-service/blob/master/postman/sandbox/Multicast_Notification_Sandbox.postman_collection.json)
     ## Onboarding
     During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be 
@@ -75,12 +100,13 @@ info:
     * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
     * 400 to 499 if it failed because of a client error by your application
     * 500 to 599 if it failed because of an error on our server
-    
+
     Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
   contact:
     name: 'multicast-notification-service API Support'
     url: 'https://digital.nhs.uk/developer/help-and-support'
     email: api.management@nhs.net
+security: []
 servers:
   - url: 'https://sandbox.api.service.nhs.uk/multicast-notification-service'
     description: Sandbox environment.
@@ -96,79 +122,45 @@ paths:
         ### Overview
         Use this endpoint to publish a patient-related event.
 
-        You have the option to provide your payload in two different formats: FHIR STU3 JSON or a simple non-FHIR JSON event.
+        The signal contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages) for more info.
 
-        ### FHIR payload
-        The FHIR payload follows the structure of the events that [NEMS currently receives](https://developer.nhs.uk/apis/ems-beta/explore_generic_event_requirements.html) from PDS, in JSON. The __only__ sender of these events is PDS. The Private Beta will focus on Change of GP Registration events.
-
-        ### Non-FHIR payload (CloudEvent)
-        The non-FHIR event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Structure) for more info.
+        ### Data and Metadata:
+          - Metadata: In the context of an event, metadata refers to the additional information that describes the event and provides context about it. It includes elements such as the family name and date of birth which are primarily for verification. Users must be cautious not to use such metadata to modify a patient's demographic details. Instead, if updates are necessary, users should conduct a full PDS retrieval to ensure accuracy and completeness in their workflows.
+          - Data: The inclusion of the data field might vary. Its presence is subject to agreements between the MNS team and the originating system. While the structure of the data might differ across various systems and scenarios, it's a general preference to have a pointer included. This pointer aids subscribers in accessing the entire record when necessary for their workflow.   
 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
         | Scenario                                  | Request                                                                 | Response                                                       |
         | ----------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- |
-        | Publish a JSON FHIR Event (GP Reg Change) | Content-Type: `application/fhir+json` Event Type: `pds-change-of-gp-1`  | HTTP Status 200 and response containing id and success status. |
         | Publish an MDS Event (GP Reg Change)      | Content-Type: `application/json` Event Type: `pds-change-of-gp-1`       | HTTP Status 200 and response containing id and success status. |
-        | Publish an event with an invalid type     | Any event type other than `pds-change-of-gp-1`                          | HTTP Status 400 and response containing a validation error.    |
+        | Publish an event with invalid data        | E.g. an event with an invalid value for `time`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
+      operationId: publish-event
       parameters:
-        - in: header
-          name: somethingForAuth
+        - name: Authorization
+          in: header
+          required: true
+          description: |-
+            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
+            Required in all environments except sandbox.
           schema:
             type: string
+            format: '^Bearer [[:ascii:]]+$'
+            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
+        - name: X-Correlation-ID
+          in: header
           required: true
-          description: TODO - EM-278 - add auth
+          description: |-
+            An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
+            Mirrored back in a response header.
+          schema:
+            type: string
+            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
       requestBody:
         required: true
         content:
-          application/fhir+json:
-            schema:
-              type: "object"
-              required:
-                - id
-                - meta
-                - type
-                - entry
-                - resourceType
-              properties:
-                resourceType:
-                  type: string
-                  example: "Bundle"
-                  description: FHIR Resource Type
-                type:
-                  type: string
-                  example: "message"
-                  description: "FHIR Bundle Type"
-                id:
-                  type: string
-                  example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-                  description: "UUID unique identifier for the message."
-                meta:
-                  type: object
-                  description: Metadata about the resource.
-                  properties:
-                    profile:
-                      type: array
-                      items:
-                        type: string
-                        example: "http://hl7.org/fhir/STU3/StructureDefinition/Bundle"
-                        description: "Existing NEMS events will be published to this service, hence we are using FHIR STU3."
-                entry:
-                  type: array
-                  description: "The entry array must contain each of the resources detailed in the example schema."
-                  items:
-                    type: object
-                    anyOf:
-                      - $ref: "components/schemas/MessageHeader.yaml"
-                      - $ref: "components/schemas/HealthService.yaml"
-                      - $ref: "components/schemas/Communication.yaml"
-                      - $ref: "components/schemas/Patient.yaml"
-                      - $ref: "components/schemas/OrganisationExampleOne.yaml"
-                      - $ref: "components/schemas/EpisodeOfCare.yaml"
-                      - $ref: "components/schemas/OrganisationExampleTwo.yaml"
           application/json:
             schema:
               type: "object"
@@ -181,76 +173,97 @@ paths:
               properties:
                 id:
                   type: "string"
-                  example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-                  description: "Producers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id will be unique."
+                  description: "Publishers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id will be unique. UUIDv4 format is expected."
                 type:
                   type: "string"
-                  example: "pds-change-of-gp-1"
                   description: "A unique string representing the event type. For the initial private beta, the API will only accept `pds-change-of-gp-1`."
                 subject:
                   type: "object"
                   required:
                     - "nhsNumber"
-                    - "givenName"
                     - "familyName"
                     - "dob"
                   description: "The NHS patient to whom the event occurred."
                   properties:
                     nhsNumber:
                       type: "string"
-                      example: "9912003888"
                       description: "NHS Number validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html."
-                    givenName:
-                      type: "string"
-                      example: "Jack"
-                      description: "First name"
                     familyName:
                       type: "string"
-                      example: "DAWKINS"
                       description: "Last name, capitalised"
                     dob:
                       type: "string"
                       format: "date"
-                      example: "2017-10-02"
-                      description: "ISO-8601 date."
+                      description: "ISO-8601 is the required format. However, due to data quality inconsistencies in demographic records, both 'YYYY' and 'YYYY-MM' formats are also acceptable. Refer to the [PDS FHIR API documentation](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient) for further clarification on the accepted formats."
                 source:
                   type: "object"
                   required:
                     - "name"
                     - "identifier"
-                  description: "Organisation responsible for generating the patient-related event."
+                  description: "Organisation responsible for publishing the patient-related event."
                   properties:
                     name:
                       type: "string"
-                      example: "The Organisation"
                       description: "Organisation name"
                     identifier:
                       type: "object"
                       required:
                         - "system"
                         - "value"
-                      description: "Must follow this identifier system: https://fhir.nhs.uk/Id/ods-organization-code and provide the ODS Code as the value."
+                      description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID Code as the value."
                       properties:
                         system:
                           type: "string"
-                          example: "https://fhir.nhs.uk/{Id}/ods-organization-code"
                         value:
                           type: "string"
-                          example: "ABC123"
                 time:
                   type: "string"
                   format: "date-time"
-                  example: "2022-04-05T17:31:00Z"
-                  description: "ISO-8601 datetime."
-                dataContentType:
-                  type: "string"
-                  example: "application/fhir+json"
-                  description: "This field describes the content type of the original event payload, if it's available e.g. text/xml, application/json, application/xml+FHIR."
+                  description: " ISO-8601 compliant datetime. UTC. Milliseconds precision."
                 data:
-                  type: "string"
-                  example: "https://test-api.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
-                  description: "String containing a pointer to the location of the information, where there exists a retrieval mechanism. E.g. an event generated from PDS would result in a pointer to the patient's PDS Record. The decision is for the events to be purely a notification and not contain any payload. A subscribing system would have to query the source of truth (in our example, PDS) to find what has changed."
-              
+                  type: object
+                  description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."
+                  anyOf:
+                    - $ref: "components/schemas/pdsEventData.yaml"
+            examples:
+              pdsChangeOfGpEvent:
+                value:
+                  id: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                  type: "pds-change-of-gp-1"
+                  subject:
+                    nhsNumber: "9912003888"
+                    familyName: "DAWKINS"
+                    dob: "2017-10-02"
+                  source:
+                    name: "NHS Digital"
+                    identifier:
+                      system: "https://fhir.nhs.uk/Id/nhsSpineASID"
+                      value: "477121000324"
+                  time: "2022-04-05T17:31:00.000Z"
+                  data:
+                    versionId: 'W/"2"'
+                    fullUrl: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
+                    registrationEncounterCode: "03"
+                    provenance:
+                      name: "The GP Practice"
+                      identifier:
+                        system: "https://fhir.nhs.uk/Id/nhsSpineASID"
+                        value: "477121000323"
+              mnsEventMetaDataOnly:
+                value:
+                  id: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                  type: "possible-future-event-type-no-data-field"
+                  subject:
+                    nhsNumber: "9912003888"
+                    familyName: "DAWKINS"
+                    dob: "2017-10-02"
+                  source:
+                    name: "NHS Digital"
+                    identifier:
+                      system: "https://fhir.nhs.uk/Id/nhsSpineASID"
+                      value: "477121000324"
+                  time: "2022-04-05T17:31:00.000Z"
+
       responses:
         200:
           description: Success - the event is accepted and will be multicast to subscribers
@@ -259,10 +272,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Indicates whether or not the action was successful
-                    example: true
                   id:
                     type: string
                     description: The id provided in the user's payload
@@ -282,7 +291,52 @@ paths:
                         type: string
                         example: Please provide a valid event type
         401:
-          description: "TODO - EM-278 - add auth"
+          description: "Unauthenticated error"
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    fault:
+                      type: object
+                      properties:
+                        faultstring:
+                          type: string
+                        detail:
+                          type: object
+                          properties:
+                            errorcode:
+                              type: string
+                examples:
+                  invalidToken:
+                    value:
+                      fault:
+                        faultstring: "Invalid access token"
+                        detail:
+                          errorcode: "oauth.v2.InvalidAccessToken"
+                  tokenMissing:
+                    value:
+                      fault:
+                        faultstring: "Missing access token"
+                        detail:
+                          errorcode: "oauth.v2.MissingAccessToken"
+                  tokenExpired:
+                    value:
+                      fault:
+                        faultstring: "Access Token expired"
+                        detail:
+                          errorcode: "keymanagement.service.access_token_expired"
+        403:
+          description: "Unauthorized error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    description: Object containing the different errors on a per key basis
+                    example: User is not authorized to handle the requested event type
         500:
           description: "Internal error"
           content:

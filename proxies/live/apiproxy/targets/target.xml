@@ -7,6 +7,9 @@
       <Step>
         <Name>FlowCallout.ApplyRateLimiting</Name>
       </Step>
+      <Step>
+        <Name>AssignMessage.AddApplicationHeaders</Name>
+      </Step>
     </Request>
   </PreFlow>
   <FaultRules>

@@ -31,6 +31,10 @@ publish: clean
 	mkdir -p build
 	npm run publish 2> /dev/null
 
+#Serves the published OAS spec locally
+serve:
+	npm run serve
+
 #Runs build proxy script
 build-proxy:
 	scripts/build_proxy.sh

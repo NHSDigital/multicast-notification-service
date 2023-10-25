@@ -24,11 +24,6 @@ def read_json_file(current_file: str, filename: str):
 
 
 @pytest.fixture
-def pds_change_of_gp_fhir_event_mock() -> dict:
-    return read_json_file(__file__, "pds-change-of-gp-event-fhir.json")
-
-
-@pytest.fixture
 def pds_change_of_gp_mds_event_mock() -> dict:
     return read_json_file(__file__, "pds-change-of-gp-event-mds.json")
 
@@ -69,6 +64,7 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
 
     assert resp.status_code == 200
     assert resp_content.get("commitId") == getenv('SOURCE_COMMIT_ID')
+    assert resp_content.get("status") == "pass"
 
 
 @pytest.mark.smoketest
@@ -108,28 +104,12 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_events_endpoint_accepts_valid_fhir_payload(
-    nhsd_apim_proxy_url,
-    nhsd_apim_auth_headers,
-    pds_change_of_gp_fhir_event_mock
-):
-    nhsd_apim_auth_headers["Content-Type"] = "application/fhir+json"
-    resp = requests.post(
-        f"{nhsd_apim_proxy_url}/events",
-        headers=nhsd_apim_auth_headers,
-        json=pds_change_of_gp_fhir_event_mock
-    )
-
-    assert resp.status_code == 200
-    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b", "success": "true"}
-
-
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_events_endpoint_accepts_valid_mds_payload(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
     pds_change_of_gp_mds_event_mock
 ):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/events",
         headers=nhsd_apim_auth_headers,
@@ -137,7 +117,7 @@ def test_events_endpoint_accepts_valid_mds_payload(
     )
 
     assert resp.status_code == 200
-    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b", "success": "true"}
+    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"}
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
@@ -146,8 +126,9 @@ def test_events_endpoint_rejects_invalid_payload(
     nhsd_apim_auth_headers,
     pds_change_of_gp_mds_event_mock
 ):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
     invalid_payload = pds_change_of_gp_mds_event_mock
-    invalid_payload["type"] = "event-type-not-accepted"
+    invalid_payload["time"] = "202-04-05T17:31:00.000Z"
 
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/events",
@@ -156,4 +137,24 @@ def test_events_endpoint_rejects_invalid_payload(
     )
 
     assert resp.status_code == 400
-    assert resp.json() == {"validationErrors": {"type": "Please provide a valid event type"}}
+    assert resp.json() == {"validationErrors": {"time": "Please provide a valid time"}}
+
+
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_events_endpoint_returns_unauthorized_error_when_client_sends_unauthorized_event_type(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    pds_change_of_gp_mds_event_mock
+):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
+    invalid_payload = pds_change_of_gp_mds_event_mock
+    invalid_payload["type"] = "pds-death-notification-1"
+
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=pds_change_of_gp_mds_event_mock
+    )
+
+    assert resp.status_code == 403
+    assert resp.json() == {"errors": "User is not authorized to handle the requested event type"}

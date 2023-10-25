@@ -58,12 +58,16 @@ apigee:
                   timeunit: minute
                 spikeArrest:
                   enabled: true
-                  ratelimit: 600pm # 10 requests per second
+                  ratelimit: 600pm
               app:
                 quota:
-                  enabled: false
+                  enabled: true
+                  limit: 300
+                  interval: 1
+                  timeunit: minute
                 spikeArrest:
-                  enabled: false
+                  enabled: true
+                  ratelimit: 1200pm
         description: {{ DESCRIPTION }}
         displayName: {{ TITLE }}
         environments: [ {{ ENV.name }} ]

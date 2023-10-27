@@ -1,7 +1,7 @@
 parameters:
   - name: app_id
     type: string
-    default: "MY APP ID"
+    default: ""
   - name: full
     type: boolean
     default: false

@@ -8,7 +8,7 @@ info:
     ## Overview
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
 
-    Use this API to publish and subscribe to patient-related events. The events do not contain clinical information; they simply describe what 
+    Use this API to publish events and subscribe to patient-related signals. The signals do not contain clinical information; they simply describe what 
     type of event occured to whom and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
  
     This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
@@ -18,13 +18,13 @@ info:
         PDS record changes, vaccinations.
 
     In future, you will be able to:
-      - subscribe to events based on certain criteria such as the event type
+      - subscribe to signals based on certain criteria such as the event type
 
     Data flow:
       1. An event occurs on a provider system. The provider system sends MNS the event.
       2. MNS validates that the event conforms to the accepted schema and sends it another component to handle subscription matching and onward delivery.
       3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations, for example an AWS Kinesis Firehose.
-      4. Consumers can optionally synchronise with event producers to obtain further information.
+      4. Subscribers can optionally synchronise with event publishers to obtain further information.
 
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You 
@@ -34,7 +34,7 @@ info:
     ## Related APIs
     The following API also provides access to patient-related events:
       - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National 
-      Events Management Service - FHIR API") - the difference is that the payloads MNS delivers will be event signals: lightweight events that do not contain any clinical information, they 'signal' a state has changed. NEMS delivers events to external consumer systems whereas MNS is intended only for use by internal NHS England product teams. The two systems will be complementary.
+      Events Management Service - FHIR API") - the difference is that the payloads MNS delivers will be event signals: lightweight events that do not contain any clinical information, they 'signal' a state has changed. NEMS delivers events to external subscriber systems whereas MNS is intended only for use by internal NHS England product teams. The two systems will be complementary.
     ## API status and roadmap
     This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
@@ -44,7 +44,7 @@ info:
     ## Technology
     This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) [publish-subscribe](https://digital.nhs.uk/developer/guides-and-documentation/introduction-to-healthcare-technology/integration-and-apis#publish-subscribe-events) API.
 
-    The event structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/)
+    The signal structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/)
     ## Network access
     This API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).
 
@@ -122,7 +122,7 @@ paths:
         ### Overview
         Use this endpoint to publish a patient-related event.
 
-        The event contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages) for more info.
+        The signal contains only a minimum dataset based on the recommendations of the CloudEvents specification. See [https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages](https://nhsd-confluence.digital.nhs.uk/display/SPINE/Event+Pattern+-+Event+Messages) for more info.
 
         ### Data and Metadata:
           - Metadata: In the context of an event, metadata refers to the additional information that describes the event and provides context about it. It includes elements such as the family name and date of birth which are primarily for verification. Users must be cautious not to use such metadata to modify a patient's demographic details. Instead, if updates are necessary, users should conduct a full PDS retrieval to ensure accuracy and completeness in their workflows.
@@ -173,7 +173,7 @@ paths:
               properties:
                 id:
                   type: "string"
-                  description: "Producers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id will be unique. UUIDv4 format is expected."
+                  description: "Publishers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id will be unique. UUIDv4 format is expected."
                 type:
                   type: "string"
                   description: "A unique string representing the event type. For the initial private beta, the API will only accept `pds-change-of-gp-1`."

@@ -37,7 +37,7 @@ properties:
       name: 
         type: "string"
         example: "The GP Practice"
-        description: "The GP Practice name"
+        description: "The name of the organisation responsible for the creating the event. This may be an empty string due to publisher data issues."
       identifier: 
         type: "object"
         required:

@@ -57,21 +57,17 @@ apigee:
               {{ NAME }}:
                 quota:
                   enabled: true
-                  limit: 300
+                  limit: 3015
                   interval: 1
                   timeunit: minute
                 spikeArrest:
                   enabled: true
-                  ratelimit: 600pm # Please update quota and rate limit when we have an outcome for EM-497
+                  ratelimit: 3015pm
               app:
                 quota:
-                  enabled: true
-                  limit: 300
-                  interval: 1
-                  timeunit: minute
+                  enabled: false
                 spikeArrest:
-                  enabled: true
-                  ratelimit: 1200pm # Please update quota and rate limit when we have an outcome for EM-497
+                  enabled: false
         description: {{ DESCRIPTION }}
         displayName: {{ TITLE }}
         environments: [ {{ ENV.name }} ]

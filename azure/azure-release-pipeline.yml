@@ -30,6 +30,7 @@ extends:
     service_name: ${{ variables.service_name }} 
     short_service_name: ${{ variables.short_service_name }} 
     service_base_path: ${{ variables.service_base_path }} 
+    prod_producer_approval: true
     apigee_deployments:
       - environment: internal-dev
         post_deploy:
@@ -64,5 +65,14 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
+              full: true
+              test_command: make test-prod
+      - environment: prod
+        depends_on:
+          - int
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              app_id: "TODO - create a test app before merging. Will need manual approval"
               full: true
               test_command: make test-prod

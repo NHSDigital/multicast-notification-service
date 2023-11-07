@@ -1,6 +1,6 @@
 SERVICE_NAME: multicast-notification-service
 PRODUCT_DISPLAY_NAME: multicast-notification-service
-DESCRIPTION: example description
+DESCRIPTION: The multicast notification service
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
@@ -26,6 +26,9 @@ APIGEE_ENVIRONMENTS:
     portal_visibility: true
   - name: int
     display_name: Integration Testing
+  - name: prod
+    approval_type: manual
+    display_name: Production
 ---
 meta:
   api:
@@ -39,10 +42,11 @@ apigee:
 {% for ENV in APIGEE_ENVIRONMENTS %}
 {% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + ENV.display_name + ' Environment)' %}
 {% set NAME = SERVICE_NAME + '-' + ENV.name %}
+{% set APPROVAL_TYPE = ENV.approval_type | default('auto') %}
   - name: {{ ENV.name }}
     products:
       - name: {{ NAME }}
-        approvalType: auto
+        approvalType: {{ APPROVAL_TYPE }}
         attributes:
           - name: access
             value: public

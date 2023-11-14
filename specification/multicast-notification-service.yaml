@@ -417,7 +417,7 @@ paths:
                   description: "A description of why this subscription is defined."
                 criteria:
                   type: "string"
-                  description: "	Criteria for the subscription formatted as a JSON path."
+                  description: "	Criteria for the subscription."
                 channel:
                   type: "object"
                   required:
@@ -444,7 +444,7 @@ paths:
                   status: "active"
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription is defined."
-                  criteria: "json blob"
+                  criteria: "eventType=pds-change-of-gp-1&;patient.identifier=123455435"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
@@ -609,7 +609,7 @@ paths:
                     status: "active"
                     end: "2022-04-05T17:31:00.000Z"
                     reason: "A description of why this subscription was created."
-                    criteria: "json blob"
+                    criteria: "eventType=pds-change-of-gp-1&;patient.identifier=123455435"
                     channel:
                       type: "message"
                       endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
@@ -619,7 +619,7 @@ paths:
                     status: "active"
                     end: "2022-04-05T17:31:00.000Z"
                     reason: "A description of why this subscription was created."
-                    criteria: "json blob"
+                    criteria: "eventType=pds-change-of-gp-1"
                     channel:
                       type: "message"
                       endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"

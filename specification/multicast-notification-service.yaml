@@ -8,9 +8,9 @@ info:
     ## Overview
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
 
-    Use this API to publish events and subscribe to patient-related signals. The signals do not contain clinical information; they simply describe what 
+    Use this API to publish events and subscribe to patient-related signals. The signals do not contain clinical information; they simply describe what
     type of event occured to whom and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
- 
+
     This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
 
     You can:
@@ -27,13 +27,13 @@ info:
       4. Subscribers can optionally synchronise with event publishers to obtain further information.
 
     ## Who can use this API
-    This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You 
+    This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You
     must do this before you can go live (see ‘Onboarding’ below).
 
     Note: during beta, this API will only be used by NHS England product teams with a valid use case.
     ## Related APIs
     The following API also provides access to patient-related events:
-      - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National 
+      - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National
       Events Management Service - FHIR API") - the difference is that the payloads MNS delivers will be event signals: lightweight events that do not contain any clinical information, they 'signal' a state has changed. NEMS delivers events to external subscriber systems whereas MNS is intended only for use by internal NHS England product teams. The two systems will be complementary.
     ## API status and roadmap
     This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
@@ -65,7 +65,7 @@ info:
     * not present at all - for example as part of a back end process where events from an NHS England product or system are generated
 
     In the above cases you must ensure the users are authenticated and suitably authorised locally
-    
+
     To use this access mode, use the following security pattern:
     * [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) 
 
@@ -91,7 +91,7 @@ info:
 
     [![Run in Postman](https://run.pstmn.io/button.svg)](https://github.com/NHSDigital/multicast-notification-service/blob/master/postman/sandbox/Multicast_Notification_Sandbox.postman_collection.json)
     ## Onboarding
-    During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be 
+    During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be
     improving it iteratively as we gather feedback from the first set of users.
 
     ## Errors

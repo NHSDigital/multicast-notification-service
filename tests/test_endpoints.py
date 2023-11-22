@@ -136,7 +136,10 @@ def test_events_endpoint_accepts_valid_mds_payload(
 
     update_response.raise_for_status()
 
-    check_updated = requests.get(apigee_update_url, headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"})
+    check_updated = requests.get(
+        apigee_update_url,
+        headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"}
+    )
 
     print(check_updated.text)
 

@@ -5,9 +5,12 @@ for more ideas on how to test the authorization of your API.
 """
 import json
 import os
-import requests
 import pytest
+import requests
+import uuid
 from os import getenv
+
+from auth_utils.authorisation_wrapper import authz_wrapper
 
 
 def read_json_file(current_file: str, filename: str):
@@ -104,6 +107,7 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@authz_wrapper
 def test_events_endpoint_accepts_valid_mds_payload(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
@@ -111,85 +115,58 @@ def test_events_endpoint_accepts_valid_mds_payload(
     _apigee_app_base_url,
     _create_test_app
 ):
-    # Test modifying the custom attributes
-    created_test_app_name = _create_test_app["name"]
-    apigee_update_url = f"{_apigee_app_base_url}/{created_test_app_name}"
-
-    key_value_pairs = {
-        "attributes": [
-            {
-                "name": "apim-app-flow-vars",
-                "value": json.dumps({
-                    "multicast-notification-service": {
-                        "app-permissions": "events:create:pds-change-of-gp-1"
-                    }
-                })
-            }
-        ]
-    }
-
-    update_response = requests.put(
-        f"{apigee_update_url}",
-        json=key_value_pairs,
-        headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"}
-    )
-
-    update_response.raise_for_status()
-
-    check_updated = requests.get(
-        apigee_update_url,
-        headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"}
-    )
-
-    print(check_updated.text)
-
-    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/events",
         headers=nhsd_apim_auth_headers,
         json=pds_change_of_gp_mds_event_mock
     )
-    print(resp.text)
 
     assert resp.status_code == 200
     assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"}
 
 
-# @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-# def test_events_endpoint_rejects_invalid_payload(
-#     nhsd_apim_proxy_url,
-#     nhsd_apim_auth_headers,
-#     pds_change_of_gp_mds_event_mock
-# ):
-#     nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
-#     invalid_payload = pds_change_of_gp_mds_event_mock
-#     invalid_payload["time"] = "202-04-05T17:31:00.000Z"
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@authz_wrapper
+def test_events_endpoint_rejects_invalid_payload(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    pds_change_of_gp_mds_event_mock,
+    _apigee_app_base_url,
+    _create_test_app
+):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
+    invalid_payload = pds_change_of_gp_mds_event_mock
+    invalid_payload["time"] = "202-04-05T17:31:00.000Z"
 
-#     resp = requests.post(
-#         f"{nhsd_apim_proxy_url}/events",
-#         headers=nhsd_apim_auth_headers,
-#         json=pds_change_of_gp_mds_event_mock
-#     )
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=pds_change_of_gp_mds_event_mock
+    )
 
-#     assert resp.status_code == 400
-#     assert resp.json() == {"validationErrors": {"time": "Please provide a valid time"}}
+    assert resp.status_code == 400
+    assert resp.json() == {"validationErrors": {"time": "Please provide a valid time"}}
 
 
-# @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-# def test_events_endpoint_returns_unauthorized_error_when_client_sends_unauthorized_event_type(
-#     nhsd_apim_proxy_url,
-#     nhsd_apim_auth_headers,
-#     pds_change_of_gp_mds_event_mock
-# ):
-#     nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
-#     invalid_payload = pds_change_of_gp_mds_event_mock
-#     invalid_payload["type"] = "pds-death-notification-1"
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@authz_wrapper
+def test_events_endpoint_returns_unauthorized_error_when_client_sends_unauthorized_event_type(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    pds_change_of_gp_mds_event_mock,
+    _apigee_app_base_url,
+    _create_test_app
+):
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
+    invalid_payload = pds_change_of_gp_mds_event_mock
+    invalid_payload["type"] = "pds-death-notification-1"
 
-#     resp = requests.post(
-#         f"{nhsd_apim_proxy_url}/events",
-#         headers=nhsd_apim_auth_headers,
-#         json=pds_change_of_gp_mds_event_mock
-#     )
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=pds_change_of_gp_mds_event_mock
+    )
 
-#     assert resp.status_code == 403
-#     assert resp.json() == {"errors": "User is not authorized to handle the requested event type"}
+    assert resp.status_code == 403
+    assert resp.json() == {"errors": "User is not authorized to handle the requested event type"}

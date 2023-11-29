@@ -5,9 +5,12 @@ for more ideas on how to test the authorization of your API.
 """
 import json
 import os
-import requests
 import pytest
+import requests
+import uuid
 from os import getenv
+
+from auth_utils.authorisation_wrapper import authz_wrapper
 
 
 def read_json_file(current_file: str, filename: str):
@@ -104,12 +107,15 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@authz_wrapper
 def test_events_endpoint_accepts_valid_mds_payload(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
-    pds_change_of_gp_mds_event_mock
+    pds_change_of_gp_mds_event_mock,
+    _apigee_app_base_url,
+    _create_test_app
 ):
-    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/events",
         headers=nhsd_apim_auth_headers,
@@ -121,12 +127,15 @@ def test_events_endpoint_accepts_valid_mds_payload(
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@authz_wrapper
 def test_events_endpoint_rejects_invalid_payload(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
-    pds_change_of_gp_mds_event_mock
+    pds_change_of_gp_mds_event_mock,
+    _apigee_app_base_url,
+    _create_test_app
 ):
-    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
     invalid_payload = pds_change_of_gp_mds_event_mock
     invalid_payload["time"] = "202-04-05T17:31:00.000Z"
 
@@ -141,12 +150,15 @@ def test_events_endpoint_rejects_invalid_payload(
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@authz_wrapper
 def test_events_endpoint_returns_unauthorized_error_when_client_sends_unauthorized_event_type(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
-    pds_change_of_gp_mds_event_mock
+    pds_change_of_gp_mds_event_mock,
+    _apigee_app_base_url,
+    _create_test_app
 ):
-    nhsd_apim_auth_headers["X-Correlation-ID"] = "ABCD-1234-EEEE"
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
     invalid_payload = pds_change_of_gp_mds_event_mock
     invalid_payload["type"] = "pds-death-notification-1"
 

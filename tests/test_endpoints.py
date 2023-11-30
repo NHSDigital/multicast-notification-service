@@ -169,4 +169,4 @@ def test_events_endpoint_returns_unauthorized_error_when_client_sends_unauthoriz
     )
 
     assert resp.status_code == 403
-    assert resp.json() == {"errors": "User is not authorized to handle the requested event type"}
+    assert resp.json() == {"errors": "User is not authorized to handle the requested data type"}

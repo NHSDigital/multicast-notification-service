@@ -8,6 +8,9 @@
         <Name>FlowCallout.ApplyRateLimiting</Name>
       </Step>
       <Step>
+        <Name>Javascript.AddAuthorizationHeader</Name>
+      </Step>
+      <Step>
         <Name>AssignMessage.AddApplicationHeaders</Name>
       </Step>
     </Request>

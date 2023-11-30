@@ -219,7 +219,7 @@ paths:
                 time:
                   type: "string"
                   format: "date-time"
-                  description: "The time at which the signal is published. ISO-8601 compliant datetime. UTC. Milliseconds precision."
+                  description: "The time at which the signal is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
                 data:
                   type: object
                   description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."
@@ -243,7 +243,7 @@ paths:
                   data:
                     versionId: 'W/"2"'
                     fullUrl: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
-                    registrationEncounterCode: "03"
+                    registrationEncounterCode: "3"
                     provenance:
                       name: "The GP Practice"
                       identifier:

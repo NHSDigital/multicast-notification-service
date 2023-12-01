@@ -358,9 +358,9 @@ paths:
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
-        | Scenario                                  | Request                                                                 | Response                                                |
-        | ----------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------- |
-        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/json`                                        | HTTP Status 201 and response containing created status. |
+        | Scenario                                  | Request                                                                 | Response                                                                    |
+        | ----------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/json+fhir`                                   | HTTP Status 201 and response containing the id of the subscription created. |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: create-subscription
@@ -402,17 +402,19 @@ paths:
                   description: "The subscription FHIR Resource: https://hl7.org/fhir/R4/subscription.html"
                 status:
                   type: "string"
-                  description: "The status of the subscription."
+                  description: "The status of the subscription. When creating a subscription, the value must be `requested`."
                 end:
                   type: "string"
                   format: "date-time"
-                  description: "Optional expiry date/time for the subscription. For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
+                  description: "Optional expiry date/time for the subscription. As per the [FHIR R4 instant data type](https://hl7.org/fhir/R4/datatypes.html#instant) time shall be specified to at least the second and include a time zone.
+                  For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
                 reason:
                   type: "string"
-                  description: "A description of why this subscription is required."
+                  description: "A description of why this subscription is required. You may provide an empty string."
                 criteria:
                   type: "string"
-                  description: "Criteria for the subscription."
+                  description: "Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=pds-change-of-gp-1&;patient.identifier=477121000324`
+                  or `eventType=pds-change-of-gp-1`. A valid criteria must contain a permitted value for `eventType`. The only additional criteria that MNS currently supports is `patient.identifier` (NHS Number)."
                 channel:
                   type: "object"
                   required:
@@ -423,25 +425,25 @@ paths:
                   properties:
                     type:
                       type: "string"
-                      description: "The type of channel to send notifications on."
+                      description: "The type of channel to send notifications on. Of the options within [FHIR](https://hl7.org/fhir/R4/valueset-subscription-channel-type.html), MNS currently only supports `message`."
                     endpoint:
                       type: "string"
-                      description: "The end-point to send messages to."
+                      description: "The end-point to send messages to. MNS currently only supports SQS Queue endpoints but there are future plans to look at further options such as HTTPS endpoints. You must provide the full SQS ARN of your desired queue."
                     payload:
                       type: "string"
-                      description: "The mime type to send the payload in - either application/fhir+xml, or application/fhir+json. If the payload is not present, then there is no payload in the notification, just a notification. The mime type 'text/plain' may also be used for Email and SMS subscriptions."
+                      description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/json+fhir R4 Bundle."
             examples:
               newSubscriptionRequest:
                 value:
                   resourceType: "Subscription"
-                  status: "active"
+                  status: "requested"
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription should be created."
-                  criteria: "eventType=pds-change-of-gp-1&;patient.identifier=123455435"
+                  criteria: "eventType=pds-change-of-gp-1&;patient.identifier=477121000324"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
-                    payload: "text/cloud-event"
+                    payload: "application/json"
 
       responses:
         201:
@@ -466,9 +468,9 @@ paths:
                     type: object
                     description: Object containing the different errors on a per key basis
                     properties:
-                      type:
+                      resourceType:
                         type: string
-                        example: Please provide a criteria
+                        example: Please provide the correct resource type for this endpoint
         401:
           description: "Unauthenticated error"
           content:
@@ -515,7 +517,7 @@ paths:
                   errors:
                     type: string
                     description: Object containing the different errors on a per key basis
-                    example: User is not authorized to subscribe to the requested event type
+                    example: User is not authorized to handle the requested data type
         500:
           description: "Internal error"
           content:

@@ -358,9 +358,10 @@ paths:
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
-        | Scenario                                  | Request                                                                 | Response                                                                    |
-        | ----------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/fhir+json`                                   | HTTP Status 201 and response containing the id of the subscription created. |
+        | Scenario                                  | Request                                                                  | Response                                                                    |
+        | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Publish an subscription with invalid data | E.g. modify the subscription to have an invalid value for `resourceType` | HTTP Status 400 and response containing a validation error.                 |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: create-subscription

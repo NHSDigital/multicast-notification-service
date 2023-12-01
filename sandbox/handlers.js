@@ -91,8 +91,37 @@ async function events(req, res, next) {
     next();
 }
 
+async function subscriptions(req, res, next) {
+    write_log(res, "info", {
+        message: "subscriptions endpoint",
+        req: {
+            path: req.path,
+            body: req.body,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const resourceType = req.body.resourceType;
+
+    if (resourceType !== 'Subscription') {
+        res.json({
+            "validationErrors": {
+                "resourceType": "Please provide the correct resource type for this endpoint"
+            }
+        });
+    }   else {
+        res.json({
+            "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+        });
+    }
+
+    res.end();
+    next();
+}
+
 module.exports = {
     status: status,
     hello: hello,
-    events: events
+    events: events,
+    subscriptions: subscriptions
 };

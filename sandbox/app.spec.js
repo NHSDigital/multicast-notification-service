@@ -1,4 +1,5 @@
-const mocks = require("./mockEvents");
+const mockEvents = require("./mockEvent");
+const mockSubscriptions = require("./mockSubscriptions");
 const request = require("supertest");
 const assert = require("chai").assert;
 // const expect = require("chai").expect;
@@ -67,22 +68,47 @@ describe("app handler tests", function () {
     it("responds with a success when the pre-canned MDS event is published to /events", (done) => {
         request(server)
             .post("/events")
-            .send(mocks.minimumDataSetEvent)
+            .send(mockEvents.minimumDataSetEvent)
             .expect(200, {
                 "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
             },done);
     });
 
     it("responds with a validation error when an event with an invalid time is published to /events", (done) => {
-        let invalidEvent = mocks.minimumDataSetEvent;
+        let invalidEvent = mockEvents.minimumDataSetEvent;
         invalidEvent["time"] = "202-04-05T17:31:00.000Z";
 
         request(server)
             .post("/events")
-            .send(mocks.minimumDataSetEvent)
+            .send(mockEvents.minimumDataSetEvent)
             .expect(200, {
                 "validationErrors": {
                     "time": "Please provide a valid time"
+                }
+            },done);
+    });
+
+    it("responds with a success when the pre-canned subscription is sent to /subscriptions", (done) => {
+        request(server)
+            .post("/subscriptions")
+            .set('Content-Type',  'application/fhir+json')
+            .send(mockSubscriptions.mockSubscription)
+            .expect(200, {
+                "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+            },done);
+    });
+
+    it("responds with a validation error when an invalid subscription is sent to /subscriptions", (done) => {
+        let invalidSubscription = mockSubscriptions.mockSubscription;
+        invalidSubscription["resourceType"] = "Bundle";
+
+        request(server)
+            .post("/subscriptions")
+            .set('Content-Type',  'application/fhir+json')
+            .send(invalidSubscription)
+            .expect(200, {
+                "validationErrors": {
+                    "resourceType": "Please provide the correct resource type for this endpoint"
                 }
             },done);
     });

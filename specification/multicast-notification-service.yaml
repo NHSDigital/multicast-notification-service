@@ -360,7 +360,7 @@ paths:
 
         | Scenario                                  | Request                                                                 | Response                                                                    |
         | ----------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/json+fhir`                                   | HTTP Status 201 and response containing the id of the subscription created. |
+        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/fhir+json`                                   | HTTP Status 201 and response containing the id of the subscription created. |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: create-subscription
@@ -431,7 +431,7 @@ paths:
                       description: "The end-point to send messages to. MNS currently only supports SQS Queue endpoints but there are future plans to look at further options such as HTTPS endpoints. You must provide the full SQS ARN of your desired queue."
                     payload:
                       type: "string"
-                      description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/json+fhir R4 Bundle."
+                      description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/fhir+json R4 Bundle."
             examples:
               newSubscriptionRequest:
                 value:

@@ -128,6 +128,7 @@ app.get("/_ping", handlers.status);
 app.get("/_status", handlers.status);
 app.get("/health", handlers.status);
 app.post("/events", handlers.events);
+app.post("/subscriptions", handlers.subscriptions);
 app.all("/hello", handlers.hello);
 app.use(on_error)
 app.use(after_request);

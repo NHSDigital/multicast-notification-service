@@ -30,6 +30,7 @@ def authz_wrapper(func):
         )
 
         update_response.raise_for_status()
+        print("hello world")
 
         return func(*args, **kwargs)
 

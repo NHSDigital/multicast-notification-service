@@ -144,7 +144,7 @@ def test_events_endpoint_accepts_valid_mds_payload(
         if resp.status_code == 403:
             retries = retries + 1
             continue
-    
+
         break
 
     assert resp.status_code == 200

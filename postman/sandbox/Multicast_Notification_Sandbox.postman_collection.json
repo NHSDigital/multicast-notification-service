@@ -36,7 +36,7 @@
 					"response": []
 				},
 				{
-					"name": "Invalid type",
+					"name": "Change of GP: Publish Event: Invalid time field",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -56,6 +56,75 @@
 							],
 							"path": [
 								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subscribe to events",
+			"item": [
+				{
+					"name": "Subscribe to PDS Change of GP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/fhir+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"resourceType\": \"Subscription\",\r\n    \"status\": \"requested\",\r\n    \"reason\": \"\",\r\n    \"end\": \"2024-01-25T00:00:00.000Z\",\r\n    \"criteria\": \"eventType=pds-change-of-gp-1\",\r\n    \"channel\": {\r\n        \"type\": \"message\",\r\n        \"endpoint\": \"arn:aws:sqs:eu-west-2:12345:my-test-queue\",\r\n        \"payload\": \"application/json\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/subscriptions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/fhir+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"resourceType\": \"Bundle\",\r\n    \"status\": \"requested\",\r\n    \"reason\": \"\",\r\n    \"end\": \"2024-01-25T00:00:00.000Z\",\r\n    \"criteria\": \"eventType=pds-change-of-gp-1\",\r\n    \"channel\": {\r\n        \"type\": \"message\",\r\n        \"endpoint\": \"arn:aws:sqs:eu-west-2:12345:my-test-queue\",\r\n        \"payload\": \"application/json\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/subscriptions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subscriptions"
 							]
 						}
 					},

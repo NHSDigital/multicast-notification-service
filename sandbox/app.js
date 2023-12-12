@@ -127,9 +127,9 @@ app.use(express.json({type: ["application/json", "application/fhir+json"]}));
 app.get("/_ping", handlers.status);
 app.get("/_status", handlers.status);
 app.get("/health", handlers.status);
+app.delete("/subscriptions/:subId", handlers.deleteSubscription);
 app.post("/events", handlers.events);
-app.post("/subscriptions", handlers.subscriptions);
-app.all("/hello", handlers.hello);
+app.post("/subscriptions", handlers.createSubscription);
 app.use(on_error)
 app.use(after_request);
 

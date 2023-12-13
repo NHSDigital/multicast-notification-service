@@ -73,6 +73,6 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              app_id: "TODO - create a test app before merging. Will need manual approval"
+              app_id: "6a91d2a8-069a-4731-9c96-cfcccfab63fa"
               full: true
               test_command: make test-prod

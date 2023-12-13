@@ -530,3 +530,127 @@ paths:
                     type: string
                     description: Object containing the different errors on a per key basis
                     example: Internal server error
+    /subscriptions/{id}:
+      get:
+        summary: "Get subscription details"
+        description: |
+          ### Overview
+          Use this endpoint to retrieve details of a subscription belonging to you.
+          ### Sandbox testing
+          You can test the following scenarios in our sandbox environment:
+          | Scenario                                  | Request                                                                  | Response                                                                    |
+          | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+          | Subscription exists and can be deleted    | `id=e9050741-ae87-4720-beb1-2abd9248e227`                                | HTTP Status 204 resource deleted response                                    |
+          | Subscription does not exist               | `id=236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b` (or any other valid UUID)      | HTTP Status 404 containing problem description                              |
+          You can try out the sandbox using the 'Try this API' feature on this page.
+        operationId: delete-subscription
+        parameters:
+          - name: Authorization
+            in: header
+            required: true
+            description: |-
+              An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
+              Required in all environments except sandbox.
+            schema:
+              type: string
+              format: '^Bearer [[:ascii:]]+$'
+              example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
+          - name: X-Correlation-ID
+            in: header
+            required: true
+            description: |-
+              An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
+              Mirrored back in a response header.
+            schema:
+              type: string
+              example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+          - name: id
+            in: path
+            required: true
+            description: The ID of the subscription you want to delete. The ID will be a valid UUID (v4).
+            schema:
+              type: string
+              example: e9050741-ae87-4720-beb1-2abd9248e227
+        responses:
+          200:
+            description: Successfully got subscription details
+          400:
+            description: Invalid user input
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    errors:
+                      type: string
+                      description: Error string that explains the problem
+                      example: Please provide a valid subscription ID
+          401:
+            description: "Unauthenticated error"
+            content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      fault:
+                        type: object
+                        properties:
+                          faultstring:
+                            type: string
+                          detail:
+                            type: object
+                            properties:
+                              errorcode:
+                                type: string
+                  examples:
+                    invalidToken:
+                      value:
+                        fault:
+                          faultstring: "Invalid access token"
+                          detail:
+                            errorcode: "oauth.v2.InvalidAccessToken"
+                    tokenMissing:
+                      value:
+                        fault:
+                          faultstring: "Missing access token"
+                          detail:
+                            errorcode: "oauth.v2.MissingAccessToken"
+                    tokenExpired:
+                      value:
+                        fault:
+                          faultstring: "Access Token expired"
+                          detail:
+                            errorcode: "keymanagement.service.access_token_expired"
+          403:
+            description: "Unauthorized error"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    errors:
+                      type: string
+                      description: Error string that explains the problem
+                      example: Unauthorised
+          404:
+            description: "Not found error"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    errors:
+                      type: string
+                      description: Error string that explains the problem
+                      example: Not found
+          500:
+            description: "Internal error"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    errors:
+                      type: string
+                      description: Error string that explains the problem
+                      example: Internal server error

@@ -73,6 +73,6 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              app_id: "6a91d2a8-069a-4731-9c96-cfcccfab63fa"
+              app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
               full: true
               test_command: make test-prod

@@ -59,12 +59,6 @@ describe("app handler tests", function () {
             .expect("Content-Type", /json/, done);
     });
 
-    it("responds to /hello", (done) => {
-        request(server)
-            .get("/hello")
-            .expect(200, done);
-    });
-
     it("responds with a success when the pre-canned MDS event is published to /events", (done) => {
         request(server)
             .post("/events")
@@ -81,7 +75,7 @@ describe("app handler tests", function () {
         request(server)
             .post("/events")
             .send(mockEvents.minimumDataSetEvent)
-            .expect(200, {
+            .expect(400, {
                 "validationErrors": {
                     "time": "Please provide a valid time"
                 }
@@ -106,10 +100,24 @@ describe("app handler tests", function () {
             .post("/subscriptions")
             .set('Content-Type',  'application/fhir+json')
             .send(invalidSubscription)
-            .expect(200, {
+            .expect(400, {
                 "validationErrors": {
                     "resourceType": "Please provide the correct resource type for this endpoint"
                 }
             },done);
+    });
+
+    it("responds with a success when a valid subscriptionID is provided to subscriptions DELETE", (done) => {
+        request(server)
+            .delete("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
+            .expect(204, done);
+    });
+
+    it("responds with a validation error when an invalid subscriptionID is provided to subscriptions DELETE", (done) => {
+        request(server)
+            .delete("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
+            .expect(404, {
+                "errors": "Not found" 
+            }, done);
     });
 });

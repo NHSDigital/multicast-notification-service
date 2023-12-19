@@ -703,7 +703,7 @@ paths:
             example: e9050741-ae87-4720-beb1-2abd9248e227
       responses:
         204:
-            description: Deleted - the subscription was deleted successfully
+          description: Deleted - the subscription was deleted successfully
         400:
           description: Invalid user input
           content:

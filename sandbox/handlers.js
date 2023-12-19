@@ -46,22 +46,6 @@ async function status(req, res, next) {
     next();
 }
 
-async function hello(req, res, next) {
-
-    write_log(res, "warn", {
-        message: "hello world",
-        req: {
-            path: req.path,
-            query: req.query,
-            headers: req.rawHeaders
-        }
-    });
-
-
-    res.json({message: "hello world"});
-    res.end();
-    next();
-}
 
 async function events(req, res, next) {
     write_log(res, "info", {
@@ -77,6 +61,7 @@ async function events(req, res, next) {
         eventTimeObject = new Date(eventTime);
 
     if (eventTimeObject.toString() === 'Invalid Date') {
+        res.status(400);
         res.json({
             "validationErrors": {
                 "time": "Please provide a valid time"
@@ -92,9 +77,9 @@ async function events(req, res, next) {
     next();
 }
 
-async function subscriptions(req, res, next) {
+async function createSubscription(req, res, next) {
     write_log(res, "info", {
-        message: "subscriptions endpoint",
+        message: "create subscriptions endpoint",
         req: {
             path: req.path,
             body: req.body,
@@ -105,6 +90,7 @@ async function subscriptions(req, res, next) {
     const resourceType = req.body.resourceType;
 
     if (resourceType !== 'Subscription') {
+        res.status(400);
         res.json({
             "validationErrors": {
                 "resourceType": "Please provide the correct resource type for this endpoint"
@@ -144,10 +130,35 @@ async function getSubscription(req, res, next) {
     next();
 }
 
+
+async function deleteSubscription(req, res, next) {
+    write_log(res, "info", {
+        message: "delete subscriptions endpoint",
+        req: {
+            path: req.path,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const subscriptionId = req.params.subId;
+
+    if (subscriptionId === "e9050741-ae87-4720-beb1-2abd9248e227") {
+        res.status(204);
+    }   else {
+        res.status(404);
+        res.json({
+            "errors": "Not found"
+        });
+    }
+
+    res.end();
+    next();
+}
+
 module.exports = {
     status: status,
-    hello: hello,
     events: events,
+    createSubscription: createSubscription,
     getSubscription: getSubscription,
-    subscriptions: subscriptions
+    deleteSubscription: deleteSubscription
 };

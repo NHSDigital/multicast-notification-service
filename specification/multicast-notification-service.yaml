@@ -291,41 +291,7 @@ paths:
                         type: string
                         example: Please provide a valid event type
         401:
-          description: "Unauthenticated error"
-          content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    fault:
-                      type: object
-                      properties:
-                        faultstring:
-                          type: string
-                        detail:
-                          type: object
-                          properties:
-                            errorcode:
-                              type: string
-                examples:
-                  invalidToken:
-                    value:
-                      fault:
-                        faultstring: "Invalid access token"
-                        detail:
-                          errorcode: "oauth.v2.InvalidAccessToken"
-                  tokenMissing:
-                    value:
-                      fault:
-                        faultstring: "Missing access token"
-                        detail:
-                          errorcode: "oauth.v2.MissingAccessToken"
-                  tokenExpired:
-                    value:
-                      fault:
-                        faultstring: "Access Token expired"
-                        detail:
-                          errorcode: "keymanagement.service.access_token_expired"
+          $ref: "components/errors/unauthenticated-error.yaml"
         403:
           description: "Unauthorized error"
           content:
@@ -335,19 +301,10 @@ paths:
                 properties:
                   errors:
                     type: string
-                    description: Object containing the different errors on a per key basis
+                    description: Error string that explains the problem
                     example: User is not authorized to handle the requested event type
         500:
-          description: "Internal error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Object containing the different errors on a per key basis
-                    example: Internal server error
+          $ref: "components/errors/internal-error.yaml"
   /subscriptions:
     post:
       summary: "Subscribe to events"
@@ -473,41 +430,7 @@ paths:
                         type: string
                         example: Please provide the correct resource type for this endpoint
         401:
-          description: "Unauthenticated error"
-          content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    fault:
-                      type: object
-                      properties:
-                        faultstring:
-                          type: string
-                        detail:
-                          type: object
-                          properties:
-                            errorcode:
-                              type: string
-                examples:
-                  invalidToken:
-                    value:
-                      fault:
-                        faultstring: "Invalid access token"
-                        detail:
-                          errorcode: "oauth.v2.InvalidAccessToken"
-                  tokenMissing:
-                    value:
-                      fault:
-                        faultstring: "Missing access token"
-                        detail:
-                          errorcode: "oauth.v2.MissingAccessToken"
-                  tokenExpired:
-                    value:
-                      fault:
-                        faultstring: "Access Token expired"
-                        detail:
-                          errorcode: "keymanagement.service.access_token_expired"
+          $ref: "components/errors/unauthenticated-error.yaml"
         403:
           description: "Unauthorized error"
           content:
@@ -517,19 +440,59 @@ paths:
                 properties:
                   errors:
                     type: string
-                    description: Object containing the different errors on a per key basis
+                    description: Error string that explains the problem
                     example: User is not authorized to handle the requested data type
         500:
-          description: "Internal error"
+          $ref: "components/errors/internal-error.yaml"
+
+    get:
+      summary: "Get all subscriptions"
+      description: |
+        ### Overview
+        Use this endpoint to retrieve a list of all subscriptions belonging to you.
+        If your application does not own any subscriptions, then this endpoint will return an empty list.
+        ### Sandbox testing
+        You can test the following scenarios in our sandbox environment:
+        | Scenario                                  | Request                                                                  | Response                                                                    |
+        | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+        | User has a list of subscriptions          | `GET` request                                                            | HTTP Status 200 containing a list of subscription resources                 |
+        You can try out the sandbox using the 'Try this API' feature on this page.
+      operationId: get-all-subscriptions
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: |-
+            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
+            Required in all environments except sandbox.
+          schema:
+            type: string
+            format: '^Bearer [[:ascii:]]+$'
+            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
+        - name: X-Correlation-ID
+          in: header
+          required: true
+          description: |-
+            An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
+            Mirrored back in a response header.
+          schema:
+            type: string
+            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+      responses:
+        200:
+          description: Successfully retrieved list of subscriptions
           content:
-            application/json:
+            application/fhir+json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Object containing the different errors on a per key basis
-                    example: Internal server error
+                type: array
+                items:
+                  $ref: "components/schemas/fhir/R4/Subscription.yaml"
+        401:
+          $ref: "components/errors/unauthenticated-error.yaml"
+        403:
+          $ref: "components/errors/unauthorised-error.yaml"
+        500:
+          $ref: "components/errors/internal-error.yaml"
   /subscriptions/{id}:
     get:
       summary: "Get subscription details"
@@ -590,74 +553,13 @@ paths:
                     description: Error string that explains the problem
                     example: Please provide a valid subscription ID
         401:
-          description: "Unauthenticated error"
-          content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    fault:
-                      type: object
-                      properties:
-                        faultstring:
-                          type: string
-                        detail:
-                          type: object
-                          properties:
-                            errorcode:
-                              type: string
-                examples:
-                  invalidToken:
-                    value:
-                      fault:
-                        faultstring: "Invalid access token"
-                        detail:
-                          errorcode: "oauth.v2.InvalidAccessToken"
-                  tokenMissing:
-                    value:
-                      fault:
-                        faultstring: "Missing access token"
-                        detail:
-                          errorcode: "oauth.v2.MissingAccessToken"
-                  tokenExpired:
-                    value:
-                      fault:
-                        faultstring: "Access Token expired"
-                        detail:
-                          errorcode: "keymanagement.service.access_token_expired"
+          $ref: "components/errors/unauthenticated-error.yaml"
         403:
-          description: "Unauthorized error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Error string that explains the problem
-                    example: Unauthorised
+          $ref: "components/errors/unauthorised-error.yaml"
         404:
-          description: "Not found error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Error string that explains the problem
-                    example: Not found
+          $ref: "components/errors/not-found-error.yaml"
         500:
-          description: "Internal error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Error string that explains the problem
-                    example: Internal server error
+          $ref: "components/errors/internal-error.yaml"
     delete:
       summary: "Delete a subscription"
       description: |
@@ -716,71 +618,10 @@ paths:
                     description: Error string that explains the problem
                     example: Please provide a valid subscription ID
         401:
-          description: "Unauthenticated error"
-          content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    fault:
-                      type: object
-                      properties:
-                        faultstring:
-                          type: string
-                        detail:
-                          type: object
-                          properties:
-                            errorcode:
-                              type: string
-                examples:
-                  invalidToken:
-                    value:
-                      fault:
-                        faultstring: "Invalid access token"
-                        detail:
-                          errorcode: "oauth.v2.InvalidAccessToken"
-                  tokenMissing:
-                    value:
-                      fault:
-                        faultstring: "Missing access token"
-                        detail:
-                          errorcode: "oauth.v2.MissingAccessToken"
-                  tokenExpired:
-                    value:
-                      fault:
-                        faultstring: "Access Token expired"
-                        detail:
-                          errorcode: "keymanagement.service.access_token_expired"
+          $ref: "components/errors/unauthenticated-error.yaml"
         403:
-          description: "Unauthorized error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Error string that explains the problem
-                    example: Unauthorised
+          $ref: "components/errors/unauthorised-error.yaml"
         404:
-          description: "Not found error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Error string that explains the problem
-                    example: Not found
+          $ref: "components/errors/not-found-error.yaml"
         500:
-          description: "Internal error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    description: Error string that explains the problem
-                    example: Internal server error
+          $ref: "components/errors/internal-error.yaml"

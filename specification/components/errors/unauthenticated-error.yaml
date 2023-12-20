@@ -1,0 +1,35 @@
+description: "Unauthenticated error"
+content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          fault:
+            type: object
+            properties:
+              faultstring:
+                type: string
+              detail:
+                type: object
+                properties:
+                  errorcode:
+                    type: string
+      examples:
+        invalidToken:
+          value:
+            fault:
+              faultstring: "Invalid access token"
+              detail:
+                errorcode: "oauth.v2.InvalidAccessToken"
+        tokenMissing:
+          value:
+            fault:
+              faultstring: "Missing access token"
+              detail:
+                errorcode: "oauth.v2.MissingAccessToken"
+        tokenExpired:
+          value:
+            fault:
+              faultstring: "Access Token expired"
+              detail:
+                errorcode: "keymanagement.service.access_token_expired"

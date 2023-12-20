@@ -1,0 +1,10 @@
+description: "Internal error"
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: string
+          description: Error string describing the problem that occurred
+          example: Internal server error

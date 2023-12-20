@@ -1,0 +1,10 @@
+description: "Unauthorised error"
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: string
+          description: Error string that explains the problem
+          example: Unauthorised

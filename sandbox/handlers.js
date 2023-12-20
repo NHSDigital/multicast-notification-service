@@ -1,5 +1,6 @@
 "use strict";
 
+const mockSubscriptions = require("./mockSubscriptions");
 const log = require("loglevel");
 
 
@@ -105,6 +106,31 @@ async function createSubscription(req, res, next) {
     next();
 }
 
+async function getSubscription(req, res, next) {
+    write_log(res, "info", {
+        message: "get subscriptions endpoint",
+        req: {
+            path: req.path,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const subscriptionId = req.params.subId;
+
+    if (subscriptionId === "e9050741-ae87-4720-beb1-2abd9248e227") {
+        res.json(mockSubscriptions.mockCreatedSubscription);
+    }   else {
+        res.status(404);
+        res.json({
+            "errors": "Not found"
+        });
+    }
+
+    res.end();
+    next();
+}
+
+
 async function deleteSubscription(req, res, next) {
     write_log(res, "info", {
         message: "delete subscriptions endpoint",
@@ -133,5 +159,6 @@ module.exports = {
     status: status,
     events: events,
     createSubscription: createSubscription,
+    getSubscription: getSubscription,
     deleteSubscription: deleteSubscription
 };

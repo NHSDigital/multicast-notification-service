@@ -1,4 +1,4 @@
-const mockSubscription = {
+const mockSubscriptionRequest = {
     "resourceType": "Subscription",
     "status": "requested",
     "reason": "",
@@ -9,9 +9,22 @@ const mockSubscription = {
         "endpoint": "arn:aws:sqs:eu-west-2:12345:nhs-dy-my-test-queue",
         "payload": "application/json"
     }
+},
+mockCreatedSubscription = {
+    "resourceType": "Subscription",
+    "status": "active",
+    "end": "2024-04-05T17:00:00.000Z",
+    "reason": "",
+    "criteria": "eventType=pds-change-of-gp-1",
+    "channel": {
+        "type": "message",
+        "endpoint": "arn:aws:sqs:eu-west-2:12345:example-queue-123",
+        "payload": "application/json"
+    }
 }
 
 
 module.exports = {
-    mockSubscription: mockSubscription
+    mockCreatedSubscription: mockCreatedSubscription,
+    mockSubscriptionRequest: mockSubscriptionRequest
 }

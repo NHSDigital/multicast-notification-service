@@ -108,7 +108,7 @@ async function createSubscription(req, res, next) {
 
 async function getSubscription(req, res, next) {
     write_log(res, "info", {
-        message: "get subscriptions endpoint",
+        message: "get subscription endpoint",
         req: {
             path: req.path,
             headers: req.rawHeaders,
@@ -126,6 +126,21 @@ async function getSubscription(req, res, next) {
         });
     }
 
+    res.end();
+    next();
+}
+
+
+async function getSubscriptions(req, res, next) {
+    write_log(res, "info", {
+        message: "get ALL subscriptions endpoint",
+        req: {
+            path: req.path,
+            headers: req.rawHeaders,
+        }
+    });
+
+    res.json([mockSubscriptions.mockCreatedSubscription])
     res.end();
     next();
 }
@@ -160,5 +175,6 @@ module.exports = {
     events: events,
     createSubscription: createSubscription,
     getSubscription: getSubscription,
+    getSubscriptions: getSubscriptions,
     deleteSubscription: deleteSubscription
 };

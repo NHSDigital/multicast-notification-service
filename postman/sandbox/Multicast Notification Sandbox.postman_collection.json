@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9a574e1e-3dca-4b6e-8de0-5a1763bce3d8",
+		"_postman_id": "fcf69434-4b78-40f4-8295-f9106fc3408f",
 		"name": "Multicast Notification Sandbox",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29428905"
@@ -237,6 +237,29 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Retrieve all subscriptions",
+			"item": [
+				{
+					"name": "Get ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/subscriptions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Gets all a user's subscriptions in MNS"
 		}
 	],
 	"event": [

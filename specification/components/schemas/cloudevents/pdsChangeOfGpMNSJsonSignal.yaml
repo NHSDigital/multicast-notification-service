@@ -1,0 +1,73 @@
+type: "object"
+description: "TODO"
+required:
+  - "id"
+  - "type"
+  - "subject"
+  - "source"
+  - "time"
+properties:
+  id:
+    type: "string"
+    description: "UUID v4 format identifier."
+    example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+  type:
+    type: "string"
+    description: "A unique string representing the event type. For the initial private beta, only `pds-change-of-gp-1` signals can be received."
+  subject:
+    type: "object"
+    required:
+      - "nhsNumber"
+      - "familyName"
+      - "dob"
+      - "age"
+    description: "The NHS patient who is the subject of the signal."
+    properties:
+      nhsNumber:
+        type: "string"
+        description: "NHS Number validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html."
+        example: "9912003888"
+      familyName:
+        type: "string"
+        description: "Last name, capitalised"
+        example: "DAWKINS"
+      dob:
+        type: "string"
+        format: "date"
+        description: "ISO-8601 is the required format. However, due to data quality inconsistencies in demographic records, both 'YYYY' and 'YYYY-MM' formats may also be seen. Refer to the [PDS FHIR API documentation](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient) for further clarification on the accepted formats."
+        example: "2017-10-02"
+      age:
+        type: "integer"
+        description: "The age of the patient at the time the Signal is created."
+        example: 6
+  source:
+    type: "object"
+    required:
+      - "name"
+      - "identifier"
+    description: "Organisation responsible for publishing the patient-related signal."
+    properties:
+      name:
+        type: "string"
+        description: "Organisation name"
+        example: "NHS Digital"
+      identifier:
+        type: "object"
+        required:
+          - "system"
+          - "value"
+        description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID Code as the value."
+        properties:
+          system:
+            type: "string"
+            example: "https://fhir.nhs.uk/Id/nhsSpineASID"
+          value:
+            type: "string"
+            example: "477121000324"
+  time:
+    type: "string"
+    format: "date-time"
+    description: "The time at which the signal is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
+    example: "2022-04-05T17:31:00.000Z"
+  data:
+    $ref: "pdsChangeOfGpEventData.yaml"

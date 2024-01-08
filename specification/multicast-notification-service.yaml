@@ -224,7 +224,7 @@ paths:
                   type: object
                   description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."
                   anyOf:
-                    - $ref: "components/schemas/cloudevents/pdsEventData.yaml"
+                    - $ref: "components/schemas/cloudevents/pdsChangeOfGpEventData.yaml"
             examples:
               pdsChangeOfGpEvent:
                 value:
@@ -405,16 +405,15 @@ paths:
 
       responses:
         201:
-          description: Created - the subscription has been successfully created
+          description: | 
+            Subscription created successfully - see the first example for the response structure. The other examples show the MNS Signals
+            you can receive in your requested endpoint.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: The subscription UUID created by the system
-                    example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                oneOf:
+                  - $ref: "components/schemas/cloudevents/pdsChangeOfGpMNSJsonSignal.yaml"
+                  - $ref: "components/success_responses/createSubscription.yaml"
         400:
           description: Invalid user input
           content:

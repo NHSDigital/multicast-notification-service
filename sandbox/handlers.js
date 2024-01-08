@@ -1,5 +1,6 @@
 "use strict";
 
+const mockSubscriptions = require("./mockSubscriptions");
 const log = require("loglevel");
 
 
@@ -76,7 +77,104 @@ async function events(req, res, next) {
     next();
 }
 
+async function createSubscription(req, res, next) {
+    write_log(res, "info", {
+        message: "create subscriptions endpoint",
+        req: {
+            path: req.path,
+            body: req.body,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const resourceType = req.body.resourceType;
+
+    if (resourceType !== 'Subscription') {
+        res.status(400);
+        res.json({
+            "validationErrors": {
+                "resourceType": "Please provide the correct resource type for this endpoint"
+            }
+        });
+    }   else {
+        res.json({
+            "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+        });
+    }
+
+    res.end();
+    next();
+}
+
+async function getSubscription(req, res, next) {
+    write_log(res, "info", {
+        message: "get subscription endpoint",
+        req: {
+            path: req.path,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const subscriptionId = req.params.subId;
+
+    if (subscriptionId === "e9050741-ae87-4720-beb1-2abd9248e227") {
+        res.json(mockSubscriptions.mockCreatedSubscription);
+    }   else {
+        res.status(404);
+        res.json({
+            "errors": "Not found"
+        });
+    }
+
+    res.end();
+    next();
+}
+
+
+async function getSubscriptions(req, res, next) {
+    write_log(res, "info", {
+        message: "get ALL subscriptions endpoint",
+        req: {
+            path: req.path,
+            headers: req.rawHeaders,
+        }
+    });
+
+    res.json([mockSubscriptions.mockCreatedSubscription])
+    res.end();
+    next();
+}
+
+
+async function deleteSubscription(req, res, next) {
+    write_log(res, "info", {
+        message: "delete subscriptions endpoint",
+        req: {
+            path: req.path,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const subscriptionId = req.params.subId;
+
+    if (subscriptionId === "e9050741-ae87-4720-beb1-2abd9248e227") {
+        res.status(204);
+    }   else {
+        res.status(404);
+        res.json({
+            "errors": "Not found"
+        });
+    }
+
+    res.end();
+    next();
+}
+
 module.exports = {
     status: status,
-    events: events
+    events: events,
+    createSubscription: createSubscription,
+    getSubscription: getSubscription,
+    getSubscriptions: getSubscriptions,
+    deleteSubscription: deleteSubscription
 };

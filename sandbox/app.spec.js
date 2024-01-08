@@ -1,4 +1,5 @@
 const mockEvents = require("./mockEvent");
+const mockSubscriptions = require("./mockSubscriptions");
 const request = require("supertest");
 
 
@@ -80,6 +81,67 @@ describe("app handler tests", function () {
                         "time": "Please provide a valid time"
                     }
                 },done);
+        });
+    });
+
+    describe("/subscriptions endpoint tests", () => {
+        it("responds with a success when the pre-canned subscription is sent to /subscriptions", (done) => {
+            request(server)
+                .post("/subscriptions")
+                .set('Content-Type',  'application/fhir+json')
+                .send(mockSubscriptions.mockSubscriptionRequest)
+                .expect(200, {
+                    "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                },done);
+        });
+    
+        it("responds with a validation error when an invalid subscription is sent to /subscriptions", (done) => {
+            let invalidSubscription = mockSubscriptions.mockSubscriptionRequest;
+            invalidSubscription["resourceType"] = "Bundle";
+    
+            request(server)
+                .post("/subscriptions")
+                .set('Content-Type',  'application/fhir+json')
+                .send(invalidSubscription)
+                .expect(400, {
+                    "validationErrors": {
+                        "resourceType": "Please provide the correct resource type for this endpoint"
+                    }
+                },done);
+        });
+    
+        it("responds with a success and returns subscription body when a valid subscriptionID is provided to subscriptions GET", (done) => {
+            request(server)
+                .get("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
+                .expect(200, mockSubscriptions.mockCreatedSubscription, done);
+        });
+    
+        it("responds with a not found error when an invalid subscriptionID is provided to subscriptions GET", (done) => {
+            request(server)
+                .get("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
+                .expect(404, {
+                    "errors": "Not found" 
+                }, done);
+        });
+    
+        it("responds with a success when a valid subscriptionID is provided to subscriptions DELETE", (done) => {
+            request(server)
+                .delete("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
+                .expect(204, done);
+        });
+    
+        it("responds with a validation error when an invalid subscriptionID is provided to subscriptions DELETE", (done) => {
+            request(server)
+                .delete("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
+                .expect(404, {
+                    "errors": "Not found" 
+                }, done);
+        });
+
+        it("responds with a success when user requests to get ALL subscriptions", (done) => {
+            request(server)
+                .get("/subscriptions")
+                .expect(200, [mockSubscriptions.mockCreatedSubscription], done);
         });
     });
 });

@@ -74,8 +74,8 @@ info:
     | Environment       | Base URL                                                               |
     | ----------------- | ---------------------------------------------------------------------- |
     | Sandbox           | `https://sandbox.api.service.nhs.uk/multicast-notification-service`    |
-    | Integration test  | `https://int.api.service.nhs.uk/multicast-notification-service`                                                     |
-    | Production        | Not yet available                                                      |
+    | Integration test  | `https://int.api.service.nhs.uk/multicast-notification-service`        |
+    | Production        | `https://api.service.nhs.uk/multicast-notification-service`            |
 
     ### Sandbox testing
     Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
@@ -307,10 +307,17 @@ paths:
           $ref: "components/errors/internal-error.yaml"
   /subscriptions:
     post:
-      summary: "Subscribe to events"
+      summary: "Subscribe to signals"
       description: |
         ### Overview
-        Use this endpoint to subscribe to patient-related signals.
+        Use this endpoint to subscribe to patient-related signals. 
+
+        ### Available signals
+        You can currently subscribe to the following patient-related signals. Browse the additional success responses below to view the schemas for the different MNS signals.
+
+        |  Event Type          | Payload format                                                         |
+        | -------------------- | ---------------------------------------------------------------------- |
+        | `pds-change-of-gp-1` | `application/json` (based on [CloudEvents](https://cloudevents.io/))   |
 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:

@@ -224,7 +224,7 @@ paths:
                   type: object
                   description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."
                   anyOf:
-                    - $ref: "components/schemas/cloudevents/pdsEventData.yaml"
+                    - $ref: "components/schemas/cloudevents/pdsChangeOfGpEventData.yaml"
             examples:
               pdsChangeOfGpEvent:
                 value:

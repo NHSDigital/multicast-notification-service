@@ -25,8 +25,11 @@ def read_json_file(current_file: str, filename: str):
 
 
 @pytest.fixture
-def pds_change_of_gp_mds_event_mock() -> dict:
-    return read_json_file(__file__, "pds-change-of-gp-event-mds.json")
+def pds_mds_event_list() -> list[dict]:
+    return [
+        read_json_file(__file__, "pds-change-of-gp-event-mds.json"),
+        read_json_file(__file__, "pds-death-event-mds.json")
+    ]
 
 
 @pytest.mark.smoketest
@@ -88,10 +91,10 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_events_endpoint_accepts_valid_mds_payload(
+def test_events_endpoint_accepts_valid_mds_payload_pds_events(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
-    pds_change_of_gp_mds_event_mock,
+    pds_mds_event_list,
     _apigee_app_base_url,
     _create_test_app
 ):
@@ -102,7 +105,7 @@ def test_events_endpoint_accepts_valid_mds_payload(
         "attributes": [
             {
                 "name": "permissions",
-                "value": "events:create:pds-change-of-gp-1"
+                "value": "events:create:pds-change-of-gp-1,events:create:pds-death-notification-1"
             }
         ]
     }
@@ -114,21 +117,22 @@ def test_events_endpoint_accepts_valid_mds_payload(
     )
     update_response.raise_for_status()
 
-    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
-    retries = 0
+    for pds_mds_event in pds_mds_event_list:
+        nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
+        retries = 0
 
-    while retries < 5:
-        resp = requests.post(
-            f"{nhsd_apim_proxy_url}/events",
-            headers=nhsd_apim_auth_headers,
-            json=pds_change_of_gp_mds_event_mock
-        )
+        while retries < 5:
+            resp = requests.post(
+                f"{nhsd_apim_proxy_url}/events",
+                headers=nhsd_apim_auth_headers,
+                json=pds_mds_event
+            )
 
-        if resp.status_code == 403:
-            retries = retries + 1
-            continue
+            if resp.status_code == 403:
+                retries = retries + 1
+                continue
 
-        break
+            break
 
-    assert resp.status_code == 200
-    assert resp.json() == {"id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"}
+        assert resp.status_code == 200
+        assert resp.json() == {"id": pds_mds_event["id"]}

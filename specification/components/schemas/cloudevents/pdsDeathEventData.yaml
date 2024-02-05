@@ -1,0 +1,51 @@
+type: "object"
+description: ""
+required:
+- deathNotificationStatus
+- fullUrl
+- provenance
+- versionId
+properties:
+  deathNotificationStatus:
+    type: "string"
+    example: "2"
+    description: |
+        A set of coded values that represent the status of the death notification. This field is only provided for the pds-death-notification-1 event type.
+        The permitted codes are as follows:
+        | Code | Type                  | Description                                                                                                      |
+        | ---- | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+        | 1    |  Informal             | This status is added when there is an understanding that a person passed away but it lacks official documentation. e.g. a death notice is received via an update from a local NHS Organisation such as a GP Practice or NHS Trust. |
+        | 2    |  Formal               | This formal status is established through the completion and filing of a death certificate, which contains details about the deceased individual, including their name, date and place of death, cause of death (if known), and other relevant information. Formal confirmation is received from the Registrar of Deaths. |
+        | U    |  Death Status Removed | A revocation of a patient death event as the death was entered in error, the patient is NOT DEAD.                    |
+  versionId:
+    type: "string"
+    example: 'W/"16"'
+    description: "The versionId/ETAG identifies the version of the resource. The format should be a version identifier enclosed in quotes and preceded by 'W/'."
+  fullUrl:
+    type: "string"
+    example: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
+    description: "The URL where the subscriber can retrieve the source of truth record for the patient or the full event payload."
+  provenance: 
+    type: "object"
+    description: "The provenance describes which organisation was responsible for the creation of the event."
+    required:
+    - name
+    - identifier
+    properties:
+      name: 
+        type: "string"
+        example: "The GP Practice"
+        description: "The name of the organisation responsible for the creating the event. This may be an empty string due to publisher data issues."
+      identifier: 
+        type: "object"
+        required:
+        - "system"
+        - "value"
+        description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID value and name of the system."
+        properties:
+            system:
+              type: "string"
+              example: "https://fhir.nhs.uk/Id/nhsSpineASID"
+            value:
+              type: "string"
+              example: "477121000323"

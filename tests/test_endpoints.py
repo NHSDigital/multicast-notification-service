@@ -5,6 +5,7 @@ for more ideas on how to test the authorization of your API.
 """
 import json
 import os
+from typing import List
 import pytest
 import requests
 import uuid
@@ -25,7 +26,7 @@ def read_json_file(current_file: str, filename: str):
 
 
 @pytest.fixture
-def pds_mds_event_list() -> list[dict]:
+def pds_mds_event_list() -> List[dict]:
     return [
         read_json_file(__file__, "pds-change-of-gp-event-mds.json"),
         read_json_file(__file__, "pds-death-event-mds.json")

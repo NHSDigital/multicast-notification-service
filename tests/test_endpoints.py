@@ -110,7 +110,7 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
                 "value": (
                     "events:create:pds-change-of-gp-1,"
                     "events:create:pds-death-notification-1,"
-                    "events:create:pds-nhs-number-change-1"
+                    "events:create:nhs-number-change-1"
                 )
             }
         ]

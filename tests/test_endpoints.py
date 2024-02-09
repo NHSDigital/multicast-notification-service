@@ -29,7 +29,8 @@ def read_json_file(current_file: str, filename: str):
 def pds_mds_event_list() -> List[dict]:
     return [
         read_json_file(__file__, "pds-change-of-gp-event-mds.json"),
-        read_json_file(__file__, "pds-death-event-mds.json")
+        read_json_file(__file__, "pds-death-event-mds.json"),
+        read_json_file(__file__, "nhs-number-change-event-mds.json")
     ]
 
 

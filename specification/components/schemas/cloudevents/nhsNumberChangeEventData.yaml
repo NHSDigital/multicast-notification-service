@@ -9,12 +9,12 @@ properties:
   nhsNumberStatus:
       type: "string"
       description: |
-          A set of coded values that represent the status of the NHS which is the subject of the change. This field is only provided for the nhs-number-change-1 event type.
+          A set of coded values that represent the status of the NHS Number which is the subject of the change. This field is only provided for the nhs-number-change-1 event type.
           The permitted codes are as follows:
           | Code | Type                  | Description                                                                                                      |
           | ---- | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
           | I    |  Invalidated          | Part of the NHS Patient 'sensitivity' information and indicates that a specific NHS Number has been invalidated. |
-          | R    |  Replaced             | An NHS Number has been superseded by or replaced by another NHS number for instance in the case of a merge. |
+          | R    |  Replaced             | An NHS Number has been superseded by or replaced by another NHS number for instance in the case of a merge.      |
   versionId:
     type: "string"
     example: 'W/"16"'

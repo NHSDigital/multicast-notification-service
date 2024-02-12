@@ -72,29 +72,29 @@ properties:
     nhsNumberStatus:
       type: "string"
       description: |
-          A set of coded values that represent the status of the NHS which is the subject of the change. This field is only provided for the nhs-number-change-1 event type.
+          A set of coded values that represent the status of the NHS Number which is the subject of the change. This field is only provided for the nhs-number-change-1 event type.
           The permitted codes are as follows:
           | Code | Type                  | Description                                                                                                      |
           | ---- | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
           | I    |  Invalidated          | Part of the NHS Patient 'sensitivity' information and indicates that a specific NHS Number has been invalidated. |
-          | R    |  Replaced             | An NHS Number has been superseded by or replaced by another NHS number for instance in the case of a merge. |
+          | R    |  Replaced             | An NHS Number has been superseded by or replaced by another NHS number for instance in the case of a merge.      |
       versionId:
         type: "string"
         description: "The versionId/ETAG identifies the version of the resource. The format should be a version identifier enclosed in quotes and preceded by 'W/'."
       fullUrl:
         type: "string"
         description: "The URL where the subscriber can retrieve the source of truth record for the patient or the full event payload."
-      provenance: 
+      provenance:
         type: "object"
         description: "The provenance describes which organisation was responsible for the creation of the event."
         required:
         - name
         - identifier
         properties:
-          name: 
+          name:
             type: "string"
             description: "The name of the organisation responsible for the creating the event. This may be an empty string due to publisher data issues."
-          identifier: 
+          identifier:
             type: "object"
             required:
             - "system"
@@ -107,7 +107,7 @@ properties:
                   type: "string"
 example:
   id: "1dd1f17a-599d-40b8-9ee9-2c92756e2bc9"
-  type: "nhn-number-change-1"
+  type: "nhs-number-change-1"
   subject:
     age: 6
     dob: "2017-10-02"

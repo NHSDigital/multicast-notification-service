@@ -29,7 +29,8 @@ def read_json_file(current_file: str, filename: str):
 def pds_mds_event_list() -> List[dict]:
     return [
         read_json_file(__file__, "pds-change-of-gp-event-mds.json"),
-        read_json_file(__file__, "pds-death-event-mds.json")
+        read_json_file(__file__, "pds-death-event-mds.json"),
+        read_json_file(__file__, "nhs-number-change-event-mds.json")
     ]
 
 
@@ -106,7 +107,11 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
         "attributes": [
             {
                 "name": "permissions",
-                "value": "events:create:pds-change-of-gp-1,events:create:pds-death-notification-1"
+                "value": (
+                    "events:create:pds-change-of-gp-1,"
+                    "events:create:pds-death-notification-1,"
+                    "events:create:nhs-number-change-1"
+                )
             }
         ]
     }

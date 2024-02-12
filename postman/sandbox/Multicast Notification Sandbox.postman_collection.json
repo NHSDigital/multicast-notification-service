@@ -96,6 +96,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "NHS Number Change: Publish Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"d94f8dec-4004-4614-bf8a-045a952f4164\",\r\n    \"type\": \"nhs-number-change-1\",\r\n    \"subject\": {\r\n        \"nhsNumber\": \"9912003888\",\r\n        \"familyName\": \"DAWKINS\",\r\n        \"dob\": \"2021-02-28\"\r\n    },\r\n    \"source\": {\r\n        \"name\": \"NHS Digital\",\r\n        \"identifier\": {\r\n        \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n        \"value\": \"477121000323\"\r\n        }\r\n    },\r\n    \"time\": \"2023-04-05T17:31:00.000Z\",\r\n    \"data\": {\r\n        \"nhsNumberStatus\": \"I\",\r\n        \"fullUrl\": \"https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\",\r\n        \"versionId\": \"W/\\\"16\\\"\",\r\n        \"provenance\": {\r\n        \"name\": \"The GP Practice\",\r\n            \"identifier\": {\r\n                \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n                \"value\": \"477121000324\"\r\n            }\r\n      }\r\n    }\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

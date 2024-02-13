@@ -237,7 +237,7 @@ paths:
                 data:
                   type: object
                   description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."
-                  anyOf:
+                  oneOf:
                     - $ref: "components/schemas/cloudevents/pdsChangeOfGpEventData.yaml"
                     - $ref: "components/schemas/cloudevents/pdsDeathEventData.yaml"
                     - $ref: "components/schemas/cloudevents/nhsNumberChangeEventData.yaml"
@@ -305,7 +305,7 @@ paths:
                   data:
                     versionId: 'W/"16"'
                     fullUrl: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
-                    nhsNumberChange: "I"
+                    nhsNumberStatus: "I"
                     provenance:
                       name: "The GP Practice"
                       identifier:
@@ -667,7 +667,7 @@ paths:
             example: e9050741-ae87-4720-beb1-2abd9248e227
       responses:
         204:
-          description: Deleted - the subscription was deleted successfully
+          description: The subscription was deleted
         400:
           description: Invalid user input
           content:

@@ -27,9 +27,9 @@ variables:
 extends:
   template: azure/common/apigee-deployment.yml@common
   parameters:
-    service_name: ${{ variables.service_name }} 
-    short_service_name: ${{ variables.short_service_name }} 
-    service_base_path: ${{ variables.service_base_path }} 
+    service_name: ${{ variables.service_name }}
+    short_service_name: ${{ variables.short_service_name }}
+    service_base_path: ${{ variables.service_base_path }}
     prod_producer_approval: true
     apigee_deployments:
       - environment: internal-dev
@@ -50,12 +50,12 @@ extends:
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
-      # - environment: ref
-      #   depends_on:
-      #     - internal_qa
-      #     - internal_qa_sandbox
-      #   post_deploy:
-      #     - template: ./templates/run-tests.yml
+      - environment: ref
+        depends_on:
+          - internal_qa
+          - internal_qa_sandbox
+        post_deploy:
+          - template: ./templates/run-tests.yml
       - environment: sandbox
         proxy_path: sandbox
       - environment: int

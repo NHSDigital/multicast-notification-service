@@ -469,7 +469,7 @@ paths:
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
                     payload: "application/json"
               nhsNumberChangeSubscription:
-                description: "Create an NHS number change subscription "
+                description: "Create an NHS number change subscription"
                 value:
                   resourceType: "Subscription"
                   status: "requested"

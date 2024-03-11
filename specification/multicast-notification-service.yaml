@@ -457,7 +457,7 @@ paths:
                       description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/fhir+json R4 Bundle."
             examples:
               pdsChangeofGPSubscription:
-                descripiton: "Create a pds change of GP subscription"
+                description: "Create a pds change of GP subscription"
                 value:
                   resourceType: "Subscription"
                   status: "requested"

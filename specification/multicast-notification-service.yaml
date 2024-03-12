@@ -244,6 +244,7 @@ paths:
                     - $ref: "components/schemas/cloudevents/nhsNumberChangeEventData.yaml"
             examples:
               pdsChangeOfGpEvent:
+                description: "Create a PDS change of GP signal event"
                 value:
                   id: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
                   type: "pds-change-of-gp-1"
@@ -380,8 +381,9 @@ paths:
 
         | Scenario                                  | Request                                                                  | Response                                                                    |
         | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
-        | Publish an subscription with invalid data | E.g. modify the subscription to have an invalid value for `resourceType` | HTTP Status 400 and response containing a validation error.                 |
+        | Subscribe to Events (GP Reg Changes)      | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Subscribe to NHS number changes           | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Publish a subscription with invalid data  | E.g. modify the subscription to have an invalid value for `resourceType` | HTTP Status 400 and response containing a validation error.                 |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: create-subscription
@@ -454,7 +456,8 @@ paths:
                       type: "string"
                       description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/fhir+json R4 Bundle."
             examples:
-              newSubscriptionRequest:
+              pdsChangeofGPSubscription:
+                description: "Create a pds change of GP subscription"
                 value:
                   resourceType: "Subscription"
                   status: "requested"
@@ -464,6 +467,18 @@ paths:
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
+                    payload: "application/json"
+              nhsNumberChangeSubscription:
+                description: "Create an NHS number change subscription"
+                value:
+                  resourceType: "Subscription"
+                  status: "requested"
+                  end: "2022-04-05T17:31:00.000Z"
+                  reason: "A description of why this subscription should be created."
+                  criteria: "eventType=nhs-number-change-1&;patient.identifier=477121000324"
+                  channel:
+                    type: "message"
+                    endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                     payload: "application/json"
 
       responses:

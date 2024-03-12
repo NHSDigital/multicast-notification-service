@@ -381,8 +381,8 @@ paths:
 
         | Scenario                                  | Request                                                                  | Response                                                                    |
         | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-        | Subscribe to Events (GP Reg Change)       | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
-        | Subscribe to NHS number change            | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Subscribe to Events (GP Reg Changes)      | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Subscribe to NHS number changes           | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
         | Publish a subscription with invalid data  | E.g. modify the subscription to have an invalid value for `resourceType` | HTTP Status 400 and response containing a validation error.                 |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
@@ -478,7 +478,7 @@ paths:
                   criteria: "eventType=nhs-number-change-1&;patient.identifier=477121000324"
                   channel:
                     type: "message"
-                    endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
+                    endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                     payload: "application/json"
 
       responses:

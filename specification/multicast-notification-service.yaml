@@ -459,8 +459,6 @@ paths:
             examples:
               pdsChangeofGPSubscription:
                 description: "Create a pds change of GP subscription"
-              pdsChangeofGPSubscription:
-                description: "Create a pds change of GP subscription"
                 value:
                   resourceType: "Subscription"
                   status: "requested"

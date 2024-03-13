@@ -481,6 +481,18 @@ paths:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                     payload: "application/json"
+              pdsDeathNotificationSubscription:
+                description: "Create a pds death notification subscription"
+                value:
+                  resourceType: "Subscription"
+                  status: "requested"
+                  end: "2022-04-05T17:31:00.000Z"
+                  reason: "A description of why this subscription should be created."
+                  criteria: "eventType=nhs-number-change-1&;patient.identifier=477121000324"
+                  channel:
+                    type: "message"
+                    endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
+                    payload: "application/json"
 
       responses:
         201:

@@ -460,7 +460,7 @@ paths:
               pdsChangeofGPSubscription:
                 description: "Create a pds change of GP subscription"
               pdsChangeofGPSubscription:
-                descripiton: "Create a pds change of GP subscription"
+                description: "Create a pds change of GP subscription"
                 value:
                   resourceType: "Subscription"
                   status: "requested"

@@ -452,7 +452,7 @@ paths:
                       description: "The type of channel to send notifications on. Of the options within [FHIR](https://hl7.org/fhir/R4/valueset-subscription-channel-type.html), MNS currently only supports `message`."
                     endpoint:
                       type: "string"
-                      description: "The end-point to send messages to. MNS currently only supports SQS Queue endpoints but there are future plans to look at further options such as HTTPS endpoints. You must provide the full SQS ARN of your desired queue."
+                      description: "The endpoint which messages will be delivered to. MNS currently only supports [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailbox and [AWS SQS](https://aws.amazon.com/sqs/) endpoints. Note: for MESH delivery you must provide the full mailbox ID and for SQS delivery you must provide the full SQS ARN of your desired queue."
                     payload:
                       type: "string"
                       description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/fhir+json R4 Bundle."
@@ -468,6 +468,18 @@ paths:
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
+                    payload: "application/json"
+              pdsChangeofGPSubscriptionMeshDelivery:
+                description: "Create a pds change of GP subscription with MESH delivery"
+                value:
+                  resourceType: "Subscription"
+                  status: "requested"
+                  end: "2022-04-05T17:31:00.000Z"
+                  reason: "A description of why this subscription should be created."
+                  criteria: "eventType=pds-change-of-gp-1"
+                  channel:
+                    type: "message"
+                    endpoint: "MYMAILBOXOT101"
                     payload: "application/json"
               nhsNumberChangeSubscription:
                 description: "Create an NHS number change subscription"

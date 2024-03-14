@@ -11,6 +11,7 @@ const mockSubscriptionRequest = {
     }
 },
 mockCreatedSubscription = {
+    "id": "e9050741-ae87-4720-beb1-2abd9248e227",
     "resourceType": "Subscription",
     "status": "active",
     "end": "2024-04-05T17:00:00.000Z",

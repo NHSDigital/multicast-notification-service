@@ -1,12 +1,17 @@
 type: "object"
 description: "The schema for a [FHIR R4 Subscription resource](https://hl7.org/fhir/R4/subscription.html)"
 required:
+- id
 - resourceType
 - status
 - reason
 - criteria
 - channel
-properties: 
+properties:
+  id:
+    type: "string"
+    example: "e9050741-ae87-4720-beb1-2abd9248e227"
+    description: "A unique identifier representing for the given Subscription resource"
   resourceType: 
     type: "string"
     example: "Subscription"

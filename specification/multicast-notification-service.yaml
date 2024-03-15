@@ -375,15 +375,29 @@ paths:
       description: |
         ### Overview
         Use this endpoint to subscribe to patient-related signals.
+        
+        ### Subscription filtering
+        You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the signal type. For example, if you provide `eventType=pds-change-of-gp-1` 
+        this will mean that you receive all PDS Change of GP events. Currently the only additional filter you can use is NHS Number. We are working with subscribers during private beta to identify any other useful 
+        filters. There may be further filters available in future.
+
+        For further information refer to the payload schema below.
+
+        ### Subscription delivery
+        You can specify the endpoint you want signals delivered to using the `channel.endpoint` field in the payload. MNS currently only supports delivery to [AWS SQS](https://aws.amazon.com/sqs/) endpoints and 
+        [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailboxes. We are working with users during private beta to identify other potential delivery endpoints. 
+        There may be further delivery endpoints available in future.
+
+        You can make suggestions using [feature upvote](https://nhs-digital-api-management.featureupvote.com).
 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
         | Scenario                                  | Request                                                                  | Response                                                                    |
         | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-        | Subscribe to Events (GP Reg Changes)      | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Subscribe to GP registration changes      | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
         | Subscribe to NHS number changes           | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
-        | Subscribe to PDS death notification       | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Subscribe to PDS death notifications      | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
         | Publish a subscription with invalid data  | E.g. modify the subscription to have an invalid value for `resourceType` | HTTP Status 400 and response containing a validation error.                 |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
@@ -452,7 +466,7 @@ paths:
                       description: "The type of channel to send notifications on. Of the options within [FHIR](https://hl7.org/fhir/R4/valueset-subscription-channel-type.html), MNS currently only supports `message`."
                     endpoint:
                       type: "string"
-                      description: "The endpoint which messages will be delivered to. MNS currently only supports [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailbox and [AWS SQS](https://aws.amazon.com/sqs/) endpoints. Note: for MESH delivery you must provide the full mailbox ID and for SQS delivery you must provide the full SQS ARN of your desired queue."
+                      description: "The endpoint which signals will be delivered to. MNS currently only supports delivery to [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailboxes and [AWS SQS](https://aws.amazon.com/sqs/) endpoints. Note: for MESH delivery you must provide the full mailbox ID and for SQS delivery you must provide the full SQS ARN of your desired queue."
                     payload:
                       type: "string"
                       description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/fhir+json R4 Bundle."

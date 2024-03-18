@@ -16,7 +16,7 @@ info:
 
     You can:
       - Publish events. The first use case is GP Registration Change events.
-      - Subscribe to signals based on criteria such as the event type or patient NHS number. The team is actively building a backlog of future signal candidates, which can be viewed in our [Signal Catalogue page](TODO).
+      - Subscribe to signals based on criteria such as the event type or patient NHS number. The team is actively building a backlog of future signal candidates, which can be viewed on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
 
     Data flow:
       1. An event occurs on a provider system. The provider system sends MNS the event.
@@ -362,7 +362,7 @@ paths:
       summary: "Subscribe to events"
       description: |
         ### Overview
-        Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals in our [Signal Catalogue page](TODO).
+        Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
         
         ### Subscription filtering
         You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the signal type. For example, if you provide `eventType=pds-change-of-gp-1`
@@ -377,6 +377,14 @@ paths:
         There may be further delivery endpoints available in future.
 
         You can make suggestions using [feature upvote](https://nhs-digital-api-management.featureupvote.com).
+
+        #### SQS Delivery
+        Before signals can be delivered to your SQS queue, you will need to complete some configuration steps during onboarding e.g. policy and encryption setup. When you make a create subscription request, you must provide your
+        full SQS ARN.
+
+        #### MESH Delivery
+        You will need to provide the ID of your MESH mailbox during onboarding. If you have already completed [MESH onboarding](https://digital.nhs.uk/developer/api-catalogue/message-exchange-for-social-care-and-health-api#overview--end-to-end-process-to-integrate-with-mesh-api)
+        then no further steps will be required aside from calling the subscriptions API. Use a MESH mailbox from their 'Path to Live integration' environment for all non-production MNS environments and a production mailbox for production MNS.
 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:

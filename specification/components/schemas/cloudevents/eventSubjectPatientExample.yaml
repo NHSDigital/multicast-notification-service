@@ -1,0 +1,17 @@
+description: "An NHS patient as represented in the subject property of an MNS event"
+type: "object"
+required:
+  - "nhsNumber"
+  - "familyName"
+  - "dob"
+properties:
+  nhsNumber:
+    type: "string"
+    description: "NHS Number validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html."
+  familyName:
+    type: "string"
+    description: "Last name, capitalised"
+  dob:
+    type: "string"
+    format: "date"
+    description: "ISO-8601 is the required format. However, due to data quality inconsistencies in demographic records, both 'YYYY' and 'YYYY-MM' formats are also acceptable. Refer to the [PDS FHIR API documentation](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient) for further clarification on the accepted formats."

@@ -69,7 +69,7 @@ info:
     In the above cases you must ensure the users are authenticated and suitably authorised locally
 
     To use this access mode, use the following security pattern:
-    * [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) 
+    * [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication)
 
     ## Environments and testing
 
@@ -141,7 +141,7 @@ paths:
 
         ### Data and Metadata:
           - Metadata: In the context of an event, metadata refers to the additional information that describes the event and provides context about it. It includes elements such as the family name and date of birth which are primarily for verification. Users must be cautious not to use such metadata to modify a patient's demographic details. Instead, if updates are necessary, users should conduct a full PDS retrieval to ensure accuracy and completeness in their workflows.
-          - Data: The inclusion of the data field might vary. Its presence is subject to agreements between the MNS team and the originating system. While the structure of the data might differ across various systems and scenarios, it's a general preference to have a pointer included. This pointer aids subscribers in accessing the entire record when necessary for their workflow.   
+          - Data: The inclusion of the data field might vary. Its presence is subject to agreements between the MNS team and the originating system. While the structure of the data might differ across various systems and scenarios, it's a general preference to have a pointer included. This pointer aids subscribers in accessing the entire record when necessary for their workflow.
 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
@@ -445,7 +445,7 @@ paths:
                     - "type"
                     - "endpoint"
                     - "payload"
-                  description: "The channel on which to report matches to the criteria."
+                  description: "The channel on which to report matches to the criteria. SQS Endpoints must be unique per event type; attempts to add a subscription to a n endpoint which is already used will return a HTTP 409 (Conflict)"
                   properties:
                     type:
                       type: "string"

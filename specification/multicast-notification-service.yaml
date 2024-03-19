@@ -445,7 +445,7 @@ paths:
                     - "type"
                     - "endpoint"
                     - "payload"
-                  description: "The channel on which to report matches to the criteria. SQS Endpoints must be unique per event type; attempts to add a subscription to a n endpoint which is already used will fail with a HTTP 409 (Conflict)"
+                  description: "The channel on which to report matches to the criteria. SQS Endpoints must be unique per event type; attempts to add a subscription with an endpoint which is already in-use will fail with a HTTP 409 (Conflict)"
                   properties:
                     type:
                       type: "string"

@@ -555,7 +555,7 @@ paths:
                   errors:
                     type: string
                     description: Error string that explains the problem
-                    example: Endpoint is already subscribed
+                    example: Endpoint arn:aws:sqs:eu-west-2:12345:queue-name is already subscribed for pds-change-of-gp-1 events
         500:
           $ref: "components/errors/internal-error.yaml"
 

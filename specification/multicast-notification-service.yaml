@@ -445,7 +445,7 @@ paths:
                     - "type"
                     - "endpoint"
                     - "payload"
-                  description: "The channel on which to report matches to the criteria. SQS Endpoints must be unique per event type; attempts to add a subscription to a n endpoint which is already used will return a HTTP 409 (Conflict)"
+                  description: "The channel on which to report matches to the criteria. SQS Endpoints must be unique per event type; attempts to add a subscription to a n endpoint which is already used will fail with a HTTP 409 (Conflict)"
                   properties:
                     type:
                       type: "string"
@@ -545,6 +545,17 @@ paths:
                     type: string
                     description: Error string that explains the problem
                     example: User is not authorized to handle the requested data type
+        409:
+          description: "Resource conflict"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    description: Error string that explains the problem
+                    example: Endpoint is already subscribed
         500:
           $ref: "components/errors/internal-error.yaml"
 

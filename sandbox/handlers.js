@@ -139,8 +139,16 @@ async function getSubscriptions(req, res, next) {
             headers: req.rawHeaders,
         }
     });
-
-    res.json([mockSubscriptions.mockCreatedSubscription])
+    res.json({"resourceType": "Bundle",
+        "type": "searchset",
+        "link": [
+            {
+                "relation": "self",
+                "url": "/subscriptions"
+            }
+        ],
+        "entry": [mockSubscriptions.mockCreatedSubscription]}
+        )
     res.end();
     next();
 }

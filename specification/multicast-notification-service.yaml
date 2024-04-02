@@ -575,6 +575,7 @@ paths:
         ### Overview
         Use this endpoint to retrieve a list of all subscriptions belonging to you.
         If your application does not own any subscriptions, then this endpoint will return an empty list.
+        The list of subscriptions is presented in a FHIR resource bundle, allowing pagination. 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
         | Scenario                                  | Request                                                                  | Response                                                                    |
@@ -602,15 +603,42 @@ paths:
           schema:
             type: string
             example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+        - name: continue_from
+          in: query
+          required: false
+          description: |-
+            An optional query string parameter used for pagination, specifying the point from which to continue the list.
+          schema:
+            type: string
       responses:
         200:
           description: Successfully retrieved list of subscriptions
           content:
             application/fhir+json:
               schema:
-                type: array
-                items:
-                  $ref: "components/schemas/fhir/R4/Subscription.yaml"
+                type: object
+                properties:
+                  resourceType:
+                    type: string
+                    enum: [Bundle]
+                  type:
+                    type: string
+                    enum: [searchset]
+                  link:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        relation:
+                          type: string
+                          description: Relation type, e.g., 'self', 'next'. The 'next' relation is present only if there's additional content to paginate through.
+                        url:
+                          type: string
+                          description: The URL for the relation. For 'next', this URL points to the next page of results.
+                  entry:
+                    type: array
+                    items:
+                      $ref: "components/schemas/fhir/R4/Subscription.yaml"
         401:
           $ref: "components/errors/unauthenticated-error.yaml"
         403:

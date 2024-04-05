@@ -635,6 +635,9 @@ paths:
                         url:
                           type: string
                           description: The URL for the relation. For 'next', this URL points to the next page of results.
+                      example:
+                        relation: next
+                        url: '/subscriptions?continue_from=ZmRqa2xmZGprc2xmamtsZHNqZmxkc2Zkcw=='
                   entry:
                     type: array
                     items:

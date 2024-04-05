@@ -141,7 +141,15 @@ describe("app handler tests", function () {
         it("responds with a success when user requests to get ALL subscriptions", (done) => {
             request(server)
                 .get("/subscriptions")
-                .expect(200, [mockSubscriptions.mockCreatedSubscription], done);
+                .expect(200, {  "resourceType": "Bundle",
+                                "type": "searchset",
+                                "link": [
+                                    {
+                                        "relation": "self",
+                                        "url": "/subscriptions"
+                                    }
+                                ], "entry": [mockSubscriptions.mockCreatedSubscription]
+                            }, done);
         });
     });
 });

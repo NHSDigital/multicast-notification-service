@@ -639,6 +639,17 @@ paths:
                     type: array
                     items:
                       $ref: "components/schemas/fhir/R4/Subscription.yaml"
+        400:
+          description: Invalid user input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    description: Error string that explains the problem
+                    example: The continue_from field was not valid
         401:
           $ref: "components/errors/unauthenticated-error.yaml"
         403:

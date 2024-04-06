@@ -18,12 +18,7 @@ install: install-node install-python .git/hooks/pre-commit
 
 #Install tooling using asdf
 install-tools:
-	PLUGINS="python java nodejs poetry"; \
-	for plugin in $$PLUGINS; do \
-		asdf plugin add $$plugin; \
-		asdf install $$plugin; \
-	done
-	asdf reshim
+	scripts/install-tools.sh "python java nodejs poetry"
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
 lint:

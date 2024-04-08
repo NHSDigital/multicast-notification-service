@@ -30,22 +30,14 @@ The contents of this repository are protected by Crown Copyright (C).
 
 ### Install
 
-First you will need to install all the packages listed in the `.tool-versions` file.
-If you are using `asdf` as your package manager, you can run `make install-tools` to install them automatically.
+First you will need to install all the tools listed in the `.tool-versions` file.
+If you are using `asdf` as your package manager, you can simply run `make install-tools` to install them automatically.
+Otherwise you can install them manually.
 
-You can then install the project dependencies by running:
+Once you have installed the tooling, You can then install the project dependencies by running:
 
 ```bash
 make install
-```
-
-#### Updating hooks
-
-You can install some pre-commit hooks to ensure you can't commit invalid spec changes by accident. These are also run
-in CI, but it's useful to run them locally too.
-
-```bash
-make install-hooks
 ```
 
 ### Environment Variables

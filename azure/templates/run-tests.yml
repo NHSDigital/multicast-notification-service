@@ -5,18 +5,29 @@ parameters:
   - name: full
     type: boolean
     default: false
-  - name: test_command
-    type: string
-    default: 'make test'
+  - name: sandbox_unit_tests
+    type: boolean
+    default: false
   - name: smoketest_command
     type: string
     default: 'make smoketest'
+  - name: test_command
+    type: string
+    default: 'make test'
 
 steps:
   - bash: |
       make install-python
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
     displayName: Setup pytests
+    condition: always()
+
+  - ${{ if parameters.full }}:
+    - bash: |
+      make install-node
+      make test-sandbox
+    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+    displayName: Run sandbox unit tests
     condition: always()
 
   - ${{ if parameters.full }}:

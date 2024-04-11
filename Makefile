@@ -35,6 +35,10 @@ publish: clean
 serve:
 	npm run serve
 
+#Runs the sandbox unit tests
+test-sandbox:
+	cd sandbox && NODE_ENV=test npx mocha --reporter spec
+
 #Runs build proxy script
 build-proxy:
 	scripts/build_proxy.sh

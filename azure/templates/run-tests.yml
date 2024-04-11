@@ -22,7 +22,7 @@ steps:
     displayName: Setup pytests
     condition: always()
 
-  - ${{ if parameters.full }}:
+  - ${{ if parameters.sandbox_unit_tests }}:
     - bash: |
       make install-node
       make test-sandbox

@@ -26,9 +26,9 @@ steps:
     - bash: |
         make install-node
         make test-sandbox
-    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
-    displayName: Run sandbox unit tests
-    condition: always()
+      workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+      displayName: Run sandbox unit tests
+      condition: always()
 
   - ${{ if parameters.full }}:
     # In order to run tests in prod you must supply the unique ID of an Apigee app

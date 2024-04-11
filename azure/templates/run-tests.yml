@@ -18,13 +18,13 @@ parameters:
 steps:
   - bash: |
       make install-python
+      make install-node
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
     displayName: Setup pytests
     condition: always()
 
   - ${{ if parameters.sandbox_unit_tests }}:
     - bash: |
-        make install-node
         make test-sandbox
       workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
       displayName: Run sandbox unit tests

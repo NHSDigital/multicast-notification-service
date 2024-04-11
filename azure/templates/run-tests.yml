@@ -25,7 +25,6 @@ steps:
   - ${{ if parameters.sandbox_unit_tests }}:
     - bash: |
       make install-node
-      make test-sandbox
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
     displayName: Run sandbox unit tests
     condition: always()

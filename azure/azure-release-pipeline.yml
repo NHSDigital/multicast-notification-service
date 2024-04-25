@@ -34,35 +34,35 @@ extends:
     apigee_deployments:
       - environment: internal-dev
         post_deploy:
-          - template: ./templates/run-tests.yml
+          - template: ./templates/run-pytests.yml.yml
             parameters:
               full: true
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         post_deploy:
-          - template: ./templates/run-tests.yml
+          - template: ./templates/run-pytests.yml.yml
       - environment: internal-qa
         post_deploy:
-          # - template: ./templates/run-tests.yml No target endpoint configured for QA. Not required currently.
+          # - template: ./templates/run-pytests.yml.yml No target endpoint configured for QA. Not required currently.
           #   parameters:
           #     full: true
       - environment: internal-qa-sandbox
         proxy_path: sandbox
         post_deploy:
-          - template: ./templates/run-tests.yml
+          - template: ./templates/run-pytests.yml.yml
       - environment: ref
         depends_on:
           - internal_qa
           - internal_qa_sandbox
         post_deploy:
-          - template: ./templates/run-tests.yml
+          - template: ./templates/run-pytests.yml.yml
       - environment: sandbox
         proxy_path: sandbox
       - environment: int
         depends_on:
           - internal_qa_sandbox
         post_deploy:
-          - template: ./templates/run-tests.yml
+          - template: ./templates/run-pytests.yml.yml
             parameters:
               app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
               full: true
@@ -71,7 +71,7 @@ extends:
         depends_on:
           - int
         post_deploy:
-          - template: ./templates/run-tests.yml
+          - template: ./templates/run-pytests.yml.yml
             parameters:
               app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
               full: true

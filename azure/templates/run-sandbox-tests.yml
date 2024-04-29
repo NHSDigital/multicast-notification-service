@@ -12,4 +12,15 @@ steps:
     condition: always()
 
   - bash: |
-      
+      make test
+      make test-report
+    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+    displayName: Run sandbox tests
+    condition: always()
+
+  - task: PublishTestResults@2
+      displayName: 'Publish sandbox results'
+      condition: always()
+      inputs:
+        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/sandbox-report.xml'
+        failTaskOnFailedTests: true

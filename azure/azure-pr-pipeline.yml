@@ -42,4 +42,7 @@ extends:
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         post_deploy:
-          - template: ./templates/run-pytests.yml.yml
+          - template: ./templates/run-sandbox-tests.yml.yml
+            parameters:
+              
+

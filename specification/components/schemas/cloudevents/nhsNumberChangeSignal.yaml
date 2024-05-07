@@ -20,7 +20,6 @@ properties:
       - "nhsNumber"
       - "familyName"
       - "dob"
-      - "age"
     description: "The NHS patient who is the subject of the signal."
     properties:
       nhsNumber:
@@ -33,9 +32,6 @@ properties:
         type: "string"
         format: "date"
         description: "ISO-8601 is the required format. However, due to data quality inconsistencies in demographic records, both 'YYYY' and 'YYYY-MM' formats may also be seen. Refer to the [PDS FHIR API documentation](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient) for further clarification on the accepted formats."
-      age:
-        type: "integer"
-        description: "The age of the patient at the time the Signal is created."
   source:
     type: "object"
     required:
@@ -109,7 +105,6 @@ example:
   id: "1dd1f17a-599d-40b8-9ee9-2c92756e2bc9"
   type: "nhs-number-change-1"
   subject:
-    age: 6
     dob: "2017-10-02"
     familyName: "DAWKINS"
     nhsNumber: "9912003888"

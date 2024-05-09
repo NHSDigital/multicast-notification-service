@@ -149,6 +149,7 @@ paths:
         | Publish a GP Registration Change event    | Content-Type: `application/json` Event Type: `pds-change-of-gp-1`       | HTTP Status 200 and response containing id and success status. |
         | Publish a GP Death event                  | Content-Type: `application/json` Event Type: `pds-death-notification-1` | HTTP Status 200 and response containing id and success status. |
         | Publish an NHS Number Change event        | Content-Type: `application/json` Event Type: `nhs-number-change-1`      | HTTP Status 200 and response containing id and success status. |
+        | Publish an Immunisation Vaccination event | Content-Type: `application/json` Event Type: `imms-vaccinations-1`      | HTTP Status 200 and response containing id and success status. |
         | Publish an event with invalid data        | E.g. an event with an invalid value for `time`                          | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
@@ -230,6 +231,7 @@ paths:
                     - $ref: "components/schemas/cloudevents/pdsChangeOfGpEventData.yaml"
                     - $ref: "components/schemas/cloudevents/pdsDeathEventData.yaml"
                     - $ref: "components/schemas/cloudevents/nhsNumberChangeEventData.yaml"
+                    - $ref: "components/schemas/cloudevents/immunisationVaccinationEventData.yaml"
             examples:
               pdsChangeOfGpEvent:
                 description: "Create a PDS change of GP signal event"
@@ -300,6 +302,29 @@ paths:
                       name: "The GP Practice"
                       identifier:
                         system: "https://fhir.nhs.uk/Id/nhsSpineASID"
+                        value: "477121000323"
+              immunisationVaccinationEvent:
+                value:
+                  id: "93d3f828-c6d2-43eb-95c2-f98f7c7ed889"
+                  type: "imms-vaccinations-1"
+                  subject:
+                    dob: "2017-10-02"
+                    familyName: "DAWKINS"
+                    nhsNumber: "9912003888"
+                  source:
+                    name: "NHS DIGITAL"
+                    identifier:
+                      system: "https://fhir.nhs.uk/Id/immunisationsASID"
+                      value: "477121000324"
+                  time: "2022-04-05T17:31:00.000Z"
+                  data:
+                    versionId: 'W/"1"'
+                    fullUrl: "https://int.api.service.nhs.uk/immunisation-fhir-api/Immunization?patient.identifier=https%3A%2F%2Ffhir.nhs.uk%2FId%2Fnhs-number%7C9912003888"
+                    immunisationType: "FLU"
+                    provenance:
+                      name: "The GP Practice"
+                      identifier:
+                        system: "https://fhir.nhs.uk/Id/orignatorOfRecordASID"
                         value: "477121000323"
               mnsEventMetaDataOnly:
                 value:
@@ -511,6 +536,18 @@ paths:
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription should be created."
                   criteria: "eventType=pds-death-notification-1&;patient.identifier=477121000324"
+                  channel:
+                    type: "message"
+                    endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
+                    payload: "application/json"
+              immunisationVaccinationSubscription:
+                description: "Create an immunisation vaccination subscription"
+                value:
+                  resourceType: "Subscription"
+                  status: "requested"
+                  end: "2022-04-05T17:31:00.000Z"
+                  reason: "A description of why this subscription should be created."
+                  criteria: "eventType=imms-vaccinations-1&;patient.identifier=477121000324"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"

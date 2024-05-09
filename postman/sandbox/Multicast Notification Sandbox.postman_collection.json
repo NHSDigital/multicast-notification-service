@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fcf69434-4b78-40f4-8295-f9106fc3408f",
+		"_postman_id": "2db40582-44de-44f0-b312-7ec3556867e2",
 		"name": "Multicast Notification Sandbox",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29428905"
+		"_exporter_id": "33432328"
 	},
 	"item": [
 		{
@@ -105,6 +105,32 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id\": \"d94f8dec-4004-4614-bf8a-045a952f4164\",\r\n    \"type\": \"nhs-number-change-1\",\r\n    \"subject\": {\r\n        \"nhsNumber\": \"9912003888\",\r\n        \"familyName\": \"DAWKINS\",\r\n        \"dob\": \"2021-02-28\"\r\n    },\r\n    \"source\": {\r\n        \"name\": \"NHS Digital\",\r\n        \"identifier\": {\r\n        \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n        \"value\": \"477121000323\"\r\n        }\r\n    },\r\n    \"time\": \"2023-04-05T17:31:00.000Z\",\r\n    \"data\": {\r\n        \"nhsNumberStatus\": \"I\",\r\n        \"fullUrl\": \"https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888\",\r\n        \"versionId\": \"W/\\\"16\\\"\",\r\n        \"provenance\": {\r\n        \"name\": \"The GP Practice\",\r\n            \"identifier\": {\r\n                \"system\": \"https://fhir.nhs.uk/Id/nhsSpineASID\",\r\n                \"value\": \"477121000324\"\r\n            }\r\n      }\r\n    }\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Immunisation Vaccination: Publish Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"d94f8dec-4004-4614-bf8a-045a952f4164\",\r\n    \"type\": \"imms-vaccinations-1\",\r\n    \"subject\": {\r\n        \"nhsNumber\": \"9912003888\",\r\n        \"familyName\": \"DAWKINS\",\r\n        \"dob\": \"2021-02-28\"\r\n    },\r\n    \"source\": {\r\n        \"name\": \"NHS Digital\",\r\n        \"identifier\": {\r\n        \"system\": \"https://fhir.nhs.uk/Id/immunisationsASID\",\r\n        \"value\": \"477121000323\"\r\n        }\r\n    },\r\n    \"time\": \"2023-04-05T17:31:00.000Z\",\r\n    \"data\": {\r\n        \"immunisationType\": \"FLU\",\r\n        \"fullUrl\": \"https://int.api.service.nhs.uk/immunisation-fhir-api/Immunization?patient.identifier=https%3A%2F%2Ffhir.nhs.uk%2FId%2Fnhs-number%7C9912003888\",\r\n        \"versionId\": \"W/\\\"1\\\"\",\r\n        \"provenance\": {\r\n        \"name\": \"The GP Practice\",\r\n            \"identifier\": {\r\n                \"system\": \"https://fhir.nhs.uk/Id/orignatorOfRecordASID\",\r\n                \"value\": \"477121000324\"\r\n            }\r\n      }\r\n    }\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"

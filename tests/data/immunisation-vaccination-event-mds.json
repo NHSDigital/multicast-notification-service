@@ -1,0 +1,29 @@
+{
+    "id": "68b06f57-bd22-42fc-951d-1c9146d1188b",
+    "type": "imms-vaccinations-1",
+    "subject": {
+        "nhsNumber": "9912003887",
+        "familyName": "DAWKINS",
+        "dob": "2021-02-28"
+    },
+    "source": {
+        "name": "NHS Digital",
+        "identifier": {
+            "system": "https://fhir.nhs.uk/Id/nhsSpineASID",
+            "value": "477121000323"
+        }
+    },
+    "time": "2023-11-15T11:12:12.219+00:00",
+    "data": {
+        "fullUrl": "https://internal-dev.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003887",
+        "versionId": "W/\"2\"",
+        "provenance": {
+            "name": "The GP Practice",
+            "identifier": {
+                "system": "https://fhir.nhs.uk/Id/nhsSpineASID",
+                "value": "477121000324"
+            }
+        },
+        "immunisationType": "FLU"
+    }
+}

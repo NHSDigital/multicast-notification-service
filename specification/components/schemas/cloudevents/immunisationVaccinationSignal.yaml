@@ -1,0 +1,128 @@
+type: "object"
+description: "The Immunisation Vaccination Signal. You will receive this object if you subscribe to `imms-vaccinations-1` events with an `application/json` format."
+required:
+  - "id"
+  - "data"
+  - "type"
+  - "subject"
+  - "source"
+  - "time"
+properties:
+  id:
+    type: "string"
+    description: "UUID v4 format identifier."
+  type:
+    type: "string"
+    description: "A unique string representing the signal type."
+  subject:
+    type: "object"
+    required:
+      - "nhsNumber"
+      - "familyName"
+      - "dob"
+    description: "The NHS patient who is the subject of the signal."
+    properties:
+      nhsNumber:
+        type: "string"
+        description: "NHS Number validated in line with https://www.datadictionary.nhs.uk/attributes/nhs_number.html."
+      familyName:
+        type: "string"
+        description: "Last name, capitalised"
+      dob:
+        type: "string"
+        format: "date"
+        description: "ISO-8601 is the required format. However, due to data quality inconsistencies in demographic records, both 'YYYY' and 'YYYY-MM' formats may also be seen. Refer to the [PDS FHIR API documentation](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient) for further clarification on the accepted formats."
+  source:
+    type: "object"
+    required:
+      - "name"
+      - "identifier"
+    description: "Organisation responsible for publishing the patient-related signal."
+    properties:
+      name:
+        type: "string"
+        description: "Organisation name"
+      identifier:
+        type: "object"
+        required:
+          - "system"
+          - "value"
+        description: "Must follow this identifier system: https://fhir.nhs.uk/Id/immunisationsASID and provide the ASID Code as the value."
+        properties:
+          system:
+            type: "string"
+          value:
+            type: "string"
+  time:
+    type: "string"
+    format: "date-time"
+    description: "The time at which the signal is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
+  data:
+    type: "object"
+    required:
+    - immunisationType
+    - fullUrl
+    - provenance
+    - versionId
+    properties:
+      immunisationType:
+        type: "string"
+        description: |
+            A string representing the immunisation type. This field is only provided for the imms-vaccinations-1 event type.
+            The permitted values are as follows:
+            | Value      | Description                                                                                                      |
+            | ---------- | ---------------------------------------------------------------------------------------------------------------- |
+            | RSV        |  Respiratory syncytial virus (RSV)                                                                               |
+            | Pertussis  |  Pertussis                                                                                                       |
+            | COVID19    |  Coronavirus disease (COVID-19)                                                                                  |
+            | FLU        |  Influenza                                                                                                       |
+            | HPV        |  Human Papillomavirus (HPV)                                                                                      |
+      versionId:
+        type: "string"
+        description: "The versionId/ETAG identifies the version of the resource. The format should be a version identifier enclosed in quotes and preceded by 'W/'."
+      fullUrl:
+        type: "string"
+        description: "The URL where the subscriber can retrieve the source of truth record for the patient or the full event payload."
+      provenance:
+        type: "object"
+        description: "The provenance describes which organisation was responsible for the creation of the event."
+        required:
+        - name
+        - identifier
+        properties:
+          name:
+            type: "string"
+            description: "The name of the organisation responsible for the creating the event. This may be an empty string due to publisher data issues."
+          identifier:
+            type: "object"
+            required:
+            - "system"
+            - "value"
+            description: "Must follow this identifier system: https://fhir.nhs.uk/Id/orignatorOfRecordASID and provide the ASID value and name of the system."
+            properties:
+                system:
+                  type: "string"
+                value:
+                  type: "string"
+example:
+  id: "1dd1f17a-599d-40b8-9ee9-2c92756e2bc9"
+  type: "imms-vaccinations-1"
+  subject:
+    dob: "2017-10-02"
+    familyName: "DAWKINS"
+    nhsNumber: "9912003888"
+  source:
+    name: "NHS DIGITAL"
+    identifier:
+      system: "https://fhir.nhs.uk/Id/immunisationsASID"
+      value: "477121000324"
+  time: "2022-04-05T17:31:00.000Z"
+  data:
+    versionId: 'W/"1"'
+    fullUrl: "https://int.api.service.nhs.uk/immunisation-fhir-api/Immunization?patient.identifier=https%3A%2F%2Ffhir.nhs.uk%2FId%2Fnhs-number%7C9912003888"
+    immunisationType: "FLU"
+    provenance:
+      name: "The GP Practice"
+      identifier:
+        system: "https://fhir.nhs.uk/Id/orignatorOfRecordASID"
+        value: "000000000000"

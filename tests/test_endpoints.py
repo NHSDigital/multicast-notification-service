@@ -108,12 +108,12 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
         "attributes": [
             {
                 "name": "permissions",
-                "value": (
-                    "events:create:pds-change-of-gp-1,"
-                    "events:create:pds-death-notification-1,"
-                    "events:create:nhs-number-change-1"
-                    "events:create:imms-vaccinations-1"
-                )
+                "value": ",".join([
+                    "events:create:pds-change-of-gp-1",
+                    "events:create:pds-death-notification-1",
+                    "events:create:nhs-number-change-1",
+                    "events:create:imms-vaccinations-1",
+                ])
             }
         ]
     }

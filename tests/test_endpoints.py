@@ -125,7 +125,7 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
     )
     update_response.raise_for_status()
 
-    for pds_mds_event in mds_event_list:
+    for mds_event in mds_event_list:
         nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
         retries = 0
 
@@ -133,7 +133,7 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
             resp = requests.post(
                 f"{nhsd_apim_proxy_url}/events",
                 headers=nhsd_apim_auth_headers,
-                json=pds_mds_event
+                json=mds_event
             )
 
             if resp.status_code == 403:
@@ -143,4 +143,4 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
             break
 
         assert resp.status_code == 200
-        assert resp.json() == {"id": pds_mds_event["id"]}
+        assert resp.json() == {"id": mds_event["id"]}

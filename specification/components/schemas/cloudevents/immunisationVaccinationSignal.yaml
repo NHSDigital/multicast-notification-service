@@ -31,7 +31,7 @@ properties:
       dob:
         type: "string"
         format: "date"
-        description: "ISO-8601 is the required format. However, due to data quality inconsistencies in demographic records, both 'YYYY' and 'YYYY-MM' formats may also be seen. Refer to the [PDS FHIR API documentation](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient) for further clarification on the accepted formats."
+        description: "ISO-8601 is the required format."
   source:
     type: "object"
     required:

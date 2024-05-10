@@ -155,7 +155,26 @@ Create an OpenAPI Specification to document your API. For more information about
 
 #### `/tests`
 
-End to End tests. These tests are written in Python and use the PyTest test runner. Before running these tests you will need to set environment variables. The `test_endpoint.py` file provides a template of how to set up tests which test your api endpoints. For more information about testing your API see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Testing+your+API ).
+End to End tests.
+
+ These tests are run automatically in the azure build pipelines. They are written in Python and use the PyTest test runner.
+
+ To run them locally you will need access to Apigee non-prod. Then you should install [get_token](https://docs.apigee.com/api-platform/system-administration/using-gettoken)
+
+
+ Then run:
+
+ `export SSO_LOGIN_URL='https://login.apigee.com'`
+
+ `export APIGEE_ACCESS_TOKEN=$(get_token)`
+
+ and then set another environment variable similar to this, substituting your pr number:
+
+ `export PROXY_NAME=multicast-notification-service-pr-137`
+
+ some of the tests also require you to export a `SOURCE_COMMIT_ID` environment variable pointing to the commit id in your branch.
+ 
+ The `test_endpoint.py` file provides a template of how to set up tests which test your api endpoints. For more information about testing your API see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Testing+your+API ).
 
 #### `Makefile`
 

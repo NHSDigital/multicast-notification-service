@@ -172,7 +172,7 @@ End to End tests.
 
  `export PROXY_NAME=multicast-notification-service-pr-137`
 
- some of the tests also require you to export a `SOURCE_COMMIT_ID` environment variable pointing to the commit id in your branch.
+ some of the tests also require you to export a `SOURCE_COMMIT_ID` environment variable pointing to the commit id azure uses to run the build. You can find this in the pipeline summary sources.
  
  The `test_endpoint.py` file provides a template of how to set up tests which test your api endpoints. For more information about testing your API see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Testing+your+API ).
 

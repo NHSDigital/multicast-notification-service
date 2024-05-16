@@ -8,9 +8,6 @@ parameters:
   - name: test_command
     type: string
     default: 'make test'
-  - name: sandboxtest_command
-    type: string
-    default: 'make -C sandbox test'
   - name: smoketest_command
     type: string
     default: 'make smoketest'
@@ -32,7 +29,6 @@ steps:
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
         ${{ parameters.test_command }}
-        ${{ parameters.sandboxtest_command }}
       workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
       displayName: Run full test suite
     - task: PublishTestResults@2

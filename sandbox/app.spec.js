@@ -141,7 +141,7 @@ describe("app handler tests", function () {
         it("responds with a success when user requests to get ALL subscriptions", (done) => {
             request(server)
                 .get("/subscriptions")
-                .expect(201, {  "resourceType": "Bundle",
+                .expect(200, {  "resourceType": "Bundle",
                                 "type": "searchset",
                                 "link": [
                                     {

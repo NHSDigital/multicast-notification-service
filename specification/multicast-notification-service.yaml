@@ -465,7 +465,10 @@ paths:
                       description: "The endpoint which signals will be delivered to. MNS currently only supports delivery to [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailboxes and [AWS SQS](https://aws.amazon.com/sqs/) endpoints. Note: for MESH delivery you must provide the full mailbox ID and for SQS delivery you must provide the full SQS ARN of your desired queue."
                     payload:
                       type: "string"
-                      description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/fhir+json R4 Bundle."
+                      description: "The mime type to send the payload in. MNS supports `application/json` and `application/fhir+json` (FHIR R4 Bundle)."
+                      example: |
+                        - "application/json"
+                        - "application/fhir+json"
             examples:
               pdsChangeofGPSubscription:
                 description: "Create a pds change of GP subscription"
@@ -514,7 +517,7 @@ paths:
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
-                    payload: "application/json"
+                    payload: "application/fhir+json"
 
       responses:
         201:

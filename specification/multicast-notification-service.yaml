@@ -466,9 +466,6 @@ paths:
                     payload:
                       type: "string"
                       description: "The mime type to send the payload in. MNS supports `application/json` and `application/fhir+json` (FHIR R4 Bundle)."
-                      example: |
-                        - "application/json"
-                        - "application/fhir+json"
             examples:
               pdsChangeofGPSubscription:
                 description: "Create a pds change of GP subscription"

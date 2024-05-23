@@ -53,4 +53,4 @@ properties:
       payload:
         type: "string"
         example: "application/json"
-        description: "The mime type to send the payload in. MNS currently only supports `application/json` signals but there are future plans to support other formats such as an application/fhir+json R4 Bundle."
+        description: "The mime type to send the payload in. MNS supports `application/json` and `application/fhir+json` (FHIR R4 Bundle)."

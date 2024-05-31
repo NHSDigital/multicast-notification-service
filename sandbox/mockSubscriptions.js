@@ -22,10 +22,27 @@ mockCreatedSubscription = {
         "endpoint": "arn:aws:sqs:eu-west-2:12345:example-queue-123",
         "payload": "application/json"
     }
+},
+mockSubscriptionRequestFHIR ={
+    ...mockSubscriptionRequest,
+    "channel": {
+        ...mockSubscriptionRequest.channel,
+        "payload": "application/fhir+json"
+    }
+},
+mockCreatedSubscriptionFHIR ={
+    ...mockCreatedSubscription,
+    "id": "c5a332ca-12ab-4ccf-9eb7-c933713accb3",
+    "channel": {
+        ...mockCreatedSubscription.channel,
+        "payload": "application/fhir+json"
+    }
 }
 
 
 module.exports = {
     mockCreatedSubscription: mockCreatedSubscription,
-    mockSubscriptionRequest: mockSubscriptionRequest
+    mockSubscriptionRequest: mockSubscriptionRequest,
+    mockSubscriptionRequestFHIR: mockSubscriptionRequestFHIR,
+    mockCreatedSubscriptionFHIR: mockCreatedSubscriptionFHIR,
 }

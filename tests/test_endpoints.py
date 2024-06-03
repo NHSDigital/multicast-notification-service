@@ -26,11 +26,12 @@ def read_json_file(current_file: str, filename: str):
 
 
 @pytest.fixture
-def pds_mds_event_list() -> List[dict]:
+def mds_event_list() -> List[dict]:
     return [
         read_json_file(__file__, "pds-change-of-gp-event-mds.json"),
         read_json_file(__file__, "pds-death-event-mds.json"),
-        read_json_file(__file__, "nhs-number-change-event-mds.json")
+        read_json_file(__file__, "nhs-number-change-event-mds.json"),
+        read_json_file(__file__, "immunisation-vaccination-event-mds.json"),
     ]
 
 
@@ -96,7 +97,7 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 def test_events_endpoint_accepts_valid_mds_payload_pds_events(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
-    pds_mds_event_list,
+    mds_event_list,
     _apigee_app_base_url,
     _create_test_app
 ):
@@ -107,11 +108,12 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
         "attributes": [
             {
                 "name": "permissions",
-                "value": (
-                    "events:create:pds-change-of-gp-1,"
-                    "events:create:pds-death-notification-1,"
-                    "events:create:nhs-number-change-1"
-                )
+                "value": ",".join([
+                    "events:create:pds-change-of-gp-1",
+                    "events:create:pds-death-notification-1",
+                    "events:create:nhs-number-change-1",
+                    "events:create:imms-vaccinations-1",
+                ])
             }
         ]
     }
@@ -123,7 +125,7 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
     )
     update_response.raise_for_status()
 
-    for pds_mds_event in pds_mds_event_list:
+    for mds_event in mds_event_list:
         nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
         retries = 0
 
@@ -131,7 +133,7 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
             resp = requests.post(
                 f"{nhsd_apim_proxy_url}/events",
                 headers=nhsd_apim_auth_headers,
-                json=pds_mds_event
+                json=mds_event
             )
 
             if resp.status_code == 403:
@@ -141,4 +143,4 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
             break
 
         assert resp.status_code == 200
-        assert resp.json() == {"id": pds_mds_event["id"]}
+        assert resp.json() == {"id": mds_event["id"]}

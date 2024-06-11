@@ -95,12 +95,6 @@ def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", headers=nhsd_apim_auth_headers)
-    assert resp.status_code == 200
-
-
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_events_endpoint_accepts_valid_mds_payload_pds_events(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,

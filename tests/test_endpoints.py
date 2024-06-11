@@ -88,9 +88,14 @@ def _container_not_ready(resp: requests.Response):
         .get('responseCode') == 503
 
 
+@pytest.mark.parametrize("proxy_path", ["/events", "/subscriptions"])
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
-def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
+def test_app_level0(proxy_path, nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}/{proxy_path}",
+        headers=nhsd_apim_auth_headers,
+        timeout=30
+    )
     assert resp.status_code == 401
 
 

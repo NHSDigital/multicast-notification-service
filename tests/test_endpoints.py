@@ -59,14 +59,16 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
 @pytest.mark.smoketest
 def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
+                        timeout=30)
     deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
-           and retries <= 30
-           and resp.status_code == 200
-           and resp.json().get("version")):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
+    while (
+            deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
+            and resp.status_code == 200
+            and resp.json().get("version")):
+        resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
+                            timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
 
@@ -77,8 +79,13 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     elif not resp.json().get("version"):
         pytest.fail("version not found")
 
-    assert deployed_commit_id == getenv('SOURCE_COMMIT_ID')
     assert resp.json().get("status") == "pass"
+
+
+def _container_not_ready(resp: requests.Response):
+    return resp.json().get('checks', {})\
+        .get('healthcheck', {})\
+        .get('responseCode') == 503
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})

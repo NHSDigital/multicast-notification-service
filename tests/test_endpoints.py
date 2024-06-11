@@ -38,13 +38,13 @@ def mds_event_list() -> List[dict]:
 @pytest.mark.smoketest
 def test_wait_for_ping(nhsd_apim_proxy_url):
     retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
     deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
            and retries <= 30
            and resp.status_code == 200):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
+        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
 
@@ -63,8 +63,7 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
                         timeout=30)
     deployed_commit_id = resp.json().get("commitId")
 
-    while (
-            deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
             and resp.status_code == 200
             and resp.json().get("version")):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,

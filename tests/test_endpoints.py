@@ -83,6 +83,10 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
 
 
 def _container_not_ready(resp: requests.Response):
+    """
+    Requests to ECS containers which are still starting up return with a
+    HTTP 503 (service unavailable).
+    """
     return resp.json().get('checks', {})\
         .get('healthcheck', {})\
         .get('responseCode') == 503

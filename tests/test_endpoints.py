@@ -65,6 +65,7 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
 
     while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
             and resp.status_code == 200
+            and retries <= 30
             and resp.json().get("version")):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
                             timeout=30)

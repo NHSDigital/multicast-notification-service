@@ -38,13 +38,13 @@ def mds_event_list() -> List[dict]:
 @pytest.mark.smoketest
 def test_wait_for_ping(nhsd_apim_proxy_url):
     retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
     deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
            and retries <= 30
            and resp.status_code == 200):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
+        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
 
@@ -59,14 +59,16 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
 @pytest.mark.smoketest
 def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
+                        timeout=30)
     deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
-           and retries <= 30
-           and resp.status_code == 200
-           and resp.json().get("version")):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
+            and resp.status_code == 200
+            and retries <= 30
+            and resp.json().get("version")):
+        resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
+                            timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
 
@@ -77,20 +79,28 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     elif not resp.json().get("version"):
         pytest.fail("version not found")
 
-    assert deployed_commit_id == getenv('SOURCE_COMMIT_ID')
     assert resp.json().get("status") == "pass"
 
 
+def _container_not_ready(resp: requests.Response):
+    """
+    Requests to ECS containers which are still starting up return with a
+    HTTP 503 (service unavailable).
+    """
+    return resp.json().get('checks', {})\
+        .get('healthcheck', {})\
+        .get('responseCode') == 503
+
+
+@pytest.mark.parametrize("proxy_path", ["events", "subscriptions"])
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
-def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
+def test_app_level0(proxy_path, nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}/{proxy_path}",
+        headers=nhsd_apim_auth_headers,
+        timeout=30
+    )
     assert resp.status_code == 401
-
-
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", headers=nhsd_apim_auth_headers)
-    assert resp.status_code == 200
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})

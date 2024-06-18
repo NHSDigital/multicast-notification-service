@@ -115,7 +115,7 @@ properties:
                 type: "string"
 example:
   id: "3f2504e0-4f89-11d3-9a0c-0305e82c3301"
-  type: "gpreg-change-gp-request-1"
+  type: "gpreg-change-gp-req-1"
   subject:
     dob: "2017-10-02"
     familyName: "DAWKINS"

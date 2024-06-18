@@ -5,6 +5,7 @@ for more ideas on how to test the authorization of your API.
 """
 import json
 import os
+from time import sleep
 from typing import List
 import pytest
 import requests
@@ -47,6 +48,7 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
+        sleep(1)
 
     if resp.status_code != 200:
         pytest.fail(f"Status code {resp.status_code}, expecting 200")
@@ -71,6 +73,7 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
                             timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
+        sleep(1)
 
     if resp.status_code != 200:
         pytest.fail(f"Status code {resp.status_code}, expecting 200")

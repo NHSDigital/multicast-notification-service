@@ -1,5 +1,5 @@
 type: "object"
-description: "The NHS Number Change Signal. You will receive this object if you subscribe to `nhs-number-change-1` events with an `application/json` format."
+description: "The Immunisation Vaccination Signal. You will receive this object if you subscribe to `imms-vaccinations-1` events with an `application/json` format."
 required:
   - "id"
   - "data"
@@ -31,7 +31,7 @@ properties:
       dob:
         type: "string"
         format: "date"
-        description: "ISO-8601 is the required format. However, due to data quality inconsistencies in demographic records, both 'YYYY' and 'YYYY-MM' formats may also be seen. Refer to the [PDS FHIR API documentation](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir#get-/Patient) for further clarification on the accepted formats."
+        description: "ISO-8601 is the required format."
   source:
     type: "object"
     required:
@@ -47,7 +47,7 @@ properties:
         required:
           - "system"
           - "value"
-        description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID Code as the value."
+        description: "Must follow this identifier system: https://fhir.nhs.uk/Id/immunisationsASID and provide the ASID Code as the value."
         properties:
           system:
             type: "string"
@@ -60,20 +60,23 @@ properties:
   data:
     type: "object"
     required:
-    - nhsNumberStatus
+    - immunisationType
     - fullUrl
     - provenance
     - versionId
     properties:
-    nhsNumberStatus:
-      type: "string"
-      description: |
-          A set of coded values that represent the status of the NHS Number which is the subject of the change. This field is only provided for the nhs-number-change-1 event type.
-          The permitted codes are as follows:
-          | Code | Type                  | Description                                                                                                      |
-          | ---- | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
-          | I    |  Invalidated          | Part of the NHS Patient 'sensitivity' information and indicates that a specific NHS Number has been invalidated. |
-          | R    |  Replaced             | An NHS Number has been superseded by or replaced by another NHS number for instance in the case of a merge.      |
+      immunisationType:
+        type: "string"
+        description: |
+            A string representing the immunisation type. This field is only provided for the imms-vaccinations-1 event type.
+            The permitted values are as follows:
+            | Value      | Description                                                                                                      |
+            | ---------- | ---------------------------------------------------------------------------------------------------------------- |
+            | RSV        |  Respiratory syncytial virus (RSV)                                                                               |
+            | Pertussis  |  Pertussis                                                                                                       |
+            | COVID19    |  Coronavirus disease (COVID-19)                                                                                  |
+            | FLU        |  Influenza                                                                                                       |
+            | HPV        |  Human Papillomavirus (HPV)                                                                                      |
       versionId:
         type: "string"
         description: "The versionId/ETAG identifies the version of the resource. The format should be a version identifier enclosed in quotes and preceded by 'W/'."
@@ -95,7 +98,7 @@ properties:
             required:
             - "system"
             - "value"
-            description: "Must follow this identifier system: https://fhir.nhs.uk/Id/nhsSpineASID and provide the ASID value and name of the system."
+            description: "Must follow this identifier system: https://fhir.nhs.uk/Id/orignatorOfRecordASID and provide the ASID value and name of the system."
             properties:
                 system:
                   type: "string"
@@ -103,7 +106,7 @@ properties:
                   type: "string"
 example:
   id: "1dd1f17a-599d-40b8-9ee9-2c92756e2bc9"
-  type: "nhs-number-change-1"
+  type: "imms-vaccinations-1"
   subject:
     dob: "2017-10-02"
     familyName: "DAWKINS"
@@ -111,15 +114,15 @@ example:
   source:
     name: "NHS DIGITAL"
     identifier:
-      system: "https://fhir.nhs.uk/Id/nhsSpineASID"
+      system: "https://fhir.nhs.uk/Id/immunisationsASID"
       value: "477121000324"
   time: "2022-04-05T17:31:00.000Z"
   data:
-    versionId: 'W/"16"'
-    fullUrl: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
-    nhsNumberStatus: "I"
+    versionId: 'W/"1"'
+    fullUrl: "https://int.api.service.nhs.uk/immunisation-fhir-api/Immunization?patient.identifier=https%3A%2F%2Ffhir.nhs.uk%2FId%2Fnhs-number%7C9912003888"
+    immunisationType: "FLU"
     provenance:
       name: "The GP Practice"
       identifier:
-        system: "https://fhir.nhs.uk/Id/nhsSpineASID"
-        value: "477121000323"
+        system: "https://fhir.nhs.uk/Id/orignatorOfRecordASID"
+        value: "000000000000"

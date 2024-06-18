@@ -115,6 +115,22 @@ describe("app handler tests", function () {
                 .get("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
                 .expect(200, mockSubscriptions.mockCreatedSubscription, done);
         });
+
+        it("responds with a success when the pre-canned FHIR subscription is sent to /subscriptions", (done) => {
+            request(server)
+                .post("/subscriptions")
+                .set('Content-Type',  'application/fhir+json')
+                .send(mockSubscriptions.mockSubscriptionRequestFHIR)
+                .expect(200, {
+                    "id": "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                },done);
+        });
+
+        it("responds with a success and returns subscription body including FHIR output format, when a valid subscriptionID is provided to subscriptions GET", (done) => {
+            request(server)
+                .get("/subscriptions/c5a332ca-12ab-4ccf-9eb7-c933713accb3")
+                .expect(200, mockSubscriptions.mockCreatedSubscriptionFHIR, done);
+        });
     
         it("responds with a not found error when an invalid subscriptionID is provided to subscriptions GET", (done) => {
             request(server)

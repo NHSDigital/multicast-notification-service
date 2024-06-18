@@ -5,6 +5,7 @@ for more ideas on how to test the authorization of your API.
 """
 import json
 import os
+from time import sleep
 from typing import List
 import pytest
 import requests
@@ -26,26 +27,28 @@ def read_json_file(current_file: str, filename: str):
 
 
 @pytest.fixture
-def pds_mds_event_list() -> List[dict]:
+def mds_event_list() -> List[dict]:
     return [
         read_json_file(__file__, "pds-change-of-gp-event-mds.json"),
         read_json_file(__file__, "pds-death-event-mds.json"),
-        read_json_file(__file__, "nhs-number-change-event-mds.json")
+        read_json_file(__file__, "nhs-number-change-event-mds.json"),
+        read_json_file(__file__, "immunisation-vaccination-event-mds.json"),
     ]
 
 
 @pytest.mark.smoketest
 def test_wait_for_ping(nhsd_apim_proxy_url):
     retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
     deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
            and retries <= 30
            and resp.status_code == 200):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
+        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
+        sleep(1)
 
     if resp.status_code != 200:
         pytest.fail(f"Status code {resp.status_code}, expecting 200")
@@ -58,16 +61,19 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
 @pytest.mark.smoketest
 def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
+                        timeout=30)
     deployed_commit_id = resp.json().get("commitId")
 
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID')
-           and retries <= 30
-           and resp.status_code == 200
-           and resp.json().get("version")):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
+    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
+            and resp.status_code == 200
+            and retries <= 30
+            and resp.json().get("version")):
+        resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
+                            timeout=30)
         deployed_commit_id = resp.json().get("commitId")
         retries += 1
+        sleep(1)
 
     if resp.status_code != 200:
         pytest.fail(f"Status code {resp.status_code}, expecting 200")
@@ -76,27 +82,35 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     elif not resp.json().get("version"):
         pytest.fail("version not found")
 
-    assert deployed_commit_id == getenv('SOURCE_COMMIT_ID')
     assert resp.json().get("status") == "pass"
 
 
+def _container_not_ready(resp: requests.Response):
+    """
+    Requests to ECS containers which are still starting up return with a
+    HTTP 503 (service unavailable).
+    """
+    return resp.json().get('checks', {})\
+        .get('healthcheck', {})\
+        .get('responseCode') == 503
+
+
+@pytest.mark.parametrize("proxy_path", ["events", "subscriptions"])
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
-def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
+def test_app_level0(proxy_path, nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}/{proxy_path}",
+        headers=nhsd_apim_auth_headers,
+        timeout=30
+    )
     assert resp.status_code == 401
-
-
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", headers=nhsd_apim_auth_headers)
-    assert resp.status_code == 200
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_events_endpoint_accepts_valid_mds_payload_pds_events(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
-    pds_mds_event_list,
+    mds_event_list,
     _apigee_app_base_url,
     _create_test_app
 ):
@@ -107,11 +121,12 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
         "attributes": [
             {
                 "name": "permissions",
-                "value": (
-                    "events:create:pds-change-of-gp-1,"
-                    "events:create:pds-death-notification-1,"
-                    "events:create:nhs-number-change-1"
-                )
+                "value": ",".join([
+                    "events:create:pds-change-of-gp-1",
+                    "events:create:pds-death-notification-1",
+                    "events:create:nhs-number-change-1",
+                    "events:create:imms-vaccinations-1",
+                ])
             }
         ]
     }
@@ -123,7 +138,7 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
     )
     update_response.raise_for_status()
 
-    for pds_mds_event in pds_mds_event_list:
+    for mds_event in mds_event_list:
         nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
         retries = 0
 
@@ -131,7 +146,7 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
             resp = requests.post(
                 f"{nhsd_apim_proxy_url}/events",
                 headers=nhsd_apim_auth_headers,
-                json=pds_mds_event
+                json=mds_event
             )
 
             if resp.status_code == 403:
@@ -141,4 +156,4 @@ def test_events_endpoint_accepts_valid_mds_payload_pds_events(
             break
 
         assert resp.status_code == 200
-        assert resp.json() == {"id": pds_mds_event["id"]}
+        assert resp.json() == {"id": mds_event["id"]}

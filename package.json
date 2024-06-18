@@ -12,7 +12,7 @@
   "license": "MIT",
   "homepage": "https://github.com/NHSDigital/multicast-notification-service",
   "dependencies": {
-    "newman-reporter-htmlextra": "^1.22.11"
+    "newman-reporter-htmlextra": "^1.23.1"
   },
   "devDependencies": {
     "@nestjs/common": "^10.2.8",

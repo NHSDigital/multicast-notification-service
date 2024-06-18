@@ -119,7 +119,11 @@ async function getSubscription(req, res, next) {
 
     if (subscriptionId === "e9050741-ae87-4720-beb1-2abd9248e227") {
         res.json(mockSubscriptions.mockCreatedSubscription);
-    }   else {
+    } 
+    else if (subscriptionId == "c5a332ca-12ab-4ccf-9eb7-c933713accb3") {
+        res.json(mockSubscriptions.mockCreatedSubscriptionFHIR)
+    }    
+    else {
         res.status(404);
         res.json({
             "errors": "Not found"
@@ -167,7 +171,11 @@ async function deleteSubscription(req, res, next) {
 
     if (subscriptionId === "e9050741-ae87-4720-beb1-2abd9248e227") {
         res.status(204);
-    }   else {
+    }
+    else if (subscriptionId == "c5a332ca-12ab-4ccf-9eb7-c933713accb3") {
+        res.status(204);
+    }
+    else {
         res.status(404);
         res.json({
             "errors": "Not found"

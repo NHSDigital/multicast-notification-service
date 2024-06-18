@@ -54,6 +54,11 @@ release: clean publish build-proxy
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-qa-sandbox.yml
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev-sandbox.yml
 
+# Regenerate JSON example payloads from signal schemas (extract from YAML-formatted JSON schemas)
+# and write out as JSON files
+signal-examples:
+	scripts/make-signal-examples.sh
+
 #################
 # Test commands #
 #################

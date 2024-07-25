@@ -63,12 +63,10 @@ definitions:
   subjectdef:
     type:
     - string
-    - 'null'
     minLength: 1
   timedef:
     type:
     - string
-    - 'null'
     format: date-time
     minLength: 1
   datarefdef:

@@ -491,6 +491,21 @@ paths:
                     payload:
                       type: "string"
                       description: "The mime type to send the payload in. MNS supports `application/json` and `application/fhir+json` (FHIR R4 Bundle)."
+                hydration:
+                  type: "object"
+                  required:
+                    - "enabled"
+                  description: "Optional block to configure hydration properties - hydration is disabled by default."
+                  properties:
+                    enabled:
+                      type: "boolean"
+                      description: "A flag to enable (true) or disable (false) signal hydration."
+                    headers:
+                      type: object
+                      description: "An optional dictionary of HTTP headers that will be sent in the request to the API endpoint specified in the signal."
+                      additionalProperties:
+                        type: string
+                        description: "HTTP header that will be sent in the request to the API endpoint specified in the signal."
             examples:
               pdsChangeofGPSubscription:
                 description: "Create a pds change of GP subscription"

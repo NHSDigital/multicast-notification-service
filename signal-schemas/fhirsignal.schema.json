@@ -1,0 +1,434 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MNS Signal in FHIR R4 Format representation schema",
+  "type": "object",
+  "description": "A wrapper object for the MNS Signal, and optionally the hydrated signal",
+  "properties": {
+    "resourceType": {
+      "const": "Bundle"
+    },
+    "id": {
+      "type": "string",
+      "description": "Event ID",
+      "examples": [
+        "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+      ]
+    },
+    "type": {
+      "const": "history"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO-8601 timestamp signifying the time of the occurrence",
+      "format": "date-time",
+      "examples": [
+        "2020-06-01T13:00:00Z"
+      ]
+    },
+    "entry": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/mns-fhir-signal"
+        },
+        {
+          "$ref": "#/$defs/hydrated-signal"
+        }
+      ],
+      "items": false,
+      "minItems": 1,
+      "maxItems": 2
+    }
+  },
+  "required": [
+    "resourceType",
+    "id",
+    "type",
+    "timestamp",
+    "entry"
+  ],
+  "$defs": {
+    "mns-fhir-signal": {
+      "type": "object",
+      "description": "The MNS Signal",
+      "properties": {
+        "fullUrl": {
+          "type": "string",
+          "description": "A temporary ID for the resource",
+          "pattern": "^urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "examples": [
+            "urn:uuid:9155bdda-35c9-44d0-a772-37abd7870e5c"
+          ]
+        },
+        "resource": {
+          "type": "object",
+          "properties": {
+            "resourceType": {
+              "const": "Parameters"
+            },
+            "meta": {
+              "type": "object",
+              "properties": {
+                "profile": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "items": {
+                    "const": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription-status-r4"
+                  }
+                }
+              },
+              "required": [
+                "profile"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "description": "Temporary ID for resource. Matches fullUrl minus `urn:uuid:`.",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "examples": [
+                "9155bdda-35c9-44d0-a772-37abd7870e5c"
+              ]
+            },
+            "parameter": {
+              "type": "array",
+              "items": false,
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "subscription"
+                    },
+                    "valueReference": {
+                      "type": "object",
+                      "properties": {
+                        "reference": {
+                          "type": "string",
+                          "description": "The MNS subscriptions endpoint",
+                          "format": "uri",
+                          "examples": [
+                            "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "reference"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "valueReference"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "status"
+                    },
+                    "valueCode": {
+                      "const": "active"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "valueCode"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "type"
+                    },
+                    "valueCode": {
+                      "const": "event-notification"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "valueCode"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "notification-event"
+                    },
+                    "part": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "items": false,
+                      "prefixItems": [
+                        {
+                          "type": "object",
+                          "description": "Note this is a fixed value",
+                          "properties": {
+                            "name": {
+                              "const": "event-number"
+                            },
+                            "valueString": {
+                              "const": "1"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "valueString"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "description": "The times of the occurrence",
+                          "properties": {
+                            "name": {
+                              "const": "timestamp"
+                            },
+                            "valueInstant": {
+                              "type": "string",
+                              "format": "date-time",
+                              "examples": [
+                                "2020-06-01T13:00:00Z"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "valueInstant"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "description": "Resource on an API of the publishing service to retrieve full details of the event (or subject record)",
+                          "properties": {
+                            "name": {
+                              "const": "focus"
+                            },
+                            "valueReference": {
+                              "type": "object",
+                              "properties": {
+                                "reference": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "examples": [
+                                    "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "reference"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "valueReference"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "part"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "const": "additional-context"
+                    },
+                    "part": {
+                      "type": "array",
+                      "items": false,
+                      "minItems": 2,
+                      "maxItems": 3,
+                      "prefixItems": [
+                        {
+                          "type": "object",
+                          "description": "Describes the occurrence; the name of the event.",
+                          "properties": {
+                            "name": {
+                              "const": "event-type"
+                            },
+                            "valueString": {
+                              "type": "string",
+                              "examples": [
+                                "gpreg-change-gp-req-1"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "valueString"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "description": "Identifies the producer of the event. This is usually a service, as listed in the [Service Catalogue](https://digital.nhs.uk/services/service-catalogue).",
+                          "properties": {
+                            "name": {
+                              "const": "source"
+                            },
+                            "valueUri": {
+                              "type": "string",
+                              "examples": [
+                                "uk.nhs.register-with-a-gp-surgery-service"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "valueUri"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "description": "Identifies the subject of the event in the context of the event producer/event type.",
+                          "properties": {
+                            "name": {
+                              "const": "subject"
+                            },
+                            "valueReference": {
+                              "type": "object",
+                              "properties": {
+                                "identifier": {
+                                  "type": "object",
+                                  "properties": {
+                                    "value": {
+                                      "type": "string",
+                                      "examples": [
+                                        "9912003888"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "value"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "identifier"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "valueReference"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "part"
+                  ]
+                }
+              ]
+            },
+            "request": {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "const": "GET"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri",
+                  "examples": [
+                    "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+                  ]
+                }
+              },
+              "required": [
+                "method",
+                "url"
+              ]
+            },
+            "response": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "200"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            }
+          },
+          "required": [
+            "resourceType",
+            "meta",
+            "id",
+            "parameter"
+          ]
+        }
+      },
+      "required": [
+        "fullUrl",
+        "resource"
+      ]
+    },
+    "hydrated-signal": {
+      "type": "object",
+      "description": "For selected event types there is the option to include the hydrated signal alongside the MNS event notification for subscribers who are unable to retrieve the record from the publisher API due to technical constraints.\nThe hydrated signal is a snapshot of the resource at the time of the event, and is as a sibling to the MNS Signal within this wrapper object.\n",
+      "properties": {
+        "fullUrl": {
+          "type": "string",
+          "format": "uri",
+          "examples": [
+            "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+          ]
+        },
+        "resource": {
+          "type": "object",
+          "description": "The response from the event publisher's source API, when getting the resource as specified in the event and reflected in the `fullUrl` sibling key."
+        },
+        "request": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "GET"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "examples": [
+                "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+              ]
+            }
+          },
+          "required": [
+            "method",
+            "url"
+          ]
+        },
+        "response": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "200"
+            }
+          },
+          "required": [
+            "status"
+          ]
+        }
+      },
+      "required": [
+        "fullUrl",
+        "resource",
+        "request",
+        "response"
+      ]
+    }
+  }
+}

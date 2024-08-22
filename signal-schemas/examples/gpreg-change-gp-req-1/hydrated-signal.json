@@ -43,7 +43,7 @@
               {
                 "name": "focus",
                 "valueReference": {
-                  "reference": "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+                  "reference": "https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605"
                 }
               }
             ]
@@ -80,11 +80,11 @@
       }
     },
     {
-      "fullUrl": "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605",
+      "fullUrl": "https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605",
       "resource": {},
       "request": {
         "method": "GET",
-        "url": "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+        "url": "https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605"
       },
       "response": {
         "status": "200"

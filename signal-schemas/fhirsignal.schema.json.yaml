@@ -153,7 +153,7 @@ $defs:
                                 type: string
                                 format: uri
                                 examples:
-                                  - 'https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605'
+                                  - 'https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605'
                             required:
                               - reference
                         required:
@@ -259,7 +259,7 @@ $defs:
         type: string
         format: uri
         examples:
-          - 'https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605'
+          - 'https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605'
       resource:
         type: object
         description: The response from the event publisher's source API, when getting the resource as specified in the event and reflected in the `fullUrl` sibling key.
@@ -272,7 +272,7 @@ $defs:
             type: string
             format: uri
             examples:
-              - 'https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605'
+              - 'https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605'
         required:
           - method
           - url

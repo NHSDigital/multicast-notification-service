@@ -216,7 +216,7 @@
                                   "type": "string",
                                   "format": "uri",
                                   "examples": [
-                                    "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+                                    "https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605"
                                   ]
                                 }
                               },
@@ -385,7 +385,7 @@
           "type": "string",
           "format": "uri",
           "examples": [
-            "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+            "https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605"
           ]
         },
         "resource": {
@@ -402,7 +402,7 @@
               "type": "string",
               "format": "uri",
               "examples": [
-                "https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605"
+                "https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605"
               ]
             }
           },

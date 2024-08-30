@@ -182,30 +182,38 @@ paths:
               type: object
               properties:
                 id:
+                  description: Identifies the event.
                   type: string
                   minLength: 1
                 source:
+                  description: Identifies the producer of your event.
                   type: string
                   format: uri-reference
                   minLength: 1
                 specversion:
+                  description: The version of the CloudEvents specification which the event uses.
                   type: string
                   minLength: 1
                 type:
+                  description: Describes the occurrence; the name of the event.
                   type: string
                   minLength: 1
                 subject:
+                  description: Describes the subject of the event in the context of the event producer/event type.
                   type: string
                   minLength: 1
                 time:
+                  description: Timestamp of when the occurrence happened. Must adhere to RFC 3339.
                   type: string
                   format: date-time
                   minLength: 1
                 dataref:
+                  description: A link to an API on the publishing service to retrieve full information about the event or the subject record.
                   type: string
                   format: uri
                   minLength: 1
                 filtering:
+                  description: Attributes for subscriber filtering.
                   type: object
                   additionalProperties:
                     type: string

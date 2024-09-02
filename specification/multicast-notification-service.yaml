@@ -179,53 +179,12 @@ paths:
         content:
           application/cloudevents+json:
             schema:
-              type: object
-              properties:
-                id:
-                  description: Identifies the event.
-                  type: string
-                  minLength: 1
-                source:
-                  description: Identifies the producer of your event.
-                  type: string
-                  format: uri-reference
-                  minLength: 1
-                specversion:
-                  description: The version of the CloudEvents specification which the event uses.
-                  type: string
-                  minLength: 1
-                type:
-                  description: Describes the occurrence; the name of the event.
-                  type: string
-                  minLength: 1
-                subject:
-                  description: Describes the subject of the event in the context of the event producer/event type.
-                  type: string
-                  minLength: 1
-                time:
-                  description: Timestamp of when the occurrence happened. Must adhere to RFC 3339.
-                  type: string
-                  format: date-time
-                  minLength: 1
-                dataref:
-                  description: A link to an API on the publishing service to retrieve full information about the event or the subject record.
-                  type: string
-                  format: uri
-                  minLength: 1
-                filtering:
-                  description: Attributes for subscriber filtering.
-                  type: object
-                  additionalProperties:
-                    type: string
-              required:
-              - id
-              - source
-              - specversion
-              - type
-              - time
-              - dataref
+              oneOf:
+                - $ref: "#/components/schemas/gpreg-change-gp-req-1"
+              discriminator:
+                propertyName: type
             examples:
-              gpregChangeGpRequestEvent:
+              gpreg-change-gp-req-1:
                 description: "Create a GP Registration Change event"
                 value:
                   specversion: '1.0'
@@ -256,8 +215,9 @@ paths:
                   description: "A unique string representing the event type."
                 subject:
                   type: "object"
-                  description: "The healthcare entity to which the event occurred. For example, this could be an NHS organisation or a person such as an NHS patient or member of staff.
-                  We currently only have a schema for a patient as a subject but will work with you to agree a new schema if you have a different use case."
+                  description: |
+                    The healthcare entity to which the event occurred. For example, this could be an NHS organisation or a person such as an NHS patient or member of staff.
+                    We currently only have a schema for a patient as a subject but will work with you to agree a new schema if you have a different use case."
                   oneOf:
                     - $ref: "components/schemas/cloudevents/eventSubjectPatientExample.yaml"
                 source:
@@ -526,15 +486,17 @@ paths:
                 end:
                   type: "string"
                   format: "date-time"
-                  description: "Optional expiry date/time for the subscription. As per the [FHIR R4 instant data type](https://hl7.org/fhir/R4/datatypes.html#instant) time shall be specified to at least the second and include a time zone.
-                  For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
+                  description: |
+                    Optional expiry date/time for the subscription. As per the [FHIR R4 instant data type](https://hl7.org/fhir/R4/datatypes.html#instant) time shall be specified to at least the second and include a time zone.
+                    For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
                 reason:
                   type: "string"
                   description: "A description of why this subscription is required. You may provide an empty string."
                 criteria:
                   type: "string"
-                  description: "Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=pds-change-of-gp-1&;patient.identifier=477121000324`
-                  or `eventType=pds-change-of-gp-1`. A valid criteria must contain a permitted value for `eventType`. The only additional criteria that MNS currently supports is `patient.identifier` (NHS Number)."
+                  description: |
+                    Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=pds-change-of-gp-1&;patient.identifier=477121000324`
+                    or `eventType=pds-change-of-gp-1`. A valid criteria must contain a permitted value for `eventType`. The only additional criteria that MNS currently supports is `patient.identifier` (NHS Number)."
                 channel:
                   type: "object"
                   required:
@@ -904,3 +866,20 @@ paths:
           $ref: "components/errors/not-found-error.yaml"
         500:
           $ref: "components/errors/internal-error.yaml"
+components:
+  schemas:
+    cloudevent:
+      $ref: "components/schemas/cloudevents/baseMnsCloudEventSignal.yaml"
+      discriminator:
+        propertyName: type
+    gpreg-change-gp-req-1:
+      description: gpreg-change-gp-req-1
+      allOf:
+        - $ref: "#/components/schemas/cloudevent"
+        - type: object
+          properties:
+            filtering:
+              $ref: "components/schemas/filtering/gpreg-change-gp-req-1-filtering.yaml"
+          required:
+            - filtering
+            - subject

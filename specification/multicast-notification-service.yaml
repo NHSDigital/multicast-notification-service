@@ -177,6 +177,26 @@ paths:
       requestBody:
         required: true
         content:
+          application/cloudevents+json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/gpreg-change-gp-req-1"
+              discriminator:
+                propertyName: type
+            examples:
+              gpreg-change-gp-req-1:
+                description: "Create a GP Registration Change event"
+                value:
+                  specversion: '1.0'
+                  id: 236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b
+                  source: uk.nhs.register-with-a-gp-surgery-service
+                  type: gpreg-change-gp-req-1
+                  time: '2020-06-01T13:00:00Z'
+                  dataref: https://api.service.nhs.uk/register-with-a-gp-surgery/applications/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b
+                  subject: '9912003888'
+                  filtering:
+                    registrationencountercode: '3'
+                    generalpracticecode: 'XY11'
           application/json:
             schema:
               type: "object"
@@ -195,8 +215,9 @@ paths:
                   description: "A unique string representing the event type."
                 subject:
                   type: "object"
-                  description: "The healthcare entity to which the event occurred. For example, this could be an NHS organisation or a person such as an NHS patient or member of staff.
-                  We currently only have a schema for a patient as a subject but will work with you to agree a new schema if you have a different use case."
+                  description: |
+                    The healthcare entity to which the event occurred. For example, this could be an NHS organisation or a person such as an NHS patient or member of staff.
+                    We currently only have a schema for a patient as a subject but will work with you to agree a new schema if you have a different use case.
                   oneOf:
                     - $ref: "components/schemas/cloudevents/eventSubjectPatientExample.yaml"
                 source:
@@ -465,15 +486,17 @@ paths:
                 end:
                   type: "string"
                   format: "date-time"
-                  description: "Optional expiry date/time for the subscription. As per the [FHIR R4 instant data type](https://hl7.org/fhir/R4/datatypes.html#instant) time shall be specified to at least the second and include a time zone.
-                  For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)"
+                  description: |
+                    Optional expiry date/time for the subscription. As per the [FHIR R4 instant data type](https://hl7.org/fhir/R4/datatypes.html#instant) time shall be specified to at least the second and include a time zone.
+                    For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)
                 reason:
                   type: "string"
                   description: "A description of why this subscription is required. You may provide an empty string."
                 criteria:
                   type: "string"
-                  description: "Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=pds-change-of-gp-1&;patient.identifier=477121000324`
-                  or `eventType=pds-change-of-gp-1`. A valid criteria must contain a permitted value for `eventType`. The only additional criteria that MNS currently supports is `patient.identifier` (NHS Number)."
+                  description: |
+                    Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=pds-change-of-gp-1&;patient.identifier=477121000324`
+                    or `eventType=pds-change-of-gp-1`. A valid criteria must contain a permitted value for `eventType`. The only additional criteria that MNS currently supports is `patient.identifier` (NHS Number).
                 channel:
                   type: "object"
                   required:
@@ -843,3 +866,20 @@ paths:
           $ref: "components/errors/not-found-error.yaml"
         500:
           $ref: "components/errors/internal-error.yaml"
+components:
+  schemas:
+    cloudevent:
+      $ref: "components/schemas/cloudevents/baseMnsCloudEventSignal.yaml"
+      discriminator:
+        propertyName: type
+    gpreg-change-gp-req-1:
+      description: gpreg-change-gp-req-1
+      allOf:
+        - $ref: "#/components/schemas/cloudevent"
+        - type: object
+          properties:
+            filtering:
+              $ref: "components/schemas/filtering/gpreg-change-gp-req-1-filtering.yaml"
+          required:
+            - filtering
+            - subject

@@ -196,7 +196,7 @@ paths:
                   subject: '9912003888'
                   filtering:
                     registrationencountercode: '3'
-                    generalpracticecode: 'XY11'
+                    generalpractice: 'XY11'
           application/json:
             schema:
               type: "object"

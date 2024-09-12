@@ -412,7 +412,7 @@ paths:
         
         ### Subscription filtering
         You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=pds-change-of-gp-1`
-        this will mean that you receive all PDS Change of GP events. Depending on the event, additional filters are available, for example you can filter by `generalpractice` or `registrationencountercode` for `gpreg-change-gp-req-1`` event.
+        this will mean that you receive all PDS Change of GP events. Depending on the event, additional filters are available, for example you can filter by `generalpractice` or `registrationencountercode` for `gpreg-change-gp-req-1` event.
         We are working with publishers and subscribers during private beta to identify any other useful filters for existing and future event types.
 
         For further information refer to the payload schema below.

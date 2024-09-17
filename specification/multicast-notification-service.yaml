@@ -16,7 +16,7 @@ info:
 
     You can:
       - Publish events. The first use case is GP Registration Change events.
-      - Subscribe to signals based on event type and optional corresponding criteria filter. The team is actively building a backlog of future signal candidates, which can be viewed on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
+      - Subscribe to signals based on event type and optional corresponding criteria filter. The team is actively building a backlog of future signal candidates, which can be viewed on our [API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue).
 
     Data flow:
       1. An event occurs on a provider system. The provider system sends MNS the event.

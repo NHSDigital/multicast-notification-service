@@ -16,7 +16,7 @@ info:
 
     You can:
       - Publish events. The first use case is GP Registration Change events.
-      - Subscribe to signals based on criteria such as the event type or patient NHS number. The team is actively building a backlog of future signal candidates, which can be viewed on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
+      - Subscribe to signals based on event type and optional corresponding criteria filter. The team is actively building a backlog of future signal candidates, which can be viewed on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
 
     Data flow:
       1. An event occurs on a provider system. The provider system sends MNS the event.
@@ -411,9 +411,9 @@ paths:
         Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
         
         ### Subscription filtering
-        You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the signal type. For example, if you provide `eventType=pds-change-of-gp-1`
-        this will mean that you receive all PDS Change of GP events. Currently the only additional filter you can use is NHS Number. We are working with subscribers during private beta to identify any other useful
-        filters. There may be further filters available in future.
+        You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=pds-change-of-gp-1`
+        this will mean that you receive all PDS Change of GP events. Depending on the event, additional filters are available, for example you can filter by `generalpractice` or `registrationencountercode` for `gpreg-change-gp-req-1` event.
+        We are working with publishers and subscribers during private beta to identify any other useful filters for existing and future event types.
 
         For further information refer to the payload schema below.
 
@@ -495,8 +495,8 @@ paths:
                 criteria:
                   type: "string"
                   description: |
-                    Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=pds-change-of-gp-1&;patient.identifier=477121000324`
-                    or `eventType=pds-change-of-gp-1`. A valid criteria must contain a permitted value for `eventType`. The only additional criteria that MNS currently supports is `patient.identifier` (NHS Number).
+                    Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=gpreg-change-gp-req-1&;generalpractice=XY11`
+                    or `eventType=gpreg-change-gp-req-1`. A valid criteria must contain a permitted value for `eventType`. Additional criteria depends on the event and are documentated on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
                 channel:
                   type: "object"
                   required:
@@ -537,7 +537,7 @@ paths:
                   status: "requested"
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription should be created."
-                  criteria: "eventType=pds-change-of-gp-1&;patient.identifier=477121000324"
+                  criteria: "eventType=pds-change-of-gp-1"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
@@ -561,7 +561,7 @@ paths:
                   status: "requested"
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription should be created."
-                  criteria: "eventType=nhs-number-change-1&;patient.identifier=477121000324"
+                  criteria: "eventType=nhs-number-change-1"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
@@ -573,7 +573,7 @@ paths:
                   status: "requested"
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription should be created."
-                  criteria: "eventType=pds-death-notification-1&;patient.identifier=477121000324"
+                  criteria: "eventType=pds-death-notification-1"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
@@ -585,7 +585,7 @@ paths:
                   status: "requested"
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription should be created."
-                  criteria: "eventType=imms-vaccinations-1&;patient.identifier=477121000324"
+                  criteria: "eventType=imms-vaccinations-1"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"

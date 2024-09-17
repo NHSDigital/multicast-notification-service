@@ -174,6 +174,15 @@ paths:
           schema:
             type: string
             example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+        - name: Content-Type
+          in: header
+          required: true
+          description: |-
+            The content type of the request body.
+            This is used to determine validation on the event body and should be set to `application/cloudevents+json` unless the event is a legacy event where it should be `application/json`.
+          schema:
+            type: string
+            example: application/cloudevents+json
       requestBody:
         required: true
         content:

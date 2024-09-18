@@ -8,21 +8,23 @@ info:
     ## Overview
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/mns-high-level-diagram.svg )
 
-    Use this API to publish events and subscribe to healthcare-related signals. This API is currently only live with patient-related signals. However, it is intended as a robust service that could support many types of future signals e.g. changes related to healthcare organisations or staff.
+    Use this API to publish or and subscribe to healthcare-related events. This API is currently only live with patient-related event. However, it is intended as a robust service that could support many types of future event e.g. changes related to healthcare organisations or staff.
     
-    The signals do not contain clinical information; they simply describe what type of event occured to whom/what and where. Where possible, a pointer is provided to enable retrieval of the associated payload.
+    The events do not contain clinical information; they simply describe what type of event occurred to whom/what and where. A pointer is provided to enable retrieval of the further event details.
 
     This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
 
     You can:
-      - Publish events. The first use case is GP Registration Change events.
-      - Subscribe to signals based on event type and optional corresponding criteria filter. The team is actively building a backlog of future signal candidates, which can be viewed on our [API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue).
+      - Publish events.
+      - Subscribe to events based on event type and optional corresponding criteria filter.
+    
+    Available and in development events can be viewed visiting the [NHS API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue) and filtering on ‘MNS’.
 
     Data flow:
-      1. An event occurs on a provider system. The provider system sends MNS the event.
+      1. An event occurs on a event publishers system. The this system notifies MNS event occurring, along with a pointer to be used for retrieval of further event details.
       2. MNS validates that the event conforms to the accepted schema and sends it another component to handle subscription matching and onward delivery.
       3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations, for example an AWS Kinesis Firehose.
-      4. Subscribers can optionally synchronise with event publishers to obtain further information.
+      4. Subscribers can use the details forwarded to them to retrieve further details of the event
 
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You

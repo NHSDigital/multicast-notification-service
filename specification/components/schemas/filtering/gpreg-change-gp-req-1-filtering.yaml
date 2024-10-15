@@ -29,11 +29,6 @@ properties:
     minLength: 1
     example: "Y12345"
     description: The ODS Code of the requested GP Practice.
-  supplierNACS:
-    type: string
-    minLength: 1
-    example: "Y67890"
-    description: The ODS Code of the GP System Supplier.
 required:
   - registrationencountercode
   - generalpractitioner

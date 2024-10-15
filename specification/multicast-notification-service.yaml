@@ -208,7 +208,6 @@ paths:
                   filtering:
                     registrationencountercode: '3'
                     generalpractitioner: 'XY11'
-                    supplierNACS: 'Y12345'
           application/json:
             schema:
               type: "object"

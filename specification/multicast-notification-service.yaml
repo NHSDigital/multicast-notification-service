@@ -207,7 +207,7 @@ paths:
                   subject: '9912003888'
                   filtering:
                     registrationencountercode: '3'
-                    generalpractice: 'XY11'
+                    generalpractitioner: 'XY11'
           application/json:
             schema:
               type: "object"
@@ -423,7 +423,7 @@ paths:
         
         ### Subscription filtering
         You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=pds-change-of-gp-1`
-        this will mean that you receive all PDS Change of GP events. Depending on the event, additional filters are available, for example you can filter by `generalpractice` or `registrationencountercode` for `gpreg-change-gp-req-1` event.
+        this will mean that you receive all PDS Change of GP events. Depending on the event, additional filters are available, for example you can filter by `generalpractitioner`,`registrationencountercode` or `supplierNACS` for `gpreg-change-gp-req-1` event.
         We are working with publishers and subscribers during private beta to identify any other useful filters for existing and future event types.
 
         For further information refer to the payload schema below.
@@ -506,7 +506,7 @@ paths:
                 criteria:
                   type: "string"
                   description: |
-                    Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=gpreg-change-gp-req-1&;generalpractice=XY11`
+                    Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=gpreg-change-gp-req-1&;generalpractitioner=XY11`
                     or `eventType=gpreg-change-gp-req-1`. A valid criteria must contain a permitted value for `eventType`. Additional criteria depends on the event and are documentated on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
                 channel:
                   type: "object"
@@ -597,6 +597,18 @@ paths:
                   end: "2022-04-05T17:31:00.000Z"
                   reason: "A description of why this subscription should be created."
                   criteria: "eventType=imms-vaccinations-1"
+                  channel:
+                    type: "message"
+                    endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
+                    payload: "application/json"
+              validatedGPRegistrationRequestSubscription:
+                description: "Create a validated GP registration request event subscription"
+                value:
+                  resourceType: "Subscription"
+                  status: "requested"
+                  end: "2022-04-05T17:31:00.000Z"
+                  reason: "A description of why this subscription should be created."
+                  criteria: "eventType=gpreg-change-gp-req-1&;supplierNACS=Y12345&;registrationencountercode=3"
                   channel:
                     type: "message"
                     endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"

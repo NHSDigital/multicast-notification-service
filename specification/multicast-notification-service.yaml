@@ -6,7 +6,7 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/MNS Overview2.svg )
+    ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/MNSOverview2.svg)
 
     Use this API to publish or and subscribe to healthcare-related events. This API is currently only live with patient-related event. However, it is intended as a robust service that could support many types of future event e.g. changes related to healthcare organisations or staff.
     

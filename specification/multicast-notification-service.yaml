@@ -443,6 +443,10 @@ paths:
         You will need to provide the ID of your MESH mailbox during onboarding. If you have already completed [MESH onboarding](https://digital.nhs.uk/developer/api-catalogue/message-exchange-for-social-care-and-health-api#overview--end-to-end-process-to-integrate-with-mesh-api)
         then no further steps will be required aside from calling the subscriptions API. Use a MESH mailbox from their 'Path to Live integration' environment for all non-production MNS environments and a production mailbox for production MNS.
 
+        The mailbox ID and workflow ID you require are supplied to the `channel.endpoint` field in a `mesh://` URL scheme.
+        
+        e.g. `mesh://MYMAILBOXOT101?workflow_id=myWorkflow101` specifies the mailbox ID `MYMAILBOXOT101` and the workflow ID `myWorkflow101`.
+
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
@@ -563,7 +567,7 @@ paths:
                   criteria: "eventType=pds-change-of-gp-1"
                   channel:
                     type: "message"
-                    endpoint: "MYMAILBOXOT101"
+                    endpoint: "mesh://MYMAILBOXOT101?workflow_id=myWorkflow101"
                     payload: "application/json"
               nhsNumberChangeSubscription:
                 description: "Create an NHS number change subscription"

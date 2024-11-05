@@ -1,0 +1,9 @@
+{
+  "specversion": "1.0",
+  "id": "16dbfb42-b5c0-4831-8258-f1a4d2491748",
+  "source": "uk.nhs.patient-flags-service",
+  "type": "patientflags-change-1",
+  "time": "2020-06-01T13:00:00Z",
+  "dataref": "https://api.service.nhs.uk/patient-flags-api/PatientFlag?patient=9912003888&code=NRAF",
+  "subject": "9912003888"
+}

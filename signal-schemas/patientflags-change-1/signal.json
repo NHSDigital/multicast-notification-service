@@ -1,0 +1,84 @@
+{
+    "resourceType": "Bundle",
+    "id": "16dbfb42-b5c0-4831-8258-f1a4d2491748",
+    "type": "history",
+    "timestamp": "2020-06-01T13:00:00Z",
+    "entry": [
+      {
+        "fullUrl": "urn:uuid:fb88f7a9-2cba-4580-8559-f2d928273759",
+        "resource": {
+          "resourceType": "Parameters",
+          "meta": {
+            "profile": [
+              "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription-status-r4"
+            ]
+          },
+          "id": "fb88f7a9-2cba-4580-8559-f2d928273759",
+          "parameter": [
+            {
+              "name": "subscription",
+              "valueReference": {
+                "reference": "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+              }
+            },
+            {
+              "name": "status",
+              "valueCode": "active"
+            },
+            {
+              "name": "type",
+              "valueCode": "event-notification"
+            },
+            {
+              "name": "notification-event",
+              "part": [
+                {
+                  "name": "event-number",
+                  "valueString": "1"
+                },
+                {
+                  "name": "timestamp",
+                  "valueInstant": "2020-06-01T13:00:00Z"
+                },
+                {
+                  "name": "focus",
+                  "valueReference": {
+                    "reference": "https://api.service.nhs.uk/patient-flags-api/PatientFlag?patient=9912003888&code=NRAF"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "additional-context",
+              "part": [
+                {
+                  "name": "event-type",
+                  "valueString": "patientflags-change-1"
+                },
+                {
+                  "name": "source",
+                  "valueUri": "uk.nhs.patient-flags-service"
+                },
+                {
+                  "name": "subject",
+                  "valueReference": {
+                    "identifier": {
+                      "value": "9912003888"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+        },
+        "response": {
+          "status": "200"
+        }
+      }
+    ]
+  }
+  

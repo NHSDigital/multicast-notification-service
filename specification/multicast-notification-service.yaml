@@ -18,7 +18,7 @@ info:
       - Publish events.
       - Subscribe to events based on event type and optional corresponding criteria filter.
     
-    Available and in development events can be viewed visiting the [NHS API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue) and filtering on ‘MNS’.
+    Available and in development events can be viewed visiting the [NHS API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue) and filtering on `MNS`.
 
     Data flow:
       1. An event occurs on a event publishers system. The this system notifies MNS event occurring, along with a pointer to be used for retrieval of further event details.
@@ -28,7 +28,7 @@ info:
 
     ## Who can use this API
     This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You
-    must do this before you can go live (see ‘Onboarding’ below).
+    must do this before you can go live (see [Onboarding](#overview--onboarding) below).
 
     Note: during beta, this API will only be used by NHS England product teams with a valid use case.
     ## Related APIs

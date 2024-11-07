@@ -1,5 +1,5 @@
 "$schema": http://json-schema.org/draft-07/schema#
-description: The GP Patient Flags Change Signal. You will receive this object if you subscribe to `patientflags-change-1` events with an `application/json` format.
+description: The Patient Flags Change Signal. You will receive this object if you subscribe to `patientflags-change-1` events with an `application/json` format.
 type: object
 properties:
   id:
@@ -33,7 +33,7 @@ properties:
     examples:
     - '2018-04-05T17:31:00Z'
   dataref:
-    description: A link to the Registration record on the Patient Flags API.
+    description: A link to the flag indicator and supported resources on the Patient Flags API.
     "$ref": "#/definitions/datarefdef"
     examples:
     - https://api.service.nhs.uk/patient-flags-api/PatientFlag?patient=9912003888&code=NRAF

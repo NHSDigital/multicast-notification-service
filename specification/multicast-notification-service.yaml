@@ -192,6 +192,7 @@ paths:
             schema:
               oneOf:
                 - $ref: "#/components/schemas/gpreg-change-gp-req-1"
+                - $ref: "#/components/schemas/patientflags-change-1"
               discriminator:
                 propertyName: type
             examples:
@@ -933,6 +934,17 @@ components:
           properties:
             filtering:
               $ref: "components/schemas/filtering/gpreg-change-gp-req-1-filtering.yaml"
+          required:
+            - filtering
+            - subject
+    patientflags-change-1:
+      description: patientflags-change-1
+      allOf:
+        - $ref: "#/components/schemas/cloudevent"
+        - type: object
+          properties:
+            filtering:
+              $ref: "components/schemas/filtering/patientflags-change-1-filtering.yaml"
           required:
             - filtering
             - subject

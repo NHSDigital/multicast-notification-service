@@ -1,11 +1,4 @@
 <TargetEndpoint name="sandbox">
-    <Description/>
-    <FaultRules/>
-    <Flows/>
-    <PostFlow name="PostFlow">
-        <Request/>
-        <Response/>
-    </PostFlow>
     <PreFlow name="PreFlow">
         <Request/>
         <Response>
@@ -14,7 +7,17 @@
           </Step>
         </Response>
     </PreFlow>
+
+    <Flows/>
+
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+
     <HTTPTargetConnection>
       {{ HOSTED_TARGET_CONNECTION }}
     </HTTPTargetConnection>
+
+    <FaultRules/>
 </TargetEndpoint>

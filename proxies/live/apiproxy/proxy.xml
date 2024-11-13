@@ -1,4 +1,3 @@
 <APIProxy name="mns">
-  <!-- This is the root of the application -->
   <Description>"multicast-notification-service"</Description>
 </APIProxy>

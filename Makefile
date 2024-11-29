@@ -4,6 +4,11 @@ SHELL=/bin/bash -euo pipefail
 install-python:
 	poetry install
 
+update:
+	poetry update
+	npm update
+	cd sandbox && npm update
+
 #Installs dependencies using npm.
 install-node:
 	npm install --legacy-peer-deps

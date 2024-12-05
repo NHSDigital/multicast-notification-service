@@ -18,7 +18,7 @@ info:
       - Publish events.
       - Subscribe to events based on event type and optional corresponding criteria filter.
     
-    Available and in development events can be viewed visiting the [NHS API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue) and filtering on `MNS`.
+    Available and in development events can be viewed visiting the [NHS API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe) and filtering on `MNS`.
 
     Data flow:
       1. An event occurs on a event publishers system. The this system notifies MNS event occurring, along with a pointer to be used for retrieval of further event details.
@@ -138,6 +138,9 @@ paths:
 
         The event contains only a minimum dataset based on the recommendations of the [CloudEvents specification](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md).
 
+        ### Content-Type
+        The Content-Type header for this endpoint is used to determine validation on the event body and should be set to `application/cloudevents+json` unless the event is a legacy event where it should be `application/json`.
+
         ### Data and Metadata:
           - Metadata: In the context of an event, metadata refers to the additional information that describes the event and provides context about it. For example, for [PDS](https://digital.nhs.uk/services/personal-demographics-service) events it includes elements such as the family name and date of birth which are primarily for verification. Users must be cautious not to use such metadata to modify a patient's demographic details. Instead, if updates are necessary, users should conduct a full PDS retrieval to ensure accuracy and completeness in their workflows.
           - Data: The inclusion of the data field might vary. Its presence is subject to agreements between the MNS team and the originating system. While the structure of the data might differ across various systems and scenarios, it's a general preference to have a pointer included. This pointer aids subscribers in accessing the entire record when necessary for their workflow.
@@ -175,15 +178,6 @@ paths:
           schema:
             type: string
             example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
-        - name: Content-Type
-          in: header
-          required: true
-          description: |-
-            The content type of the request body.
-            This is used to determine validation on the event body and should be set to `application/cloudevents+json` unless the event is a legacy event where it should be `application/json`.
-          schema:
-            type: string
-            example: application/cloudevents+json
       requestBody:
         required: true
         content:
@@ -432,7 +426,7 @@ paths:
       summary: "Subscribe to events"
       description: |
         ### Overview
-        Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
+        Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
         
         ### Subscription filtering
         You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=pds-change-of-gp-1`
@@ -524,7 +518,7 @@ paths:
                   type: "string"
                   description: |
                     Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=gpreg-change-gp-req-1&;generalpractitioner=XY11`
-                    or `eventType=gpreg-change-gp-req-1`. A valid criteria must contain a permitted value for `eventType`. Additional criteria depends on the event and are documentated on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/signal-catalogue).
+                    or `eventType=gpreg-change-gp-req-1`. A valid criteria must contain a permitted value for `eventType`. Additional criteria depends on the event and are documentated on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
                 channel:
                   type: "object"
                   required:

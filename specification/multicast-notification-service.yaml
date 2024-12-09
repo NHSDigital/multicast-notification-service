@@ -159,25 +159,8 @@ paths:
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: publish-event
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          description: |-
-            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
-            Required in all environments except sandbox.
-          schema:
-            type: string
-            format: '^Bearer [[:ascii:]]+$'
-            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
-        - name: X-Correlation-ID
-          in: header
-          required: true
-          description: |-
-            An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
-            Mirrored back in a response header.
-          schema:
-            type: string
-            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+        - $ref: "parameters/headers/authorization.yaml"
+        - $ref: "parameters/headers/x-correlation-id.yaml"   
       requestBody:
         required: true
         content:
@@ -467,25 +450,8 @@ paths:
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: create-subscription
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          description: |-
-            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
-            Required in all environments except sandbox.
-          schema:
-            type: string
-            format: '^Bearer [[:ascii:]]+$'
-            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
-        - name: X-Correlation-ID
-          in: header
-          required: true
-          description: |-
-            An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
-            Mirrored back in a response header.
-          schema:
-            type: string
-            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+        - $ref: "parameters/headers/authorization.yaml"
+        - $ref: "parameters/headers/x-correlation-id.yaml"
       requestBody:
         required: true
         content:
@@ -706,32 +672,9 @@ paths:
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: get-all-subscriptions
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          description: |-
-            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
-            Required in all environments except sandbox.
-          schema:
-            type: string
-            format: '^Bearer [[:ascii:]]+$'
-            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
-        - name: X-Correlation-ID
-          in: header
-          required: true
-          description: |-
-            An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
-            Mirrored back in a response header.
-          schema:
-            type: string
-            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
-        - name: continue_from
-          in: query
-          required: false
-          description: |-
-            An optional query string parameter used for pagination, specifying the point from which to continue the list.
-          schema:
-            type: string
+        - $ref: "parameters/headers/authorization.yaml"
+        - $ref: "parameters/headers/x-correlation-id.yaml"
+        - $ref: "parameters/query/continue_from.yaml"
       responses:
         200:
           description: Successfully retrieved list of subscriptions
@@ -796,32 +739,9 @@ paths:
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: get-subscription-by-id
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          description: |-
-            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
-            Required in all environments except sandbox.
-          schema:
-            type: string
-            format: '^Bearer [[:ascii:]]+$'
-            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
-        - name: X-Correlation-ID
-          in: header
-          required: true
-          description: |-
-            An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
-            Mirrored back in a response header.
-          schema:
-            type: string
-            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
-        - name: id
-          in: path
-          required: true
-          description: The ID of the subscription you want to retrieve. The ID will be a valid UUID (v4).
-          schema:
-            type: string
-            example: e9050741-ae87-4720-beb1-2abd9248e227
+        - $ref: "parameters/headers/authorization.yaml"
+        - $ref: "parameters/headers/x-correlation-id.yaml"
+        - $ref: "parameters/path/id.yaml"
       responses:
         200:
           description: Successfully got subscription details
@@ -865,32 +785,9 @@ paths:
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: delete-subscription
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          description: |-
-            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
-            Required in all environments except sandbox.
-          schema:
-            type: string
-            format: '^Bearer [[:ascii:]]+$'
-            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
-        - name: X-Correlation-ID
-          in: header
-          required: true
-          description: |-
-            An ID which is used to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
-            Mirrored back in a response header.
-          schema:
-            type: string
-            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
-        - name: id
-          in: path
-          required: true
-          description: The ID of the subscription you want to delete. The ID will be a valid UUID (v4).
-          schema:
-            type: string
-            example: e9050741-ae87-4720-beb1-2abd9248e227
+        - $ref: "parameters/headers/authorization.yaml"
+        - $ref: "parameters/headers/x-correlation-id.yaml"
+        - $ref: "parameters/path/id.yaml"
       responses:
         204:
           description: The subscription was deleted

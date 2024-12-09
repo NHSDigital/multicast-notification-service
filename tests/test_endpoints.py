@@ -60,7 +60,7 @@ def test_post_event(
     update_response = requests.put(
         f"{apigee_update_url}",
         json=attributes_to_update,
-        headers={"Authorization": f"Bearer {os.environ["APIGEE_ACCESS_TOKEN"]}"}
+        headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"}
     )
     update_response.raise_for_status()
 

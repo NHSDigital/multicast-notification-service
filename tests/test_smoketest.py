@@ -37,7 +37,7 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
 
     while deployed_commit_id != getenv("SOURCE_COMMIT_ID") and retries <= 30:
         resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
-        
+
         if resp.status_code != 200:
             pytest.fail(f"Status code {resp.status_code}, expecting 200")
 

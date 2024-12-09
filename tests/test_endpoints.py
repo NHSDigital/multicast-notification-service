@@ -6,7 +6,7 @@ import uuid
 
 
 @pytest.fixture
-def mns_test_signal_event() -> dict[str, str]:
+def mns_test_signal_event():
     return {
         "specversion": "1.0",
         "id": str(uuid.uuid4()),

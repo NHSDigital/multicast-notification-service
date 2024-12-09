@@ -12,8 +12,8 @@ context.targetRequest.headers["X-MNS-Application-Permissions"] = appPermissions;
 const appMeshMailboxes = context.getVariable("app.mesh-mailboxes");
 context.targetRequest.headers["X-MNS-Application-Mesh-Mailboxes"] = appMeshMailboxes;
 
-const productId = context.getVariable("product-id");
+const productId = context.getVariable("app.product-id");
 context.targetRequest.headers["NHSE-Product-ID"] = productId;
 
-const productDeviceId = context.getVariable("product-device-id");
+const productDeviceId = context.getVariable("app.product-device-id");
 context.targetRequest.headers["NHSE-Product-Device-ID"] = productDeviceId;

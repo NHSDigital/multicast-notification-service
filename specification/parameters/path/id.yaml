@@ -1,0 +1,7 @@
+name: id
+in: path
+required: true
+description: The ID of the subscription you want to retrieve. The ID will be a valid UUID (v4).
+schema:
+  type: string
+  example: e9050741-ae87-4720-beb1-2abd9248e227

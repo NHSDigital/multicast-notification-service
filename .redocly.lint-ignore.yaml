@@ -1,5 +1,10 @@
 # This file instructs Redocly's linter to ignore the rules contained for specific parts of your API.
-# See https://redoc.ly/docs/cli/ for more information.
+# See https://redocly.com/docs/cli/ for more information.
 specification/multicast-notification-service.yaml:
   info-license:
     - '#/info'
+specification/requestBody/create-or-update-subscription-body.yaml:
+  struct:
+    - '#/content/blockReplace/action'
+    - '#/content/blockReplace/actioning'
+    - '#/content/blockReplace/actioned'

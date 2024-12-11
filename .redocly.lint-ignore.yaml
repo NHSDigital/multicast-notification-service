@@ -3,8 +3,4 @@
 specification/multicast-notification-service.yaml:
   info-license:
     - '#/info'
-specification/requestBody/create-or-update-subscription-body.yaml:
-  struct:
-    - '#/content/blockReplace/action'
-    - '#/content/blockReplace/actioning'
-    - '#/content/blockReplace/actioned'
+

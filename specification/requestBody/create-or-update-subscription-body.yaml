@@ -1,9 +1,5 @@
 required: true
 content:
-  blockReplace: 
-    action: "Create"
-    actioning: "creating"
-    actioned: "created"
   application/fhir+json:
     schema:
       type: "object"

@@ -8,3 +8,4 @@ content:
           type: string
           description: Error string that explains the problem
           example: Unauthorised
+

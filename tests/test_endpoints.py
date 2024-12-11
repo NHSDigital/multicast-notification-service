@@ -66,6 +66,7 @@ def test_post_event(
 
     # POST event to /events endpoint
     nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
+    nhsd_apim_auth_headers["Content-Type"] = "application/cloudevents+json"
     retries = 0
 
     while retries < 5:
@@ -144,6 +145,7 @@ def test_missing_required_target_attributes(
 
     # POST event to /events endpoint
     nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
+    nhsd_apim_auth_headers["Content-Type"] = "application/cloudevents+json"
 
     # Wait 5 seconds as apigee can take time to register update
     sleep(5)

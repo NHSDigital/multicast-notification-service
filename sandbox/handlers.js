@@ -158,6 +158,47 @@ async function getSubscriptions(req, res, next) {
 }
 
 
+async function editSubscription(req, res, next) {
+    write_log(res, "info", {
+        message: "edit subscriptions endpoint",
+        req: {
+            path: req.path,
+            body: req.body,
+            headers: req.rawHeaders,
+        }
+    });
+
+    const resourceType = req.body.resourceType;
+    const subscriptionId = req.params.subId;    
+
+    if (resourceType !== 'Subscription') {
+        res.status(400);
+        res.json({
+            "validationErrors": {
+                "resourceType": `Please provide the correct resource type for this endpoint`
+            }
+        });
+    }
+    else if(subscriptionId === "e9050741-ae87-4720-beb1-2abd9248e227") {
+        res.status(204);
+    }
+    else if (subscriptionId === "f8f44c83-a697-4607-8604-a1a45acedd8c") {
+        res.status(409);
+        res.json({
+            "errors": "A matching subscription already exists with id: 5553998c-b802-4071-9a54-8e99ea729614"
+        });
+    }
+    else {
+        res.status(404);
+        res.json({
+            "errors": "Not found"
+        });
+    }    
+
+    res.end();
+    next();
+}
+
 async function deleteSubscription(req, res, next) {
     write_log(res, "info", {
         message: "delete subscriptions endpoint",
@@ -192,5 +233,6 @@ module.exports = {
     createSubscription: createSubscription,
     getSubscription: getSubscription,
     getSubscriptions: getSubscriptions,
+    editSubscription: editSubscription,
     deleteSubscription: deleteSubscription
 };

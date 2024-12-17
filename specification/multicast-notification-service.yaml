@@ -642,6 +642,7 @@ paths:
       description: |
         ### Overview
         Use this endpoint to edit (update) an existing subscription.
+        The update will apply immediately, overwriting the existing subscription with the given id.
 
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:

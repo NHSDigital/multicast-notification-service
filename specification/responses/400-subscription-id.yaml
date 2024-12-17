@@ -1,0 +1,10 @@
+description: Invalid user input
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: string
+          description: Error string that explains the problem
+          example: Please provide a valid subscription ID in UUID4 format

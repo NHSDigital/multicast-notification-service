@@ -94,3 +94,12 @@ smoketest-prod:
 test-prod:
 	$(PROD_TEST_CMD) \
 	--junitxml=test-report.xml \
+
+docker-build:
+	make -C sandbox build
+
+up:
+	make -C sandbox up
+
+down:
+	make -C sandbox down

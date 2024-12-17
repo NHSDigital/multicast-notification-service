@@ -130,6 +130,7 @@ app.get("/health", handlers.status);
 app.get("/subscriptions", handlers.getSubscriptions);
 app.get("/subscriptions/:subId", handlers.getSubscription);
 app.delete("/subscriptions/:subId", handlers.deleteSubscription);
+app.put("/subscriptions/:subId", handlers.editSubscription);
 app.post("/events", handlers.events);
 app.post("/subscriptions", handlers.createSubscription);
 app.use(on_error)

@@ -114,9 +114,8 @@ $defs:
                     const: notification-event
                   part:
                     type: array
-                    minItems: 3
+                    minItems: 2
                     maxItems: 3
-                    items: false
                     prefixItems:
                       - type: object
                         description: Note this is a fixed value
@@ -141,6 +140,7 @@ $defs:
                         required:
                           - name
                           - valueInstant
+                  items:
                       - type: object
                         description: Resource on an API of the publishing service to retrieve full details of the event (or subject record)
                         properties:

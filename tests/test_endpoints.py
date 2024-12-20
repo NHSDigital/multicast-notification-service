@@ -87,40 +87,51 @@ def test_post_event(
 
 
 @pytest.mark.parametrize(
-    "attributes_to_update",
+    "attributes_to_update, expected_status_code, expected_error_message",
     [
-        [
-            {
-                "name": "product-id",
-                "value": "P-MNS-TST"
-            },
-            {
-                "name": "product-device-id",
-                "value": str(uuid.uuid4())
-            },
-        ],
+        (
+            [
+                {
+                    "name": "product-id",
+                    "value": "P-MNS-TST"
+                },
+                {
+                    "name": "product-device-id",
+                    "value": str(uuid.uuid4()),
+                },
+            ],
+            403,
+            "Unauthorised",
+        ),
         # UNCOMMENT AFTER BACKEND CHECKS FOR NHSE-Product-ID HEADER
-        # [
-        #     {
-        #         "name": "permissions",
-        #         "value": "events:create:mns-test-signal-1"
-        #     },
-        #     {
-        #         "name": "product-device-id",
-        #         "value": str(uuid.uuid4())
-        #     },
-        # ],
-        # UNCOMMENT AFTER BACKEND CHECKS FOR NHSE-Product-Device-ID HEADER
-        # [
-        #     {
-        #         "name": "permissions",
-        #         "value": "events:create:mns-test-signal-1"
-        #     },
-        #     {
-        #         "name": "product-id",
-        #         "value": "P-MNS-TST"
-        #     },
-        # ]
+        # (
+        #     [
+        #         {
+        #             "name": "permissions",
+        #             "value": "events:create:mns-test-signal-1",
+        #         },
+        #         {
+        #             "name": "product-device-id",
+        #             "value": str(uuid.uuid4()),
+        #         },
+        #     ],
+        #     500,
+        #     "Missing required attribute 'product-id' on calling client application",
+        # ),
+        # (
+        #     [
+        #         {
+        #             "name": "permissions",
+        #             "value": "events:create:mns-test-signal-1",
+        #         },
+        #         {
+        #             "name": "product-id",
+        #             "value": "P-MNS-TST",
+        #         },
+        #     ],
+        #     500,
+        #     "Missing required attribute 'product-device-id' on calling client application",
+        # ),
     ]
 )
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
@@ -131,6 +142,8 @@ def test_missing_required_target_attributes(
     _apigee_app_base_url,
     _create_test_app,
     attributes_to_update,
+    expected_status_code,
+    expected_error_message
 ):
     # Update client app via Apigee with necessary custom attributes
     created_test_app_name = _create_test_app["name"]
@@ -156,5 +169,5 @@ def test_missing_required_target_attributes(
         json=mns_test_signal_event
     )
 
-    assert resp.status_code == 403
-    assert resp.json() == {"errors": "Unauthorised"}
+    assert resp.status_code == expected_status_code
+    assert resp.json() == {"errors": expected_error_message}

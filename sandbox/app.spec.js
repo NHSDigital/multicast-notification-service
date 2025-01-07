@@ -32,9 +32,10 @@ describe("app handler tests", function () {
         process.env = env;
         server.close();
     });
+    
 
     describe("healthcheck tests", () => {
-        it("responds to /_ping", (done) => {
+        it("GET /_ping responds successfully", (done) => {
             request(server)
                 .get("/_ping")
                 .expect(200, {
@@ -46,7 +47,7 @@ describe("app handler tests", function () {
                 .expect("Content-Type", /json/, done);
         });
     
-        it("responds to /_status", (done) => {
+        it("GET /_status responds successfully", (done) => {
             request(server)
                 .get("/_status")
                 .expect(200, {
@@ -60,7 +61,9 @@ describe("app handler tests", function () {
     });
 
     describe("/events endpoint tests", () => {
-        it("responds with a success when the pre-canned MDS event is published to /events", (done) => {
+        // POST /events
+
+        it("POST /events responds with a success when the pre-canned MDS event is sent", (done) => {
             request(server)
                 .post("/events")
                 .send(mockEvents.minimumDataSetEvent)
@@ -69,13 +72,13 @@ describe("app handler tests", function () {
                 },done);
         });
     
-        it("responds with a validation error when an event with an invalid time is published to /events", (done) => {
-            let invalidEvent = mockEvents.minimumDataSetEvent;
+        it("POST /events responds with a validation error when an event with an invalid time is sent", (done) => {
+            let invalidEvent = {...mockEvents.minimumDataSetEvent};
             invalidEvent["time"] = "202-04-05T17:31:00.000Z";
-    
+   
             request(server)
                 .post("/events")
-                .send(mockEvents.minimumDataSetEvent)
+                .send(invalidEvent)
                 .expect(400, {
                     "validationErrors": {
                         "time": "Please provide a valid time"
@@ -85,7 +88,10 @@ describe("app handler tests", function () {
     });
 
     describe("/subscriptions endpoint tests", () => {
-        it("responds with a success when the pre-canned subscription is sent to /subscriptions", (done) => {
+
+        // POST /subscriptions
+
+        it("POST /subscriptions responds with a success when the pre-canned subscription is sent", (done) => {
             request(server)
                 .post("/subscriptions")
                 .set('Content-Type',  'application/fhir+json')
@@ -95,8 +101,8 @@ describe("app handler tests", function () {
                 },done);
         });
     
-        it("responds with a validation error when an invalid subscription is sent to /subscriptions", (done) => {
-            let invalidSubscription = mockSubscriptions.mockSubscriptionRequest;
+        it("POST /subscriptions responds with a validation error when an invalid resourceType is sent", (done) => {
+            let invalidSubscription = {...mockSubscriptions.mockSubscriptionRequest};
             invalidSubscription["resourceType"] = "Bundle";
     
             request(server)
@@ -109,14 +115,8 @@ describe("app handler tests", function () {
                     }
                 },done);
         });
-    
-        it("responds with a success and returns subscription body when a valid subscriptionID is provided to subscriptions GET", (done) => {
-            request(server)
-                .get("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
-                .expect(200, mockSubscriptions.mockCreatedSubscription, done);
-        });
 
-        it("responds with a success when the pre-canned FHIR subscription is sent to /subscriptions", (done) => {
+        it("POST /subscriptions responds with a success when the pre-canned FHIR subscription is sent", (done) => {
             request(server)
                 .post("/subscriptions")
                 .set('Content-Type',  'application/fhir+json')
@@ -126,35 +126,9 @@ describe("app handler tests", function () {
                 },done);
         });
 
-        it("responds with a success and returns subscription body including FHIR output format, when a valid subscriptionID is provided to subscriptions GET", (done) => {
-            request(server)
-                .get("/subscriptions/c5a332ca-12ab-4ccf-9eb7-c933713accb3")
-                .expect(200, mockSubscriptions.mockCreatedSubscriptionFHIR, done);
-        });
-    
-        it("responds with a not found error when an invalid subscriptionID is provided to subscriptions GET", (done) => {
-            request(server)
-                .get("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
-                .expect(404, {
-                    "errors": "Not found" 
-                }, done);
-        });
-    
-        it("responds with a success when a valid subscriptionID is provided to subscriptions DELETE", (done) => {
-            request(server)
-                .delete("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
-                .expect(204, done);
-        });
-    
-        it("responds with a validation error when an invalid subscriptionID is provided to subscriptions DELETE", (done) => {
-            request(server)
-                .delete("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
-                .expect(404, {
-                    "errors": "Not found" 
-                }, done);
-        });
+        // GET /subscriptions
 
-        it("responds with a success when user requests to get ALL subscriptions", (done) => {
+        it("GET /subscriptions responds with a success when user requests to get ALL subscriptions", (done) => {
             request(server)
                 .get("/subscriptions")
                 .expect(200, {  "resourceType": "Bundle",
@@ -166,6 +140,97 @@ describe("app handler tests", function () {
                                     }
                                 ], "entry": [mockSubscriptions.mockCreatedSubscription]
                             }, done);
+        });        
+
+    });
+
+
+    describe("/subscriptions/{id} endpoint tests", () => {
+
+        // GET /subscriptions/{id}
+    
+        it("GET /subscriptions/{id} responds with a success and returns subscription body when a valid subscriptionID is sent", (done) => {
+            request(server)
+                .get("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
+                .expect(200, mockSubscriptions.mockCreatedSubscription, done);
         });
+
+
+        it("GET /subscriptions/{id} responds with a success and returns subscription body including FHIR output format, when a valid subscriptionID is sent", (done) => {
+            request(server)
+                .get("/subscriptions/c5a332ca-12ab-4ccf-9eb7-c933713accb3")
+                .expect(200, mockSubscriptions.mockCreatedSubscriptionFHIR, done);
+        });
+    
+        it("GET /subscriptions/{id} responds with a not found error when non-matching subscriptionID is sent", (done) => {
+            request(server)
+                .get("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
+                .expect(404, {
+                    "errors": "Not found" 
+                }, done);
+        });
+
+        // DELETE /subscriptions/{id}
+    
+        it("DELETE /subscriptions/{id} responds with a success when a valid subscriptionID is sent", (done) => {
+            request(server)
+                .delete("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
+                .expect(204, done);
+        });
+    
+        it("DELETE /subscriptions/{id} responds with a validation error when an non-matching subscriptionID is sent", (done) => {
+            request(server)
+                .delete("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
+                .expect(404, {
+                    "errors": "Not found" 
+                }, done);
+        });
+
+        // PUT /subscriptions/{id}
+
+        it("PUT /subscriptions/{id} responds with succcess when user updates a subscription", (done) => {
+            //console.log(mockSubscriptions.mockSubscriptionRequest);
+            request(server)
+                .put("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
+                .set('Content-Type',  'application/fhir+json')                
+                .send(mockSubscriptions.mockSubscriptionRequest)
+                .expect(204, {
+                },done);
+        });     
+
+        it("PUT /subscriptions/{id} responds with a conflict error when matching subscription already exists", (done) => {
+            request(server)
+                .put("/subscriptions/f8f44c83-a697-4607-8604-a1a45acedd8c")
+                .send(mockSubscriptions.mockSubscriptionRequest)
+                .expect(409, {
+                    "errors": "A matching subscription already exists with id: 5553998c-b802-4071-9a54-8e99ea729614"
+                },done);
+        });            
+
+        it("PUT /subscriptions/{id} responds with a validation error when an invalid resourceType is sent", (done) => {
+            let invalidSubscription = {...mockSubscriptions.mockSubscriptionRequest};
+            invalidSubscription["resourceType"] = "Bundle";
+    
+            request(server)
+                .put("/subscriptions/e9050741-ae87-4720-beb1-2abd9248e227")
+                .set('Content-Type',  'application/fhir+json')
+                .send(invalidSubscription)
+                .expect(400, {
+                    "validationErrors": {
+                        "resourceType": "Please provide the correct resource type for this endpoint"
+                    }
+                },done);
+        });     
+        
+        it("PUT /subscriptions/{id} responds with a validation error when non-matching subscriptionID is sent", (done) => {
+            request(server)
+                .put("/subscriptions/236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b")
+                .set('Content-Type',  'application/fhir+json')                
+                .send(mockSubscriptions.mockSubscriptionRequest)                
+                .expect(404, {
+                    "errors": "Not found" 
+                }, done);
+        });   
+
     });
 });

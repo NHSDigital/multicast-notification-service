@@ -7,6 +7,11 @@ APIGEE_ENVIRONMENTS:
     has_mock_auth: true
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
+  - name: internal-qa
+    display_name: Internal QA
+    has_mock_auth: true
+  - name: internal-qa-sandbox
+    display_name: Internal QA Sandbox
   - name: ref
     display_name: Reference
     has_mock_auth: true

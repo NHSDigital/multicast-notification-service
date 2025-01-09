@@ -41,6 +41,9 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               test_command: make smoketest
+      - environment: internal-qa
+      - environment: internal-qa-sandbox
+        proxy_path: sandbox
       - environment: ref
         post_deploy:
           - template: ./templates/run-tests.yml

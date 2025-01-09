@@ -43,7 +43,6 @@ required:
 - specversion
 - type
 - time
-- dataref
 - subject
 definitions:
   iddef:

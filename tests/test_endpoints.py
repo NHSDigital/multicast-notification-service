@@ -1,103 +1,26 @@
-"""
-See
-https://github.com/NHSDigital/pytest-nhsd-apim/blob/main/tests/test_examples.py
-for more ideas on how to test the authorization of your API.
-"""
-import json
 import os
-from time import sleep
-from typing import List
 import pytest
 import requests
+from time import sleep
 import uuid
-from os import getenv
-
-
-def read_json_file(current_file: str, filename: str):
-    """
-    read a test data json file
-    """
-
-    filepath = os.path.join(os.path.dirname(current_file), "data", filename)
-
-    with open(filepath, "r", encoding='utf8') as json_file:
-        content = json.loads(json_file.read())
-
-    return content
 
 
 @pytest.fixture
-def mds_event_list() -> List[dict]:
-    return [
-        read_json_file(__file__, "pds-change-of-gp-event-mds.json"),
-        read_json_file(__file__, "pds-death-event-mds.json"),
-        read_json_file(__file__, "nhs-number-change-event-mds.json"),
-        read_json_file(__file__, "immunisation-vaccination-event-mds.json"),
-    ]
-
-
-@pytest.mark.smoketest
-def test_wait_for_ping(nhsd_apim_proxy_url):
-    retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
-    deployed_commit_id = resp.json().get("commitId")
-
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
-           and retries <= 30
-           and resp.status_code == 200):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
-        deployed_commit_id = resp.json().get("commitId")
-        retries += 1
-        sleep(1)
-
-    if resp.status_code != 200:
-        pytest.fail(f"Status code {resp.status_code}, expecting 200")
-    elif retries >= 30:
-        pytest.fail("Timeout Error - max retries")
-
-    assert deployed_commit_id == getenv('SOURCE_COMMIT_ID')
-
-
-@pytest.mark.smoketest
-def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
-    retries = 0
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
-                        timeout=30)
-    deployed_commit_id = resp.json().get("commitId")
-
-    while (deployed_commit_id != getenv('SOURCE_COMMIT_ID') or _container_not_ready(resp)
-            and resp.status_code == 200
-            and retries <= 30
-            and resp.json().get("version")):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers,
-                            timeout=30)
-        deployed_commit_id = resp.json().get("commitId")
-        retries += 1
-        sleep(1)
-
-    if resp.status_code != 200:
-        pytest.fail(f"Status code {resp.status_code}, expecting 200")
-    elif retries >= 30:
-        pytest.fail("Timeout Error - max retries")
-    elif not resp.json().get("version"):
-        pytest.fail("version not found")
-
-    assert resp.json().get("status") == "pass"
-
-
-def _container_not_ready(resp: requests.Response):
-    """
-    Requests to ECS containers which are still starting up return with a
-    HTTP 503 (service unavailable).
-    """
-    return resp.json().get('checks', {})\
-        .get('healthcheck', {})\
-        .get('responseCode') == 503
+def mns_test_signal_event():
+    return {
+        "specversion": "1.0",
+        "id": str(uuid.uuid4()),
+        "source": "uk.nhs.multicast-notification-service",
+        "type": "mns-test-signal-1",
+        "time": "2020-06-01T13:00:00Z",
+        "dataref": "https://int.api.service.nhs.uk/multicast-notification-service/FHIRR4Response",
+        "subject": "9911003906"
+    }
 
 
 @pytest.mark.parametrize("proxy_path", ["events", "subscriptions"])
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
-def test_app_level0(proxy_path, nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+def test_api_not_accessible_by_api_key(proxy_path, nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(
         f"{nhsd_apim_proxy_url}/{proxy_path}",
         headers=nhsd_apim_auth_headers,
@@ -107,53 +30,144 @@ def test_app_level0(proxy_path, nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_events_endpoint_accepts_valid_mds_payload_pds_events(
+def test_post_event(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
-    mds_event_list,
+    mns_test_signal_event,
     _apigee_app_base_url,
     _create_test_app
 ):
+    # Update client app via Apigee with necessary custom attributes
     created_test_app_name = _create_test_app["name"]
     apigee_update_url = f"{_apigee_app_base_url}/{created_test_app_name}"
-
-    key_value_pairs = {
+    attributes_to_update = {
         "attributes": [
             {
                 "name": "permissions",
-                "value": ",".join([
-                    "events:create:pds-change-of-gp-1",
-                    "events:create:pds-death-notification-1",
-                    "events:create:nhs-number-change-1",
-                    "events:create:imms-vaccinations-1",
-                ])
-            }
+                "value": "events:create:mns-test-signal-1"
+            },
+            {
+                "name": "product-id",
+                "value": "P-MNS-TST"
+            },
+            {
+                "name": "product-device-id",
+                "value": str(uuid.uuid4())
+            },
         ]
     }
 
     update_response = requests.put(
         f"{apigee_update_url}",
-        json=key_value_pairs,
+        json=attributes_to_update,
         headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"}
     )
     update_response.raise_for_status()
 
-    for mds_event in mds_event_list:
-        nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
-        retries = 0
+    # POST event to /events endpoint
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
+    nhsd_apim_auth_headers["Content-Type"] = "application/cloudevents+json"
+    retries = 0
 
-        while retries < 5:
-            resp = requests.post(
-                f"{nhsd_apim_proxy_url}/events",
-                headers=nhsd_apim_auth_headers,
-                json=mds_event
-            )
+    while retries < 5:
+        resp = requests.post(
+            f"{nhsd_apim_proxy_url}/events",
+            headers=nhsd_apim_auth_headers,
+            json=mns_test_signal_event
+        )
 
-            if resp.status_code == 403:
-                retries = retries + 1
-                continue
+        if resp.status_code == 403:
+            retries = retries + 1
+            continue
 
-            break
+        break
 
-        assert resp.status_code == 200
-        assert resp.json() == {"id": mds_event["id"]}
+    assert resp.status_code == 200
+    assert resp.json() == {"id": mns_test_signal_event["id"]}
+
+
+@pytest.mark.parametrize(
+    "attributes_to_update, expected_status_code, expected_error_message",
+    [
+        (
+            [
+                {
+                    "name": "product-id",
+                    "value": "P-MNS-TST"
+                },
+                {
+                    "name": "product-device-id",
+                    "value": str(uuid.uuid4()),
+                },
+            ],
+            403,
+            "Unauthorised",
+        ),
+        # UNCOMMENT AFTER BACKEND CHECKS FOR NHSE-Product-ID HEADER
+        # (
+        #     [
+        #         {
+        #             "name": "permissions",
+        #             "value": "events:create:mns-test-signal-1",
+        #         },
+        #         {
+        #             "name": "product-device-id",
+        #             "value": str(uuid.uuid4()),
+        #         },
+        #     ],
+        #     500,
+        #     "Missing required attribute 'product-id' on calling client application",
+        # ),
+        # (
+        #     [
+        #         {
+        #             "name": "permissions",
+        #             "value": "events:create:mns-test-signal-1",
+        #         },
+        #         {
+        #             "name": "product-id",
+        #             "value": "P-MNS-TST",
+        #         },
+        #     ],
+        #     500,
+        #     "Missing required attribute 'product-device-id' on calling client application",
+        # ),
+    ]
+)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_missing_required_target_attributes(
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    mns_test_signal_event,
+    _apigee_app_base_url,
+    _create_test_app,
+    attributes_to_update,
+    expected_status_code,
+    expected_error_message
+):
+    # Update client app via Apigee with necessary custom attributes
+    created_test_app_name = _create_test_app["name"]
+    apigee_update_url = f"{_apigee_app_base_url}/{created_test_app_name}"
+
+    update_response = requests.put(
+        f"{apigee_update_url}",
+        json={"attributes": attributes_to_update},
+        headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"}
+    )
+    update_response.raise_for_status()
+
+    # POST event to /events endpoint
+    nhsd_apim_auth_headers["X-Correlation-ID"] = f"apim-smoketests-{uuid.uuid4()}"
+    nhsd_apim_auth_headers["Content-Type"] = "application/cloudevents+json"
+
+    # Wait 5 seconds as apigee can take time to register update
+    sleep(5)
+
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/events",
+        headers=nhsd_apim_auth_headers,
+        json=mns_test_signal_event
+    )
+
+    assert resp.status_code == expected_status_code
+    assert resp.json() == {"errors": expected_error_message}

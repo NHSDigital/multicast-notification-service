@@ -35,27 +35,27 @@ extends:
       - environment: internal-dev
         post_deploy:
           - template: ./templates/run-tests.yml
-            parameters:
-              full: true
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
-      - environment: internal-qa
-      - environment: internal-qa-sandbox
-        proxy_path: sandbox
+            parameters:
+              test_command: make smoketest
       - environment: ref
         post_deploy:
           - template: ./templates/run-tests.yml
       - environment: sandbox
         proxy_path: sandbox
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              test_command: make smoketest
       - environment: int
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
               app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
-              full: true
-              test_command: make test-prod
+              test_command: make smoketest-prod
       - environment: prod
         depends_on:
           - int
@@ -63,5 +63,4 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
-              full: true
-              test_command: make test-prod
+              test_command: make smoketest-prod

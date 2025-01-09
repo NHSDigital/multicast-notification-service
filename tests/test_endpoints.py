@@ -10,7 +10,7 @@ def mns_test_signal_event():
     return {
         "specversion": "1.0",
         "id": str(uuid.uuid4()),
-        "source": "uk.nhs.multicast-notifications-service",
+        "source": "uk.nhs.multicast-notification-service",
         "type": "mns-test-signal-1",
         "time": "2020-06-01T13:00:00Z",
         "dataref": "https://int.api.service.nhs.uk/multicast-notification-service/FHIRR4Response",

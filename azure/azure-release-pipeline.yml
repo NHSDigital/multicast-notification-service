@@ -52,7 +52,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              test_command: make smoketest
+              test_command: make smoketest-prod
       - environment: int
         post_deploy:
           - template: ./templates/run-tests.yml

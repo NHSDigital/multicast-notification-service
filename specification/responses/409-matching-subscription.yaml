@@ -1,0 +1,10 @@
+description: "Resource conflict"
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        errors:
+          type: string
+          description: Error string that explains the problem
+          example: "A matching SQS subscription already exists with id: ab40a960-fc6a-426c-965f-2bff8a0bd74f"

@@ -169,7 +169,7 @@ $defs:
                   part:
                     type: array
                     minItems: 2
-                    maxItems: 3
+                    maxItems: 4
                     prefixItems:
                       - type: object
                         description: Describes the occurrence; the name of the event.

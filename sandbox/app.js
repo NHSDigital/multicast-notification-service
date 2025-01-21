@@ -1,19 +1,17 @@
 "use strict";
 
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const log = require("loglevel");
-const uuid = require('uuid');
-
+const uuid = require("uuid");
 
 
 function setup(options) {
     options = options || {};
-    app.locals.app_name = options.APP_NAME || 'multicast-notification-service';
-    app.locals.version_info = JSON.parse(options.VERSION_INFO || '{}');
+    app.locals.app_name = options.APP_NAME || "multicast-notification-service";
+    app.locals.version_info = JSON.parse(options.VERSION_INFO || "{}");
     log.setLevel(options.LOG_LEVEL || "info");
-
-
     log.info(JSON.stringify({
         timestamp: Date.now(),
         level: "info",
@@ -21,11 +19,11 @@ function setup(options) {
         msg: "setup",
         version:  app.locals.version_info
     }));
-}
+};
 
 function start(options) {
     options = options || {};
-    let server = app.listen(options.PORT || 9000, () => {
+    const server = app.listen(options.PORT || 9000, () => {
         log.info(JSON.stringify({
             timestamp: Date.now(),
             level: "info",
@@ -33,31 +31,31 @@ function start(options) {
             msg: "startup",
             server_port: server.address().port,
             version:  app.locals.version_info
-        }))
+        }));
     });
     return server;
-}
+};
 
 function before_request(req, res, next) {
     res.locals.started_at = Date.now();
     res.locals.correlation_id = (
-        req.header('X-Correlation-ID')
-        || req.header('Correlation-ID')
-        || req.header('CorrelationID')
+        req.header("X-Correlation-ID")
+        || req.header("Correlation-ID")
+        || req.header("CorrelationID")
         || uuid.v4()
     );
     next();
-}
+};
 
 const _health_endpoints = ["/_ping", "/health"];
 
 function after_request(req, res, next) {
-    if (_health_endpoints.includes(req.path) && !('log' in Object.assign({}, req.query))) {
+    if (_health_endpoints.includes(req.path) && !("log" in Object.assign({}, req.query))) {
         // don't log ping / health by default
         return next();
-    }
-    let finished_at = Date.now();
-    let log_entry = {
+    };
+    const finished_at = Date.now();
+    const log_entry = {
         timestamp: finished_at,
         level: "info",
         app: app.locals.app_name,
@@ -83,12 +81,11 @@ function after_request(req, res, next) {
         // debug
         log_entry.req.headers = req.rawHeaders;
         log_entry.res.headers = res.rawHeaders;
-    }
+    };
     log.info(JSON.stringify(log_entry));
 
     next();
-
-}
+};
 
 function on_error(err, req, res, next) {
     let log_err = err;
@@ -97,9 +94,9 @@ function on_error(err, req, res, next) {
             name: err.name,
             message: err.message,
             stack: err.stack
-        }
-    }
-    let finished_at = Date.now();
+        };
+    };
+    const finished_at = Date.now();
     log.error(JSON.stringify({
         timestamp: finished_at,
         level: "error",
@@ -115,13 +112,43 @@ function on_error(err, req, res, next) {
     if (res.headersSent) {
         next();
         return;
-    }
+    };
     res.status(500);
-    res.json({error: "something went wrong" });
+    res.json({error: "something went wrong"});
     next();
-}
+};
 
 const handlers = require("./handlers");
+app.use(
+    cors({
+        origin: "https://digital.nhs.uk",
+        allowedHeaders: [
+            "origin",
+            "x-requested-with",
+            "accept",
+            "accept-encoding",
+            "content-type",
+            "content-length",
+            "host",
+            "nhsd-correlation-id",
+            "nhsd-request-id",
+            "user-agent",
+            "x-correlation-id",
+            "x-forwarded-for",
+            "x-forwarded-port",
+            "x-forwarded-proto",
+            "authorization",
+            "x-application-id",
+            "x-application-name",
+            "x-application-mesh-mailboxes",
+            "x-mns-application-permissions",
+            "nhse-product-id",
+            "nhse-product-device-id"
+        ],
+        maxAge: 3628800,
+        methods: ["GET", "PUT", "POST", "DELETE"]
+    })
+);
 app.use(before_request);
 app.use(express.json({type: ["application/json", "application/cloudevents+json", "application/fhir+json"]}));
 app.get("/_ping", handlers.status);
@@ -133,7 +160,7 @@ app.delete("/subscriptions/:subId", handlers.deleteSubscription);
 app.put("/subscriptions/:subId", handlers.editSubscription);
 app.post("/events", handlers.events);
 app.post("/subscriptions", handlers.createSubscription);
-app.use(on_error)
+app.use(on_error);
 app.use(after_request);
 
 module.exports = {start: start, setup: setup};

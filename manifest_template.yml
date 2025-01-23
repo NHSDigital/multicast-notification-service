@@ -1,6 +1,6 @@
 SERVICE_NAME: multicast-notification-service
-PRODUCT_DISPLAY_NAME: multicast-notification-service
-DESCRIPTION: The multicast notification service
+PRODUCT_DISPLAY_NAME: Multicast Notification Service API
+DESCRIPTION: Publish and receive patient-related state changes from a single centralised system
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
@@ -10,11 +10,11 @@ APIGEE_ENVIRONMENTS:
   - name: internal-qa
     display_name: Internal QA
     has_mock_auth: true
+  - name: internal-qa-sandbox
+    display_name: Internal QA Sandbox
   - name: ref
     display_name: Reference
     has_mock_auth: true
-  - name: internal-qa-sandbox
-    display_name: Internal QA Sandbox
   - name: sandbox
     display_name: Sandbox
     has_mock_auth: true

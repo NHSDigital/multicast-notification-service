@@ -140,7 +140,6 @@ app.use(
             "authorization",
             "x-application-id",
             "x-application-name",
-            "x-application-mesh-mailboxes",
             "x-mns-application-permissions",
             "nhse-product-id",
             "nhse-product-device-id"

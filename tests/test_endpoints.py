@@ -103,35 +103,34 @@ def test_post_event(
             403,
             "Unauthorised",
         ),
-        # UNCOMMENT AFTER BACKEND CHECKS FOR NHSE-Product-ID HEADER
-        # (
-        #     [
-        #         {
-        #             "name": "permissions",
-        #             "value": "events:create:mns-test-signal-1",
-        #         },
-        #         {
-        #             "name": "product-device-id",
-        #             "value": str(uuid.uuid4()),
-        #         },
-        #     ],
-        #     500,
-        #     "Missing required attribute 'product-id' on calling client application",
-        # ),
-        # (
-        #     [
-        #         {
-        #             "name": "permissions",
-        #             "value": "events:create:mns-test-signal-1",
-        #         },
-        #         {
-        #             "name": "product-id",
-        #             "value": "P-MNS-TST",
-        #         },
-        #     ],
-        #     500,
-        #     "Missing required attribute 'product-device-id' on calling client application",
-        # ),
+        (
+            [
+                {
+                    "name": "permissions",
+                    "value": "events:create:mns-test-signal-1",
+                },
+                {
+                    "name": "product-device-id",
+                    "value": str(uuid.uuid4()),
+                },
+            ],
+            500,
+            "Missing required attribute 'product-id' on calling client application",
+        ),
+        (
+            [
+                {
+                    "name": "permissions",
+                    "value": "events:create:mns-test-signal-1",
+                },
+                {
+                    "name": "product-id",
+                    "value": "P-MNS-TST",
+                },
+            ],
+            500,
+            "Missing required attribute 'product-device-id' on calling client application",
+        ),
     ]
 )
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})

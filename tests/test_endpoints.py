@@ -168,5 +168,5 @@ def test_missing_required_target_attributes(
         json=mns_test_signal_event
     )
 
-    assert resp.status_code == expected_status_code
+    assert resp.status_code == expected_status_code, resp.text
     assert resp.json() == {"errors": expected_error_message}

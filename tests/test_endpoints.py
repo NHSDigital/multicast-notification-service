@@ -48,6 +48,7 @@ def test_api_not_accessible_by_api_key(proxy_path, nhsd_apim_proxy_url, nhsd_api
                 },
             ],
             200,
+            None,
         ),
         (
             [

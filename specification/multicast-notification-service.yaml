@@ -201,6 +201,7 @@ paths:
                   filtering:
                     flagtype: 'NRAF'
                     generalpractitioner: 'XY11'
+                    origin: 'pfapi-internal-mns-int'
           application/json:
             schema:
               type: "object"

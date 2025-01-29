@@ -161,12 +161,21 @@ def test_missing_required_target_attributes(
 
     # Wait 5 seconds as apigee can take time to register update
     sleep(5)
+    retries = 0
 
-    resp = requests.post(
-        f"{nhsd_apim_proxy_url}/events",
-        headers=nhsd_apim_auth_headers,
-        json=mns_test_signal_event
-    )
+    while retries < 5:
+        resp = requests.post(
+            f"{nhsd_apim_proxy_url}/events",
+            headers=nhsd_apim_auth_headers,
+            json=mns_test_signal_event
+        )
+
+        if resp.status_code != expected_status_code:
+            retries = retries + 1
+            sleep(1)
+            continue
+
+        break
 
     assert resp.status_code == expected_status_code, resp.text
     assert resp.json() == {"errors": expected_error_message}

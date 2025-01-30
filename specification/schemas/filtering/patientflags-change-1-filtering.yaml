@@ -22,6 +22,12 @@ properties:
     minLength: 1
     example: "Y12345"
     description: The ODS Code of the GP Practice for the patient.
+  origin:
+    type: string
+    minLength: 1
+    example: "pfapi-internal-mns-int"
+    description: Origin of the event so the subscriber can make a decision if the event is relevant. e.g. You might want to ignore an event if you triggered the event and are already aware of it.
 required:
   - flagtype
   - generalpractitioner
+  - origin

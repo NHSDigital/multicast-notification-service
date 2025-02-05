@@ -330,11 +330,11 @@
                             "description": "Version ID related to the event",
                             "properties": {
                               "name": {
-                                "const": "versionid"
+                                "const": "version-id"
                               },
                               "valueString": {
                                 "type": "string",
-                                "examples" : [
+                                "examples": [
                                   "1"
                                 ]
                               }

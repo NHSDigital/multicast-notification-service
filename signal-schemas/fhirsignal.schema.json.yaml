@@ -223,7 +223,7 @@ $defs:
                         description: Version ID related to the event
                         poperties:
                           name:
-                            const: versionid
+                            const: version-id
                           valueString:
                             type: string
                             examples: 

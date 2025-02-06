@@ -168,9 +168,8 @@ $defs:
                     const: additional-context
                   part:
                     type: array
-                    items: false
                     minItems: 2
-                    maxItems: 3
+                    maxItems: 4
                     prefixItems:
                       - type: object
                         description: Describes the occurrence; the name of the event.
@@ -196,28 +195,42 @@ $defs:
                         required:
                           - name
                           - valueUri
+                    items:
+                      anyOf:
+                        - type: object
+                          description: Identifies the subject of the event in the context of the event producer/event type.
+                          properties:
+                            name:
+                              const: subject
+                            valueReference:
+                              type: object
+                              properties:
+                                identifier:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      examples:
+                                        - '9912003888'
+                                  required:
+                                    - value
+                              required:
+                                - identifier
+                          required:
+                            - name
+                            - valueReference
                       - type: object
-                        description: Identifies the subject of the event in the context of the event producer/event type.
-                        properties:
+                        description: Version ID related to the event
+                        poperties:
                           name:
-                            const: subject
-                          valueReference:
-                            type: object
-                            properties:
-                              identifier:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                                    examples:
-                                      - '9912003888'
-                                required:
-                                  - value
-                            required:
-                              - identifier
+                            const: version-id
+                          valueString:
+                            type: string
+                            examples: 
+                              - "1"
                         required:
                           - name
-                          - valueReference
+                          - valueString
                 required:
                   - name
                   - part

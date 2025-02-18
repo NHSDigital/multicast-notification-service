@@ -6,7 +6,7 @@
 // If we need to add more then use extended attributes. See:
 // https://nhsd-confluence.digital.nhs.uk/display/APM/ExtendedAttributes+shared+flow
 
-const appPermissions = context.getVariable("app.permissions");
+const appPermissions = context.getVariable("apim-app-flow-vars.mns.permissions");
 context.targetRequest.headers["X-MNS-Application-Permissions"] = appPermissions;
 
 const productId = context.getVariable("app.product-id");

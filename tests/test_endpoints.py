@@ -83,11 +83,7 @@ def test_api_not_accessible_by_api_key(proxy_path, nhsd_apim_proxy_url, nhsd_api
             [
                 {
                     "name": "apim-app-flow-vars",
-                    "value": {
-                        "mns": {
-                            "permissions": "events:create:mns-test-signal-1"
-                        }
-                    }
+                    "value": json.dumps({"mns": {"permissions": "events:create:mns-test-signal-1"}})
                 },
                 {
                     "name": "product-id",

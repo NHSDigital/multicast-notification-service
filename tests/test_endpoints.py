@@ -1,3 +1,4 @@
+import json
 import os
 import pytest
 import requests
@@ -35,8 +36,8 @@ def test_api_not_accessible_by_api_key(proxy_path, nhsd_apim_proxy_url, nhsd_api
         (
             [
                 {
-                    "name": "permissions",
-                    "value": "events:create:mns-test-signal-1"
+                    "name": "apim-app-flow-vars",
+                    "value": json.dumps({"mns": {"permissions": "events:create:mns-test-signal-1"}})
                 },
                 {
                     "name": "product-id",
@@ -67,8 +68,8 @@ def test_api_not_accessible_by_api_key(proxy_path, nhsd_apim_proxy_url, nhsd_api
         (
             [
                 {
-                    "name": "permissions",
-                    "value": "events:create:mns-test-signal-1",
+                    "name": "apim-app-flow-vars",
+                    "value": json.dumps({"mns": {"permissions": "events:create:mns-test-signal-1"}}),
                 },
                 {
                     "name": "product-device-id",
@@ -81,8 +82,8 @@ def test_api_not_accessible_by_api_key(proxy_path, nhsd_apim_proxy_url, nhsd_api
         (
             [
                 {
-                    "name": "permissions",
-                    "value": "events:create:mns-test-signal-1",
+                    "name": "apim-app-flow-vars",
+                    "value": json.dumps({"mns": {"permissions": "events:create:mns-test-signal-1"}})
                 },
                 {
                     "name": "product-id",

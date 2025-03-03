@@ -39,5 +39,8 @@
     <LoadBalancer>
       <Server name="multicast-notification-service" />
     </LoadBalancer>
+    <Properties>
+      <Property name="keepalive.timeout.millis">28000</Property>
+    </Properties>
   </HTTPTargetConnection>
 </TargetEndpoint>

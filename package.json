@@ -15,7 +15,7 @@
     "newman-reporter-htmlextra": "^1.23.1"
   },
   "devDependencies": {
-    "@nestjs/common": "^10.3.10",
+    "@nestjs/common": "^11.0.11",
     "@redocly/cli": "^1.19.0",
     "apigeetool": "^0.16.4",
     "license-checker": "^25.0.1",

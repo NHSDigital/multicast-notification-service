@@ -21,9 +21,12 @@ install-tools:
 	scripts/install-tools.sh "python java nodejs poetry"
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
-lint:
+lint: # lint-oas
 	npm run lint
 	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
+
+lint-oas:
+	docker run --rm -v ./specification:/work:ro dshanley/vacuum lint multicast-notification-service.yaml -d
 
 #Removes build/ + dist/ directories
 clean:

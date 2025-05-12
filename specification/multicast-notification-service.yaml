@@ -368,7 +368,7 @@ paths:
                   time: "2022-04-05T17:31:00.000Z"
 
       responses:
-        200:
+        "200":
           description: Success - the event is accepted and will be multicast to subscribers
           content:
             application/json:
@@ -379,7 +379,7 @@ paths:
                     type: string
                     description: The id provided in the user's payload
                     example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-        400:
+        "400":
           description: Invalid user input
           content:
             application/json:
@@ -393,9 +393,9 @@ paths:
                       type:
                         type: string
                         example: Please provide a valid event type
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           description: "Unauthorized error"
           content:
             application/json:
@@ -406,7 +406,7 @@ paths:
                     type: string
                     description: Error string that explains the problem
                     example: User is not authorized to handle the requested event type
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
   /subscriptions:
@@ -465,7 +465,7 @@ paths:
           actioned: created
         $ref: "requestBody/create-or-update-subscription-body.yaml"
       responses:
-        201:
+        "201":
           description: Created - the subscription has been successfully created
           content:
             application/json:
@@ -476,7 +476,7 @@ paths:
                     type: string
                     description: The subscription UUID created by the system
                     example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-        400:
+        "400":
           description: Invalid user input
           content:
             application/json:
@@ -490,13 +490,13 @@ paths:
                       resourceType:
                         type: string
                         example: Please provide the correct resource type for this endpoint
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        409:
+        "409":
           $ref: "responses/409-matching-subscription.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
     get:
@@ -518,7 +518,7 @@ paths:
         - $ref: "parameters/headers/x-correlation-id.yaml"
         - $ref: "parameters/query/continue_from.yaml"
       responses:
-        200:
+        "200":
           description: Successfully retrieved list of subscriptions
           content:
             application/fhir+json:
@@ -549,7 +549,7 @@ paths:
                     type: array
                     items:
                       $ref: "schemas/fhir/R4/Subscription.yaml"
-        400:
+        "400":
           description: Invalid user input
           content:
             application/json:
@@ -560,11 +560,11 @@ paths:
                     type: string
                     description: Error string that explains the problem
                     example: The continue_from field was not valid
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
   /subscriptions/{id}:
@@ -587,21 +587,21 @@ paths:
         - $ref: "parameters/headers/x-correlation-id.yaml"
         - $ref: "parameters/path/id.yaml"
       responses:
-        200:
+        "200":
           description: Successfully got subscription details
           content:
             application/fhir+json:
               schema:
                 $ref: "schemas/fhir/R4/Subscription.yaml"
-        400:
+        "400":
           $ref: "responses/400-subscription-id.yaml"
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        404:
+        "404":
           $ref: "responses/404-not-found.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
     delete:
@@ -625,17 +625,17 @@ paths:
         - $ref: "parameters/headers/x-correlation-id.yaml"
         - $ref: "parameters/path/id.yaml"
       responses:
-        204:
+        "204":
           description: The subscription was deleted
-        400:
+        "400":
           $ref: "responses/400-subscription-id.yaml"
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        404:
+        "404":
           $ref: "responses/404-not-found.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"   
 
     put:
@@ -668,17 +668,17 @@ paths:
           actioned: updated
         $ref: "requestBody/create-or-update-subscription-body.yaml"        
       responses:
-        204:
+        "204":
           description: The subscription was updated
-        400:
+        "400":
           $ref: "responses/400-subscription-id.yaml"
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        409:
+        "409":
           $ref: "responses/409-matching-subscription.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"    
 
 components:

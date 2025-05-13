@@ -3,6 +3,10 @@
     <Name>amazon-request-id</Name>
     <Template>{createUuid()}</Template>
   </AssignVariable>
+  <AssignVariable>
+    <Name>request-data-for-splunk.header.x-amzn-RequestId</Name>
+    <Template>{amazon-request-id}</Template>
+  </AssignVariable>
   <Add>
       <Headers>
           <Header name="x-amzn-RequestId">{amazon-request-id}</Header>

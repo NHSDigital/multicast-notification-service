@@ -16,6 +16,9 @@
       <Step>
         <Name>AssignMessage.AddApplicationHeaders</Name>
       </Step>
+      <Step>
+        <Name>AssignMessage.AddXAmznRequestIdHeader</Name>
+      </Step>
     </Request>
   </PreFlow>
 

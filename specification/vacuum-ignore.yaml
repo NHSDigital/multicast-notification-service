@@ -1,0 +1,5 @@
+description-duplication:
+  - $.paths['/subscriptions'].get.responses['400'].description
+  - $.paths['/subscriptions'].get.responses['400'].content['application/json'].schema.properties['errors']['description']
+  - $.paths['/subscriptions'].post.responses['400'].description
+  - $.paths['/subscriptions'].post.responses['400'].content['application/json'].schema.properties['validationErrors']['description']

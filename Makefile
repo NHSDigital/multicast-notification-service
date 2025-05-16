@@ -21,14 +21,14 @@ install-tools:
 	scripts/install-tools.sh "python java nodejs poetry"
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
-lint: lint-oas
+lint: lint-vacuum
 	npm run lint
 	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
 
-lint-oas:
+lint-vacuum:
 	docker run --rm -v ./specification:/work:ro dshanley/vacuum lint -n info --ignore-file vacuum-ignore.yaml  multicast-notification-service.yaml -d
 
-lint-oas-html:
+lint-vacuum-html:
 	docker run --user $$(id -u):$$(id -g) --rm -v ./specification:/work dshanley/vacuum html-report multicast-notification-service.yaml vacuum-report.html
 
 #Removes build/ + dist/ directories
@@ -109,3 +109,7 @@ up:
 
 down:
 	make -C sandbox down
+
+update:
+	npm update
+	make -C sandbox update

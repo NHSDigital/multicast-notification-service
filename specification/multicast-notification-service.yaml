@@ -713,5 +713,5 @@ paths:
 components:
   schemas:
     cloudevent:
-      $ref: "schemas/cloudevents/baseMnsCloudEventSignal.yaml"
+      $ref: "schemas/cloudevents/mns-publish-cloudevent.yaml"
   

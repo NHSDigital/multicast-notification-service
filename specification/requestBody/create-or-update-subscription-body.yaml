@@ -34,9 +34,13 @@ content:
           example: "Business process A"
         criteria:
           type: "string"
+          pattern: "^eventType=.*$"
           description: |
-            Criteria for the subscription. Provide your criteria with each condition separated by `&;`. If you are requesting a generic subscription to all signals of a certain type the separator is not required. For example, `eventType=gpreg-change-gp-req-1&;generalpractitioner=XY11`
-            or `eventType=gpreg-change-gp-req-1`. A valid criteria must contain a permitted value for `eventType`. Additional criteria depends on the event and are documentated on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
+            Criteria for the subscription. A valid criteria must contain a permitted value for `eventType`. 
+            Additional criteria depends on the event and are documentated on our 
+            [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
+            Examples: 'eventType=gpreg-change-gp-req-1' or 'eventType=gpreg-change-gp-req-1 AND generalpractitioner=XY11'
+          # Separate examples are only supported in OpenAPI 3.1
           example: "eventType=gpreg-change-gp-req-1 AND generalpractitioner=XY11"
         channel:
           type: "object"
@@ -53,6 +57,7 @@ content:
               example: "message"
             endpoint:
               type: "string"
+              pattern: "^(mesh://[\\w]*\\?workflow_id=[\\w_.-]+|arn:aws:sqs:eu-west-2:\\d{0,12}:[\\w_.-]*)$"
               description: "The endpoint which signals will be delivered to. MNS currently only supports delivery to [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailboxes and [AWS SQS](https://aws.amazon.com/sqs/) endpoints. Note: for MESH delivery you must provide the full mailbox ID and for SQS delivery you must provide the full SQS ARN of your desired queue."
             payload:
               type: "string"
@@ -82,73 +87,73 @@ content:
                 custom_header_2: "custom_value_2"
     examples:
           pdsChangeofGPSubscription:
-            description: "[[action]] a pds change of GP subscription"
+            description: "PDS change of GP subscription"
             value:
               resourceType: "Subscription"
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
-              reason: "A description of why this subscription should be [[actioned]]."
+              reason: "Business process A"
               criteria: "eventType=pds-change-of-gp-1"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
                 payload: "application/json"
           pdsChangeofGPSubscriptionMeshDelivery:
-            description: "[[action]] a pds change of GP subscription with MESH delivery"
+            description: "PDS change of GP subscription with MESH delivery"
             value:
               resourceType: "Subscription"
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
-              reason: "A description of why this subscription should be [[actioned]]."
+              reason: "Business process A"
               criteria: "eventType=pds-change-of-gp-1"
               channel:
                 type: "message"
-                endpoint: "mesh://MYMAILBOXOT101?workflow_id=myWorkflow101"
+                endpoint: "mesh://MYMAILBOXOT101?workflow_id=MY_WORKFLOW_1.1-A"
                 payload: "application/json"
           nhsNumberChangeSubscription:
-            description: "[[action]] an NHS number change subscription"
+            description: "NHS number change subscription"
             value:
               resourceType: "Subscription"
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
-              reason: "A description of why this subscription should be [[actioned]]."
+              reason: "Business process A"
               criteria: "eventType=nhs-number-change-1"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                 payload: "application/json"
           pdsDeathNotificationSubscription:
-            description: "[[action]] a pds death notification subscription"
+            description: "PDS death notification subscription"
             value:
               resourceType: "Subscription"
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
-              reason: "A description of why this subscription should be [[actioned]]."
+              reason: "Business process A"
               criteria: "eventType=pds-death-notification-1"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                 payload: "application/fhir+json"
           validatedGPRegistrationRequestSubscription:
-            description: "[[action]] a validated GP registration request event subscription"
+            description: "GP registration request event subscription"
             value:
               resourceType: "Subscription"
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
-              reason: "A description of why this subscription should be [[actioned]]."
-              criteria: "eventType=gpreg-change-gp-req-1&;supplierNACS=Y12345&;registrationencountercode=3"
+              reason: "Business process A"
+              criteria: "eventType=gpreg-change-gp-req-1 AND supplierNACS=Y12345 AND registrationencountercode=3"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                 payload: "application/fhir+json"
           patientflagsChangeSubscription:
-            description: "[[action]] a Patient Flags Change subscription"
+            description: "Patient Flags Change subscription"
             value:
               resourceType: "Subscription"
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
-              reason: "A description of why this subscription should be [[actioned]]."
-              criteria: "eventType=patientflags-change-1&;flagtype=NRAF&;generalpractitioner=XY11"
+              reason: "Business process A"
+              criteria: "eventType=patientflags-change-1 AND flagtype=NRAF AND generalpractitioner=XY11"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"

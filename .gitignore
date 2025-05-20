@@ -20,3 +20,4 @@ env
 .dir-locals.el
 *.pyc
 test-report.xml
+specification/vacuum-report.html

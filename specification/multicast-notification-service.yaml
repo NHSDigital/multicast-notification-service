@@ -689,10 +689,16 @@ components:
         propertyName: type
     gpreg-change-gp-req-1:
       description: gpreg-change-gp-req-1
+      properties:
+        type:
+          type: string
+          enum: [gpreg-change-gp-req-1]   
+      required:
+        - type                                
       allOf:
         - $ref: "#/components/schemas/cloudevent"
         - type: object
-          properties:
+          properties:      
             filtering:
               $ref: "schemas/filtering/gpreg-change-gp-req-1-filtering.yaml"
           required:
@@ -700,10 +706,16 @@ components:
             - subject
     patientflags-change-1:
       description: patientflags-change-1
+      properties:
+        type:
+          type: string
+          enum: [patientflags-change-1]    
+      required:
+        - type      
       allOf:
         - $ref: "#/components/schemas/cloudevent"
         - type: object
-          properties:
+          properties:           
             filtering:
               $ref: "schemas/filtering/patientflags-change-1-filtering.yaml"
           required:

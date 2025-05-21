@@ -74,7 +74,7 @@ PROD_TEST_CMD := $(TEST_CMD) \
 		--apigee-app-id=$(APIGEE_APP_ID) \
 		--apigee-organization=nhsd-prod \
 		--status-endpoint-api-key=$(STATUS_ENDPOINT_API_KEY) \
-		-k "test_wait_for_status"
+		-s
 
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
@@ -94,3 +94,12 @@ smoketest-prod:
 test-prod:
 	$(PROD_TEST_CMD) \
 	--junitxml=test-report.xml \
+
+docker-build:
+	make -C sandbox build
+
+up:
+	make -C sandbox up
+
+down:
+	make -C sandbox down

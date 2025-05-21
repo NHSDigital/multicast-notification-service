@@ -35,44 +35,36 @@ extends:
       - environment: internal-dev
         post_deploy:
           - template: ./templates/run-tests.yml
-            parameters:
-              full: true
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
+            parameters:
+              test_command: make smoketest
       - environment: internal-qa
-        post_deploy:
-          # - template: ./templates/run-tests.yml No target endpoint configured for QA. Not required currently.
-          #   parameters:
-          #     full: true
       - environment: internal-qa-sandbox
         proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-tests.yml
       - environment: ref
-        depends_on:
-          - internal_qa
-          - internal_qa_sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
       - environment: sandbox
         proxy_path: sandbox
-      - environment: int
-        depends_on:
-          - internal_qa_sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
-              full: true
-              test_command: make test-prod
+              app_id: "2b969c39-f7fb-4ded-85bb-ad6571bc9eca"
+              test_command: make smoketest-prod
+      - environment: int
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              app_id: "64a29e72-92ca-4931-b45f-f26e5399c80c"
+              test_command: make smoketest-prod
       - environment: prod
         depends_on:
           - int
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              app_id: "0d334714-4548-4cf7-8b7f-ac194f341bc6"
-              full: true
-              test_command: make test-prod
+              app_id: "24c55404-2d02-403e-a57a-97ac4e4e80d9"
+              test_command: make smoketest-prod

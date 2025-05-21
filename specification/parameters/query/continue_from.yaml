@@ -1,0 +1,7 @@
+name: continue_from
+in: query
+required: false
+description: |-
+  An optional query string parameter used for pagination, specifying the point from which to continue the list.
+schema:
+  type: string

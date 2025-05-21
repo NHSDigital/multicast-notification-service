@@ -32,14 +32,16 @@
       </Request>
       <Response>
         <Step>
-          <Name>javascript.SetStatusResponse</Name>
+          <Name>Javascript.SetStatusResponse</Name>
         </Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
   </Flows>
+
   <PreFlow/>
+
   <PostClientFlow name="PostClientFlow">
     <Response>
       <Step>
@@ -47,10 +49,12 @@
       </Step>
     </Response>
   </PostClientFlow>
+
   <HTTPProxyConnection>
     <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
+
   <RouteRule name="NoRoutePing">
     <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
   </RouteRule>

@@ -5,16 +5,20 @@
         <Name>OauthV2.VerifyAccessTokenAppLevel3OrCis2Aal3</Name>
       </Step>
       <Step>
+        <Name>FlowCallout.ExtendedAttributes</Name>
+      </Step>
+      <Step>
         <Name>FlowCallout.ApplyRateLimiting</Name>
       </Step>
       <Step>
-        <Name>Javascript.AddAuthorizationHeader</Name>
+        <Name>Javascript.SetTargetAttributes</Name>
       </Step>
       <Step>
         <Name>AssignMessage.AddApplicationHeaders</Name>
       </Step>
     </Request>
   </PreFlow>
+
   <FaultRules>
     <FaultRule name="access_token_expired">
       <Step>
@@ -26,10 +30,12 @@
       <Condition>oauthV2.OauthV2.VerifyAccessToken.failed</Condition>
     </FaultRule>
   </FaultRules>
+
   <HTTPTargetConnection>
     <SSLInfo>
       <Enabled>true</Enabled>
     </SSLInfo>
+  
     <LoadBalancer>
       <Server name="multicast-notification-service" />
     </LoadBalancer>

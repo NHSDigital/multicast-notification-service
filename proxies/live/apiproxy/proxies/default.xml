@@ -17,6 +17,7 @@
       </Response>
       <Condition>(request.verb = "OPTIONS") and (request.header.origin != null) and (request.header.Access-Control-Request-Method != null)</Condition>
     </Flow>
+  
     <Flow name="AddPayloadToPing">
       <Description/>
       <Request/>
@@ -27,6 +28,7 @@
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </Flow>
+  
     <Flow name="StatusEndpoint">
       <Request>
         <Step>
@@ -39,13 +41,14 @@
       </Request>
       <Response>
         <Step>
-          <Name>javascript.SetStatusResponse</Name>
+          <Name>Javascript.SetStatusResponse</Name>
         </Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
   </Flows>
+
   <PostClientFlow name="PostClientFlow">
     <Response>
       <Step>
@@ -53,22 +56,28 @@
       </Step>
     </Response>
   </PostClientFlow>
+
   <HTTPProxyConnection>
     <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
+
   <RouteRule name="NoRoute">
     <Condition>(request.verb = "OPTIONS") and (request.header.origin != null) and (request.header.Access-Control-Request-Method != null)</Condition>
   </RouteRule>
+
   <RouteRule name="NoRoutePing">
     <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
   </RouteRule>
+
   <RouteRule name="NoRouteStatus">
     <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
   </RouteRule>
+
   <RouteRule name="multicast-notification-service-target">
     <TargetEndpoint>multicast-notification-service-target</TargetEndpoint>
   </RouteRule>
+
   <DefaultFaultRule>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>

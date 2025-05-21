@@ -1,0 +1,34 @@
+# "$schema": http://json-schema.org/draft-07/schema#
+description: gpreg-change-gp-req-1 filtering object schema.
+type: object
+properties:
+  registrationencountercode:
+    type: string
+    example: "3"
+    enum:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+      - "6"
+      - ""
+    description: |
+      Numeric code that represents the type of GP registration that occurred.
+      The permitted codes are as follows:
+      | Code | Type               | Description                                                                                                      |
+      | ---- | ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+      | 1    |  Birth             | At the time of registration, if the patient has been born in the last year then it is counted as such.           |
+      | 2    |  First Acceptance  | Very rare scenario - patient is a UK National and has never previously been registered with an NHS GP Practice.  |
+      | 3    |  Transfer In       | Accounts for the vast majority of registrations - a patient registers with a new GP Practice.                    |
+      | 4    |  Immigrant         | A patient has moved to the UK and registers with a GP Practice .                                                 |
+      | 6    |  Internal Transfer | A deprecated type. In [NHAIS](https://digital.nhs.uk/services/nhais) a transfer between two GP practices in the same NHAIS region is counted as this type within [PCRM](https://digital.nhs.uk/services/primary-care-registration-management) registrations are centralised and will be counted as Type 3 |
+      | -    |  Blank             | Before a GP Registration is approved by Primary Care Support using NHAIS or PCRM, there is an initial GP-Links transaction sent by the GP Practice. This initial transaction will result in a Signal where the registration encounter code is set as an empty string. A subsequent Signal is created when the registration is processed, which this time includes a registration encounter code e.g. Type 3.  In the case of a GP Practice merge or split, the registration encounter code will also be an empty string. |
+  generalpractitioner:
+    type: string
+    minLength: 1
+    example: "Y12345"
+    description: The ODS Code of the requested GP Practice.
+required:
+  - registrationencountercode
+  - generalpractitioner

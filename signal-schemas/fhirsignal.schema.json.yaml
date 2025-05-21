@@ -114,9 +114,8 @@ $defs:
                     const: notification-event
                   part:
                     type: array
-                    minItems: 3
+                    minItems: 2
                     maxItems: 3
-                    items: false
                     prefixItems:
                       - type: object
                         description: Note this is a fixed value
@@ -141,24 +140,25 @@ $defs:
                         required:
                           - name
                           - valueInstant
-                      - type: object
-                        description: Resource on an API of the publishing service to retrieve full details of the event (or subject record)
+                  items:
+                    type: object
+                    description: Resource on an API of the publishing service to retrieve full details of the event (or subject record)
+                    properties:
+                      name:
+                        const: focus
+                      valueReference:
+                        type: object
                         properties:
-                          name:
-                            const: focus
-                          valueReference:
-                            type: object
-                            properties:
-                              reference:
-                                type: string
-                                format: uri
-                                examples:
-                                  - 'https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605'
-                            required:
-                              - reference
+                          reference:
+                            type: string
+                            format: uri
+                            examples:
+                              - 'https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605'
                         required:
-                          - name
-                          - valueReference
+                          - reference
+                    required:
+                      - name
+                      - valueReference
                 required:
                   - name
                   - part
@@ -259,7 +259,7 @@ $defs:
         type: string
         format: uri
         examples:
-          - 'https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605'
+          - 'https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605'
       resource:
         type: object
         description: The response from the event publisher's source API, when getting the resource as specified in the event and reflected in the `fullUrl` sibling key.
@@ -272,7 +272,7 @@ $defs:
             type: string
             format: uri
             examples:
-              - 'https://api.service.nhs.uk/register-with-a-gp-surgery?sessionID=bd468854-4cd5-4e57-9dde-e5a482d50605'
+              - 'https://api.service.nhs.uk/register-with-a-gp-surgery/applications/bd468854-4cd5-4e57-9dde-e5a482d50605'
         required:
           - method
           - url

@@ -3,12 +3,10 @@ name = "multicast-notification-service"
 python = "^3.8"
 
 [tool.poetry]
-name = "multicast-notification-service"
+description = "multicast-notification-service"
 version = "0.0.1-alpha"
-description = "TODO"
-authors = [
-    #TODO add authors
-]
+authors = ["NHS England"]
+package-mode = false
 readme = 'README.md'
 license = "MIT"
 repository = "https://github.com/NHSDigital/multicast-notification-service"

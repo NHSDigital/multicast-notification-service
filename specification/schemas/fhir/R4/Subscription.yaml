@@ -26,7 +26,7 @@ properties:
     example: "2024-04-05T17:00:00.000Z"
     description: |
       Optional expiry date/time for the subscription. As per the [FHIR R4 instant data type](https://hl7.org/fhir/R4/datatypes.html#instant) time shall be specified to at least the second and include a time zone.
-      For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z)
+      For example: YYYY-MM-DDThh:mm:ss.sss+zz:zz (e.g. 2015-02-07T13:28:17.239+02:00 or 2017-01-01T00:00:00Z) **Note** that under the current implementation this field is not used.
   reason:
     type: "string"
     example: ""

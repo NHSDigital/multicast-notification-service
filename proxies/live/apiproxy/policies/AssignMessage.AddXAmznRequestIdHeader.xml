@@ -1,0 +1,17 @@
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddXAmznRequestIdHeader">
+  <AssignVariable>
+    <Name>amazon-request-id</Name>
+    <Template>{createUuid()}</Template>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>request-data-for-splunk.header.x-amzn-RequestId</Name>
+    <Template>{amazon-request-id}</Template>
+  </AssignVariable>
+  <Add>
+      <Headers>
+          <Header name="x-amzn-RequestId">{amazon-request-id}</Header>
+      </Headers>
+  </Add>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

@@ -29,6 +29,6 @@ jobs:
         with:
           ci_required: ${{ inputs.ci_required == 'YES' }}
           labels: dependencies
-          pr_title: EM-88 Combined Dependabot PRs
-          combine_branch_name: em-88-dependabot-combined
+          pr_title: EM-310 Combined Dependabot PRs
+          combine_branch_name: EM-310-dependabot-combined
           pr_body_header: Combined Dependabot PRs

@@ -103,3 +103,7 @@ up:
 
 down:
 	make -C sandbox down
+
+update:
+	poetry update
+	npm update

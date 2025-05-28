@@ -2,7 +2,7 @@ SHELL=/bin/bash -euo pipefail
 
 #Installs dependencies using poetry.
 install-python: maybe-init-venv
-	poetry sync --with dev
+	poetry install --sync
 
 #Installs dependencies using npm.
 install-node:

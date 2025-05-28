@@ -111,7 +111,6 @@ files = [
 [package.dependencies]
 aiohappyeyeballs = ">=2.5.0"
 aiosignal = ">=1.1.2"
-async-timeout = {version = ">=4.0,<6.0", markers = "python_version < \"3.11\""}
 attrs = ">=17.3.0"
 frozenlist = ">=1.1.1"
 multidict = ">=4.5,<7.0"
@@ -135,19 +134,6 @@ files = [
 
 [package.dependencies]
 frozenlist = ">=1.1.0"
-
-[[package]]
-name = "async-timeout"
-version = "5.0.1"
-description = "Timeout context manager for asyncio programs"
-optional = false
-python-versions = ">=3.8"
-groups = ["dev"]
-markers = "python_version == \"3.10\""
-files = [
-    {file = "async_timeout-5.0.1-py3-none-any.whl", hash = "sha256:39e3809566ff85354557ec2398b55e096c8364bacac9405a7a1fa429e77fe76c"},
-    {file = "async_timeout-5.0.1.tar.gz", hash = "sha256:d9321a7a3d5a6a5e187e824d2fa0793ce379a202935782d555d6e9d2735677d3"},
-]
 
 [[package]]
 name = "atomicwrites"
@@ -237,8 +223,6 @@ mypy-extensions = ">=0.4.3"
 packaging = ">=22.0"
 pathspec = ">=0.9.0"
 platformdirs = ">=2"
-tomli = {version = ">=1.1.0", markers = "python_version < \"3.11\""}
-typing-extensions = {version = ">=4.0.1", markers = "python_version < \"3.11\""}
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -1164,9 +1148,6 @@ files = [
     {file = "multidict-6.4.4.tar.gz", hash = "sha256:69ee9e6ba214b5245031b76233dd95408a0fd57fdb019ddcc1ead4790932a8e8"},
 ]
 
-[package.dependencies]
-typing-extensions = {version = ">=4.1.0", markers = "python_version < \"3.11\""}
-
 [[package]]
 name = "mypy-extensions"
 version = "1.1.0"
@@ -1843,12 +1824,11 @@ version = "4.13.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
 optional = false
 python-versions = ">=3.8"
-groups = ["main", "dev"]
+groups = ["main"]
 files = [
     {file = "typing_extensions-4.13.2-py3-none-any.whl", hash = "sha256:a439e7c04b49fec3e5d3e2beaa21755cadbbdc391694e28ccdd36ca4a1408f8c"},
     {file = "typing_extensions-4.13.2.tar.gz", hash = "sha256:e6c81219bd689f51865d9e372991c540bda33a0379d5573cddb9a3a23f7caaef"},
 ]
-markers = {dev = "python_version == \"3.10\""}
 
 [[package]]
 name = "urllib3"
@@ -2016,5 +1996,5 @@ propcache = ">=0.2.1"
 
 [metadata]
 lock-version = "2.1"
-python-versions = "^3.10"
-content-hash = "4fe2255c2c8323edc7b9dbee2492d1e3ddd6754ca098d3c4db1b2187732ca5ff"
+python-versions = "^3.12"
+content-hash = "5bc59efc084e80224fe0b7a113c1e5c4e53c76d67ddd5c73a5cfa624357c4950"

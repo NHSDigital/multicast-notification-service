@@ -137,7 +137,9 @@ def test_post_event(
         break
 
     assert resp.status_code == expected_status_code, resp.text
-    assert resp.json() == expected_error if expected_error else {"id": mns_test_signal_event["id"]}
+    expected = expected_error if expected_error else {"id": mns_test_signal_event["id"]}
+    actual = resp.json()
+    assert actual == expected, f"Expected json: {expected}, Actual json: {actual}"
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})

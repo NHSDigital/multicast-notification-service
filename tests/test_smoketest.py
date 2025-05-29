@@ -78,4 +78,4 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     if retries >= 45:
         pytest.fail("Timeout Error - max retries")
 
-    assert resp.json().get("status") == "pass"
+    assert resp.json().get("status") == "pass", f'Expected "status":"pass", got: {resp.json()}'

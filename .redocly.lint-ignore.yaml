@@ -3,4 +3,5 @@
 specification/multicast-notification-service.yaml:
   info-license:
     - '#/info'
-
+  no-invalid-media-type-examples:
+    - "#/paths/~1events/post/requestBody/content/application~1cloudevents+json/schema"

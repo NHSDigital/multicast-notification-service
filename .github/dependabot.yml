@@ -7,7 +7,7 @@ updates:
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "EM-88 - "
+      prefix: "EM-310 - "
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -16,7 +16,7 @@ updates:
     versioning-strategy: increase
     open-pull-requests-limit: 20
     commit-message:
-      prefix: "EM-88 - "
+      prefix: "EM-310 - "
 
   - package-ecosystem: "pip"
     directory: "/"
@@ -24,4 +24,4 @@ updates:
       interval: "weekly"
     versioning-strategy: increase
     commit-message:
-      prefix: "EM-88 - "
+      prefix: "EM-310 - "

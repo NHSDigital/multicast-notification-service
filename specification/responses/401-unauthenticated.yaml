@@ -9,11 +9,21 @@ content:
             properties:
               faultstring:
                 type: string
+                example: "Invalid access token"
               detail:
                 type: object
                 properties:
                   errorcode:
                     type: string
+                    example: "oauth.v2.InvalidAccessToken"
+                example: 
+                  detail:
+                    errorcode: "oauth.v2.InvalidAccessToken"
+            example: 
+              fault:
+                faultstring: "Invalid access token"
+                detail:
+                  errorcode: "oauth.v2.InvalidAccessToken"
       examples:
         invalidToken:
           value:

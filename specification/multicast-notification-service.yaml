@@ -131,12 +131,20 @@ servers:
   - url: 'https://api.service.nhs.uk/multicast-notification-service'
     description: Production environment.
 
+tags:
+  - name: events
+    description: Event publishing
+  - name: subscriptions
+    description: Subscription management
+
 paths:
 
   /events:
 
     post:
       summary: "Publish an event"
+      tags:
+        - events
       description: |
         ### Overview
         Use this endpoint to publish a healthcare-related event.
@@ -153,13 +161,10 @@ paths:
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
-        | Scenario                                  | Request                                                                 | Response                                                       |
-        | ----------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- |
-        | Publish a GP Registration Change event    | Content-Type: `application/json` Event Type: `pds-change-of-gp-1`       | HTTP Status 200 and response containing id and success status. |
-        | Publish a GP Death event                  | Content-Type: `application/json` Event Type: `pds-death-notification-1` | HTTP Status 200 and response containing id and success status. |
-        | Publish an NHS Number Change event        | Content-Type: `application/json` Event Type: `nhs-number-change-1`      | HTTP Status 200 and response containing id and success status. |
-        | Publish an Immunisation Vaccination event | Content-Type: `application/json` Event Type: `imms-vaccinations-1`      | HTTP Status 200 and response containing id and success status. |
-        | Publish an event with invalid data        | E.g. an event with an invalid value for `time`                          | HTTP Status 400 and response containing a validation error.    |
+        | Scenario                           | Request                                                                    | Response                                                       |
+        | ---------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------- |
+        | Publish an event                   | Content-Type: `application/cloudevents+json` Event Type: `example-event-1` | HTTP Status 200 and response containing id and success status. |
+        | Publish an event with invalid data | E.g. an event with an invalid value for `time`                             | HTTP Status 400 and response containing a validation error.    |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: publish-event
@@ -167,16 +172,43 @@ paths:
         - $ref: "parameters/headers/authorization.yaml"
         - $ref: "parameters/headers/x-correlation-id.yaml"   
       requestBody:
+        description: The cloudevent+json formatted body representing the event.
         required: true
         content:
           application/cloudevents+json:
             schema:
-              oneOf:
-                - $ref: "#/components/schemas/gpreg-change-gp-req-1"
-                - $ref: "#/components/schemas/patientflags-change-1"
-              discriminator:
-                propertyName: type
+              $ref: "#/components/schemas/cloudevent"
             examples:
+              pds-death-notification-2:
+                description: "Create a patient death status event"
+                value:
+                  specversion: '1.0'
+                  id: 963b28e0-067a-4a3f-bee8-f613c23541b2
+                  source: https://fhir.nhs.uk/Id/nhsSpineASID/477121000324
+                  type: pds-death-notification-2
+                  time: '2020-06-01T13:00:00Z'
+                  dataref: https://api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888
+                  subject: '9912003888'
+              pds-change-of-gp-2:
+                description: "Create a change of gp event"
+                value:
+                  specversion: '1.0'
+                  id: 56e9d7db-d70a-48bf-95f8-e779a741382a
+                  source: https://fhir.nhs.uk/Id/nhsSpineASID/477121000324
+                  type: pds-change-of-gp-2
+                  time: '2020-06-01T13:00:00Z'
+                  dataref: https://api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888
+                  subject: '9912003888'
+              nhs-number-change-2:
+                description: "Create a nhs number change event"
+                value:
+                  specversion: '1.0'
+                  id: 685aec28-70bb-4763-853b-2bdc07a44415
+                  source: https://fhir.nhs.uk/Id/nhsSpineASID/477121000324
+                  type: nhs-number-change-2
+                  time: '2020-06-01T13:00:00Z'
+                  dataref: https://api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888
+                  subject: '9912003888'
               gpreg-change-gp-req-1:
                 description: "Create a GP Registration Change event"
                 value:
@@ -217,9 +249,11 @@ paths:
                 id:
                   type: "string"
                   description: "Publishers must ensure that the id is unique within their system to ensure that when the MNS team trace messages, they can be certain that source + id will be unique. UUIDv4 format is expected."
+                  example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
                 type:
                   type: "string"
                   description: "A unique string representing the event type."
+                  example: "pds-change-of-gp-1"
                 subject:
                   type: "object"
                   description: |
@@ -227,6 +261,10 @@ paths:
                     We currently only have a schema for a patient as a subject but will work with you to agree a new schema if you have a different use case.
                   oneOf:
                     - $ref: "schemas/cloudevents/eventSubjectPatientExample.yaml"
+                  example: 
+                    nhsNumber: "9912003888"
+                    familyName: "DAWKINS"
+                    dob: "2017-10-02"
                 source:
                   type: "object"
                   required:
@@ -248,10 +286,16 @@ paths:
                           type: "string"
                         value:
                           type: "string"
+                  example: 
+                    name: "NHS Digital"
+                    identifier:
+                      system: "https://fhir.nhs.uk/Id/nhsSpineASID"
+                      value: "477121000324"
                 time:
                   type: "string"
                   format: "date-time"
                   description: "The time at which the signal is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
+                  example: "2022-04-05T17:31:00.000Z"
                 data:
                   type: object
                   description: "This field is optional, dependent on the agreements between the publishing system and the MNS team. While the data schema might vary based on the system and use-case, it is preferred to include a pointer for subscribers to access the full record when necessary for their workflow."
@@ -259,12 +303,20 @@ paths:
                     - $ref: "schemas/cloudevents/pdsChangeOfGpEventData.yaml"
                     - $ref: "schemas/cloudevents/pdsDeathEventData.yaml"
                     - $ref: "schemas/cloudevents/nhsNumberChangeEventData.yaml"
-                    - $ref: "schemas/cloudevents/immunisationVaccinationEventData.yaml"
+                  example: 
+                    versionId: 'W/"2"'
+                    fullUrl: "https://int.api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888"
+                    registrationEncounterCode: "3"
+                    provenance:
+                      name: "The GP Practice"
+                      identifier:
+                        system: "https://fhir.nhs.uk/Id/nhsSpineASID"
+                        value: "477121000323"
             examples:
               pdsChangeOfGpEvent:
-                description: "Create a PDS change of GP signal event"
+                description: "(Verson 1 Deprecated) Create a change of gp event"
                 value:
-                  id: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                  id: 56e9d7db-d70a-48bf-95f8-e779a741382a
                   type: "pds-change-of-gp-1"
                   subject:
                     nhsNumber: "9912003888"
@@ -286,8 +338,9 @@ paths:
                         system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                         value: "477121000323"
               pdsDeathEvent:
+                description: "(Verson 1 Deprecated) Create a patient death status event"
                 value:
-                  id: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
+                  id: 963b28e0-067a-4a3f-bee8-f613c23541b2
                   type: "pds-death-notification-1"
                   subject:
                     dob: "2017-10-02"
@@ -309,8 +362,9 @@ paths:
                         system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                         value: "477121000323"
               nhsNumberChangeEvent:
+                description: "(Verson 1 Deprecated) Create a nhs number change event"
                 value:
-                  id: "dd822a88-959c-416c-86e0-652a48c5a810"
+                  id: 685aec28-70bb-4763-853b-2bdc07a44415
                   type: "nhs-number-change-1"
                   subject:
                     dob: "2017-10-02"
@@ -331,46 +385,8 @@ paths:
                       identifier:
                         system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                         value: "477121000323"
-              immunisationVaccinationEvent:
-                value:
-                  id: "93d3f828-c6d2-43eb-95c2-f98f7c7ed889"
-                  type: "imms-vaccinations-1"
-                  subject:
-                    dob: "2017-10-02"
-                    familyName: "DAWKINS"
-                    nhsNumber: "9912003888"
-                  source:
-                    name: "NHS DIGITAL"
-                    identifier:
-                      system: "https://fhir.nhs.uk/Id/immunisationsASID"
-                      value: "477121000324"
-                  time: "2022-04-05T17:31:00.000Z"
-                  data:
-                    versionId: 'W/"1"'
-                    fullUrl: "https://int.api.service.nhs.uk/immunisation-fhir-api/Immunization?patient.identifier=https%3A%2F%2Ffhir.nhs.uk%2FId%2Fnhs-number%7C9912003888"
-                    immunisationType: "FLU"
-                    provenance:
-                      name: "The GP Practice"
-                      identifier:
-                        system: "https://fhir.nhs.uk/Id/orignatorOfRecordASID"
-                        value: "477121000323"
-              mnsEventMetaDataOnly:
-                value:
-                  id: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-                  type: "possible-future-event-containing-no-data-field"
-                  subject:
-                    nhsNumber: "A new subject schema would need to be proposed for subjects other than patients."
-                    familyName: "DAWKINS"
-                    dob: "2017-10-02"
-                  source:
-                    name: "NHS Digital"
-                    identifier:
-                      system: "https://fhir.nhs.uk/Id/nhsSpineASID"
-                      value: "477121000324"
-                  time: "2022-04-05T17:31:00.000Z"
-
       responses:
-        200:
+        "200":
           description: Success - the event is accepted and will be multicast to subscribers
           content:
             application/json:
@@ -381,7 +397,7 @@ paths:
                     type: string
                     description: The id provided in the user's payload
                     example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-        400:
+        "400":
           description: Invalid user input
           content:
             application/json:
@@ -395,9 +411,9 @@ paths:
                       type:
                         type: string
                         example: Please provide a valid event type
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           description: "Unauthorized error"
           content:
             application/json:
@@ -408,20 +424,22 @@ paths:
                     type: string
                     description: Error string that explains the problem
                     example: User is not authorized to handle the requested event type
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
   /subscriptions:
   
     post:
       summary: "Subscribe to events"
+      tags:
+        - subscriptions
       description: |
         ### Overview
         Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on the [API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
 
         ### Subscription filtering
-        You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=pds-change-of-gp-1`
-        this will mean that you receive all PDS Change of GP events. Depending on the event, additional filters are available, for example you can filter by `generalpractitioner`,`registrationencountercode` or `supplierNACS` for `gpreg-change-gp-req-1` event.
+        You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=gpreg-change-gp-req-1`
+        this will mean that you receive all Validated GP Registration Request events. Depending on the event, additional filters are available, for example you can filter by `generalpractitioner`,`registrationencountercode` or `generalpractitioner_manufacturer_org` for `gpreg-change-gp-req-1` event.
         We are working with publishers and subscribers during private beta to identify any other useful filters for existing and future event types.
 
         For further information refer to the payload schema below.
@@ -448,12 +466,10 @@ paths:
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
 
-        | Scenario                                  | Request                                                                  | Response                                                                    |
-        | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-        | Subscribe to GP registration changes      | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
-        | Subscribe to NHS number changes           | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
-        | Subscribe to PDS death notifications      | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
-        | Publish a subscription with invalid data  | E.g. modify the subscription to have an invalid value for `resourceType` | HTTP Status 400 and response containing a validation error.                 |
+        | Scenario                                 | Request                                                                  | Response                                                                    |
+        | ---------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+        | Subscribe to an event                    | Content-Type: `application/fhir+json`                                    | HTTP Status 201 and response containing the id of the subscription created. |
+        | Publish a subscription with invalid data | E.g. modify the subscription to have an invalid value for `resourceType` | HTTP Status 400 and response containing a validation error.                 |
 
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: create-subscription
@@ -461,13 +477,9 @@ paths:
         - $ref: "parameters/headers/authorization.yaml"
         - $ref: "parameters/headers/x-correlation-id.yaml"
       requestBody:
-        blockReplace: 
-          action: Create
-          actioning: creating
-          actioned: created
         $ref: "requestBody/create-or-update-subscription-body.yaml"
       responses:
-        201:
+        "201":
           description: Created - the subscription has been successfully created
           content:
             application/json:
@@ -478,7 +490,7 @@ paths:
                     type: string
                     description: The subscription UUID created by the system
                     example: "236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b"
-        400:
+        "400":
           description: Invalid user input
           content:
             application/json:
@@ -492,27 +504,32 @@ paths:
                       resourceType:
                         type: string
                         example: Please provide the correct resource type for this endpoint
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        409:
+        "409":
           $ref: "responses/409-matching-subscription.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
     get:
       summary: "Get all subscriptions"
+      tags:
+        - subscriptions
       description: |
         ### Overview
         Use this endpoint to retrieve a list of all subscriptions belonging to you.
         If your application does not own any subscriptions, then this endpoint will return an empty list.
         The list of subscriptions is presented in a FHIR resource bundle, allowing pagination.
+
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
-        | Scenario                                  | Request                                                                  | Response                                                                    |
-        | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-        | User has a list of subscriptions          | `GET` request                                                            | HTTP Status 200 containing a list of subscription resources                 |
+
+        | Scenario                         | Request       | Response                                                    |
+        | -------------------------------- | ------------- | ----------------------------------------------------------- |
+        | User has a list of subscriptions | `GET` request | HTTP Status 200 containing a list of subscription resources |
+
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: get-all-subscriptions
       parameters:
@@ -520,7 +537,7 @@ paths:
         - $ref: "parameters/headers/x-correlation-id.yaml"
         - $ref: "parameters/query/continue_from.yaml"
       responses:
-        200:
+        "200":
           description: Successfully retrieved list of subscriptions
           content:
             application/fhir+json:
@@ -530,9 +547,11 @@ paths:
                   resourceType:
                     type: string
                     enum: [Bundle]
+                    example: Bundle
                   type:
                     type: string
                     enum: [searchset]
+                    example: searchset
                   link:
                     type: array
                     items:
@@ -544,14 +563,42 @@ paths:
                         url:
                           type: string
                           description: The URL for the relation. For 'next', this URL points to the next page of results.
-                      example:
-                        relation: next
+                    example:
+                      - relation: next
                         url: '/subscriptions?continue_from=ZmRqa2xmZGprc2xmamtsZHNqZmxkc2Zkcw=='
                   entry:
                     type: array
                     items:
                       $ref: "schemas/fhir/R4/Subscription.yaml"
-        400:
+                    example:
+                      - channel:
+                          endpoint: arn:aws:sqs:eu-west-2:123456789012:test-queue
+                          payload: application/json
+                          type: message
+                        criteria: eventType=mns-test-signal-1
+                        end: '2024-01-25T00:00:00.000Z'
+                        id: 0e381025-985f-4696-a460-6c375b76e4d0
+                        reason: ''
+                        resourceType: Subscription
+                        status: active
+              example:
+                resourceType: Bundle
+                type: searchset
+                link:
+                  - relation: self
+                    url: "/subscriptions"
+                entry:
+                  - channel:
+                      endpoint: arn:aws:sqs:eu-west-2:123456789012:test-queue
+                      payload: application/json
+                      type: message
+                    criteria: eventType=mns-test-signal-1
+                    end: '2024-01-25T00:00:00.000Z'
+                    id: 0e381025-985f-4696-a460-6c375b76e4d0
+                    reason: ''
+                    resourceType: Subscription
+                    status: active
+        "400":
           description: Invalid user input
           content:
             application/json:
@@ -562,26 +609,31 @@ paths:
                     type: string
                     description: Error string that explains the problem
                     example: The continue_from field was not valid
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
   /subscriptions/{id}:
   
     get:
       summary: "Get subscription details"
+      tags:
+        - subscriptions
       description: |
         ### Overview
         Use this endpoint to retrieve details of a subscription belonging to you.
+
         ### Sandbox testing
         You can test the following scenarios in our sandbox environment:
+
         | Scenario                                  | Request                                                                  | Response                                                                    |
         | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
         | Subscription exists and can be retrieved  | `id=e9050741-ae87-4720-beb1-2abd9248e227`                                | HTTP Status 200 containing subscription details                             |
         | Subscription does not exist               | `id=236a1d4a-5d69-4fa9-9c7f-e72bf505aa5b` (or any other valid UUID)      | HTTP Status 404 containing problem description                              |
+
         You can try out the sandbox using the 'Try this API' feature on this page.
       operationId: get-subscription-by-id
       parameters:
@@ -589,25 +641,38 @@ paths:
         - $ref: "parameters/headers/x-correlation-id.yaml"
         - $ref: "parameters/path/id.yaml"
       responses:
-        200:
+        "200":
           description: Successfully got subscription details
           content:
             application/fhir+json:
               schema:
                 $ref: "schemas/fhir/R4/Subscription.yaml"
-        400:
+              example:
+                id: "e9050741-ae87-4720-beb1-2abd9248e227"
+                resourceType: "Subscription"
+                status: "active"
+                end: "2022-04-05T17:31:00.000Z"
+                reason: "Business case A"
+                criteria: "eventType=pds-change-of-gp-2"
+                channel:
+                  type: "message"
+                  endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
+                  payload: "application/json"
+        "400":
           $ref: "responses/400-subscription-id.yaml"
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        404:
+        "404":
           $ref: "responses/404-not-found.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"
 
     delete:
       summary: "Delete a subscription"
+      tags:
+        - subscriptions
       description: |
         ### Overview
         Use this endpoint to delete a subscription that you need to remove.
@@ -627,21 +692,23 @@ paths:
         - $ref: "parameters/headers/x-correlation-id.yaml"
         - $ref: "parameters/path/id.yaml"
       responses:
-        204:
+        "204":
           description: The subscription was deleted
-        400:
+        "400":
           $ref: "responses/400-subscription-id.yaml"
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        404:
+        "404":
           $ref: "responses/404-not-found.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"   
 
     put:
       summary: "Edit a subscription"
+      tags:
+        - subscriptions
       description: |
         ### Overview
         Use this endpoint to edit (update) an existing subscription.
@@ -664,50 +731,23 @@ paths:
         - $ref: "parameters/headers/x-correlation-id.yaml"
         - $ref: "parameters/path/id.yaml"        
       requestBody:
-        blockReplace: 
-          action: Update
-          actioning: updating
-          actioned: updated
         $ref: "requestBody/create-or-update-subscription-body.yaml"        
       responses:
-        204:
+        "204":
           description: The subscription was updated
-        400:
+        "400":
           $ref: "responses/400-subscription-id.yaml"
-        401:
+        "401":
           $ref: "responses/401-unauthenticated.yaml"
-        403:
+        "403":
           $ref: "responses/403-unauthorised.yaml"
-        409:
+        "409":
           $ref: "responses/409-matching-subscription.yaml"
-        500:
+        "500":
           $ref: "responses/500-internal-server-error.yaml"    
 
 components:
   schemas:
     cloudevent:
-      $ref: "schemas/cloudevents/baseMnsCloudEventSignal.yaml"
-      discriminator:
-        propertyName: type
-    gpreg-change-gp-req-1:
-      description: gpreg-change-gp-req-1
-      allOf:
-        - $ref: "#/components/schemas/cloudevent"
-        - type: object
-          properties:
-            filtering:
-              $ref: "schemas/filtering/gpreg-change-gp-req-1-filtering.yaml"
-          required:
-            - filtering
-            - subject
-    patientflags-change-1:
-      description: patientflags-change-1
-      allOf:
-        - $ref: "#/components/schemas/cloudevent"
-        - type: object
-          properties:
-            filtering:
-              $ref: "schemas/filtering/patientflags-change-1-filtering.yaml"
-          required:
-            - filtering
-            - subject
+      $ref: "schemas/cloudevents/mns-publish-cloudevent.yaml"
+  

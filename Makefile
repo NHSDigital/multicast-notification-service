@@ -116,6 +116,6 @@ down:
 	make -C sandbox down
 
 update:
-  poetry update
+	poetry update
 	npm update
 	make -C sandbox update

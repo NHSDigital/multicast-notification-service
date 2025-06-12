@@ -1,8 +1,8 @@
 SHELL=/bin/bash -euo pipefail
 
 #Installs dependencies using poetry.
-install-python:
-	poetry install
+install-python: maybe-init-venv
+	poetry install --sync
 
 #Installs dependencies using npm.
 install-node:
@@ -19,6 +19,11 @@ install: install-hooks install-node install-python
 #Install tooling using asdf
 install-tools:
 	scripts/install-tools.sh "python java nodejs poetry"
+
+maybe-init-venv:
+	@if command -v asdf &> /dev/null; then \
+  		poetry env use $$(asdf current python | grep python | sed -e 's/ \+/ /g' | cut -d' ' -f 2); \
+	fi
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
 lint: lint-vacuum
@@ -111,5 +116,6 @@ down:
 	make -C sandbox down
 
 update:
+  poetry update
 	npm update
 	make -C sandbox update

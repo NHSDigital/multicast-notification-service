@@ -18,7 +18,7 @@ info:
       - Publish events.
       - Subscribe to events based on event type and optional corresponding criteria filter.
 
-    Available and in development events can be viewed visiting the [NHS API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe) and filtering on `MNS`.
+    Available and in development events can be viewed visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
 
     Data flow:
       1. An event occurs on a event publishers system. The this system notifies MNS event occurring, along with a pointer to be used for retrieval of further event details.
@@ -27,10 +27,12 @@ info:
       4. Subscribers can use the details forwarded to them to retrieve further details of the event
 
     ## Who can use this API
-    This API can only currently be used by internal NHS England services. Make sure you have a valid use case before you go too far with your development. You
-    must do this before you can go live (see [Onboarding](#overview--onboarding) below).
+    This API can be used by developers of services supporting the delivery of health and social care.
 
-    Note: during beta, this API will only be used by NHS England product teams with a valid use case.
+    Make sure you have a valid use case before you go too far with your development. 
+    
+    You must do this before you can go live (see [Onboarding](#overview--onboarding) below).
+
     ## Related APIs
     The following API also provides access to healthcare-related events:
       - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National
@@ -403,7 +405,7 @@ paths:
         - subscriptions
       description: |
         ### Overview
-        Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on our [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
+        Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on the [API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
 
         ### Subscription filtering
         You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=pds-change-of-gp-1`

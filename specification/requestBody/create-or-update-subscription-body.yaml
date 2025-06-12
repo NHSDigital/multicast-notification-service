@@ -93,7 +93,7 @@ content:
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
               reason: "Business process A"
-              criteria: "eventType=pds-change-of-gp-1"
+              criteria: "eventType=pds-change-of-gp-2"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
@@ -105,7 +105,7 @@ content:
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
               reason: "Business process A"
-              criteria: "eventType=pds-change-of-gp-1"
+              criteria: "eventType=pds-change-of-gp-2"
               channel:
                 type: "message"
                 endpoint: "mesh://MYMAILBOXOT101?workflow_id=MY_WORKFLOW_1.1-A"
@@ -117,7 +117,7 @@ content:
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
               reason: "Business process A"
-              criteria: "eventType=nhs-number-change-1"
+              criteria: "eventType=nhs-number-change-2"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
@@ -129,7 +129,7 @@ content:
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
               reason: "Business process A"
-              criteria: "eventType=pds-death-notification-1"
+              criteria: "eventType=pds-death-notification-2"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"

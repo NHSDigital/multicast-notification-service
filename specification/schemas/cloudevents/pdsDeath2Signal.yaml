@@ -33,7 +33,7 @@ properties:
     examples:
     - '2018-04-05T17:31:00Z'
   dataref:
-    description: A link to the flag indicator and supported resources on the Patient Flags API.
+    description: A link to the patient demographic information on the Personal Demographics Service API.
     "$ref": "#/definitions/datarefdef"
     examples:
     - https://api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888

@@ -1,5 +1,5 @@
 type: "object"
-description: "The PDS Change of GP Signal. You will receive this object if you subscribe to `pds-change-of-gp-1` events with an `application/json` format."
+description: "(Version 1 Deprecated) The PDS Change of GP Signal. You will receive this object if you subscribe to `pds-change-of-gp-1` events with an `application/json` format."
 required:
   - "id"
   - "data"

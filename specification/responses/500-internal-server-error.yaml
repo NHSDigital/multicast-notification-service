@@ -8,3 +8,5 @@ content:
           type: string
           description: Error string describing the problem that occurred
           example: Internal server error
+      example: 
+        errors: Internal server error

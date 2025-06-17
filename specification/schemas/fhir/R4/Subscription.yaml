@@ -33,7 +33,7 @@ properties:
     description: "A description of why this subscription was required. The value may be an empty string."
   criteria:
     type: "string"
-    example: "eventType=pds-change-of-gp-1"
+    example: "eventType=pds-change-of-gp-2"
     description: "The criteria of the subscription."
   channel:
     type: "object"

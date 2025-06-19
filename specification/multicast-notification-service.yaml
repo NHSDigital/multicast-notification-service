@@ -314,7 +314,7 @@ paths:
                         value: "477121000323"
             examples:
               pdsChangeOfGpEvent:
-                description: "(Verson 1 Deprecated) Create a change of gp event"
+                description: "(Version 1 Deprecated) Create a change of gp event"
                 value:
                   id: 56e9d7db-d70a-48bf-95f8-e779a741382a
                   type: "pds-change-of-gp-1"
@@ -338,7 +338,7 @@ paths:
                         system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                         value: "477121000323"
               pdsDeathEvent:
-                description: "(Verson 1 Deprecated) Create a patient death status event"
+                description: "(Version 1 Deprecated) Create a patient death status event"
                 value:
                   id: 963b28e0-067a-4a3f-bee8-f613c23541b2
                   type: "pds-death-notification-1"
@@ -362,7 +362,7 @@ paths:
                         system: "https://fhir.nhs.uk/Id/nhsSpineASID"
                         value: "477121000323"
               nhsNumberChangeEvent:
-                description: "(Verson 1 Deprecated) Create a nhs number change event"
+                description: "(Version 1 Deprecated) Create a nhs number change event"
                 value:
                   id: 685aec28-70bb-4763-853b-2bdc07a44415
                   type: "nhs-number-change-1"

@@ -40,7 +40,6 @@ info:
     ## API status and roadmap
     This API is [in production (beta)](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
-    You can comment, upvote and view progress on our [roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/440034/multicast-notification-service-event-management-api).
     ## Service level
     This API is a bronze service, meaning it is operational and supported only during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
 
@@ -115,9 +114,11 @@ info:
     | MNS API                   | Source code for the API proxy, sandbox and specification.            | [GitHub repo](https://github.com/NHSDigital/multicast-notification-service) |
     | FHIR libraries and SDKs   | Various open source libraries for integrating with FHIR APIs.        | [FHIR libraries and SDKs](https://digital.nhs.uk/developer/guides-and-documentation/api-technologies-at-nhs-digital#fhir-libraries-and-sdks) |
 
-    We currently don't have any open source client libraries or sample code for this API. If you think this would be useful, you can [upvote the suggestion on our Interactive Product Backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/107439/client-libraries-and-reference-implementations).
-
-    The source code for the MNS back end is not currently in the open. If you think this would be useful, you can [upvote the suggestion on our Interactive Product Backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/525770/open-source-the-multicast-notification-service-back-end-repo).
+    We currently don't have any open source client libraries or sample code and the source code for the MNS backend is not currently in the open. If you think this would be useful, [contact us](https://digital.nhs.uk/developer/help-and-support).
+ 
+    ## Contact us
+    For help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).
+  
   contact:
     name: 'multicast-notification-service API Support'
     url: 'https://digital.nhs.uk/developer/help-and-support'

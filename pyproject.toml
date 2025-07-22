@@ -29,7 +29,7 @@ jsonpath-rw = "^1.4.0"
 semver = "^3.0.2"
 gitpython = "^3.1.44"
 pytest = "^8.4.1"
-coverage = "^7.6"
+coverage = "^7.9"
 aiohttp = "^3.10.2"
 pytest-asyncio = "^1.0.0"
 

@@ -19,6 +19,6 @@
     "@redocly/cli": "^2.0.3",
     "apigeetool": "^0.16.4",
     "license-checker": "^25.0.1",
-    "react-is": "^19.1.0"
+    "react-is": "^19.1.1"
   }
 }

@@ -21,7 +21,7 @@ info:
     Available and in development events can be viewed visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
 
     Data flow:
-      1. An event occurs on a event publishers system. The publisher publishes the event to MNS, including a pointer to be used for retrieval of the event details.
+      1. An event occurs on an event publishers system. They publishes the event to MNS, including a pointer to be used for retrieval of the event details.
       2. MNS matches the event to the subscription criteria of subscribing organisations and delivers it to their specified destinations, for example an AWS SQS queue.
       3. Subscribers retrieve details of the event from the pointer provided in the event.
 

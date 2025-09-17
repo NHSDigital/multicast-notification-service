@@ -1,5 +1,5 @@
 "$schema": http://json-schema.org/draft-07/schema#
-description: The PDS Change of GP Signal. You will receive this object if you subscribe to `pds-change-of-gp-2` events with an `application/cloudevents+json` format.
+description: The PDS Change of GP event. You will receive this object if you subscribe to `pds-change-of-gp-2` events with an `application/cloudevents+json` format.
 type: object
 properties:
   id:

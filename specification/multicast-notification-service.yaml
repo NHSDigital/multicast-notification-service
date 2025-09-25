@@ -12,7 +12,7 @@ info:
 
     The events do not contain clinical information; they simply describe what type of event occurred to whom/what and where. A pointer is provided for retrieval of the data that the event refers to.
 
-    This API is for systems that need to share information with more than one other system and systems that need to stay up to date with changes to healthcare information.
+    This API is for systems that need to share healthcare information with other systems that need to stay up to date with changes to that information.
 
     You can:
       - Publish events.

@@ -10,9 +10,9 @@ info:
 
     Use this API to publish or and subscribe to healthcare-related events. This API is currently only live with patient-related event. However, it is intended as a robust service that could support many types of future event e.g. changes related to healthcare organisations or staff.
 
-    The events do not contain clinical information; they simply describe what type of event occurred to whom/what and where. A pointer is provided to enable retrieval of the further event details.
+    The events do not contain clinical information; they simply describe what type of event occurred to whom/what and where. A pointer is provided for retrieval of the data that the event refers to.
 
-    This API is intended for NHS England internal product teams as a means of decoupling systems by providing access to streams of lightweight data from various sources without the need for direct integration.
+    This API is for systems that need to share healthcare information with other systems that need to stay up to date with changes to that information.
 
     You can:
       - Publish events.
@@ -21,10 +21,9 @@ info:
     Available and in development events can be viewed visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
 
     Data flow:
-      1. An event occurs on a event publishers system. The this system notifies MNS event occurring, along with a pointer to be used for retrieval of further event details.
-      2. MNS validates that the event conforms to the accepted schema and sends it another component to handle subscription matching and onward delivery.
-      3. MNS matches the signal against subscribing organisations and delivers it to their specified destinations, for example an AWS Kinesis Firehose.
-      4. Subscribers can use the details forwarded to them to retrieve further details of the event
+      1. An event occurs on an event publishers system. They publish the event to MNS, including a pointer to be used for retrieval of the event details.
+      2. MNS matches the event to the subscription criteria of subscribing organisations and delivers it to their specified destinations, for example an AWS SQS queue.
+      3. Subscribers retrieve details of the event from the pointer provided in the event.
 
     ## Who can use this API
     This API can be used by developers of services supporting the delivery of health and social care.
@@ -36,7 +35,9 @@ info:
     ## Related APIs
     The following API also provides access to healthcare-related events:
       - [National Events Management Service - FHIR API](https://digital.nhs.uk/developer/api-catalogue/national-events-management-service-fhir "National
-      Events Management Service - FHIR API") - the difference is that the payloads MNS delivers will be event signals: lightweight events that do not contain any clinical information, they 'signal' a state has changed. NEMS delivers events to external subscriber systems whereas MNS is intended only for use by internal NHS England product teams. The two systems will be complementary.
+      Events Management Service - FHIR API") - the predecessor to MNS, the difference is that the payloads MNS delivers are lightweight events that do not contain any clinical information, they signal that a state has changed and allow subscribers to retrieve up to date information from the authoritative source.
+      - [Messaging Exchange for Social care and Health (MESH)](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) - available delivery system for receiving events from MNS.
+  
     ## API status and roadmap
     This API is [in production (beta)](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
@@ -47,11 +48,15 @@ info:
     ## Technology
     This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) [publish-subscribe](https://digital.nhs.uk/developer/guides-and-documentation/introduction-to-healthcare-technology/integration-and-apis#publish-subscribe-events) API.
 
-    The signal structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/)
+    The publish event structure is based on the recommendations of the [Cloud Events specification.](https://cloudevents.io/)
+
+    Events received conform to the FHIR global standard for health care data exchange, specifically to FHIR R4 (v4.0.1).
+
     ## Network access
-    This API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).
+    This API is available on the internet.
 
     For more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
+
     ## Security and authorisation
 
     This API has one access mode:
@@ -256,16 +261,7 @@ paths:
                   description: "A unique string representing the event type."
                   example: "pds-change-of-gp-1"
                 subject:
-                  type: "object"
-                  description: |
-                    The healthcare entity to which the event occurred. For example, this could be an NHS organisation or a person such as an NHS patient or member of staff.
-                    We currently only have a schema for a patient as a subject but will work with you to agree a new schema if you have a different use case.
-                  oneOf:
-                    - $ref: "schemas/cloudevents/eventSubjectPatientExample.yaml"
-                  example: 
-                    nhsNumber: "9912003888"
-                    familyName: "DAWKINS"
-                    dob: "2017-10-02"
+                  $ref: "schemas/cloudevents/eventSubjectPatientExample.yaml"
                 source:
                   type: "object"
                   required:
@@ -295,7 +291,7 @@ paths:
                 time:
                   type: "string"
                   format: "date-time"
-                  description: "The time at which the signal is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
+                  description: "The time at which the event is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
                   example: "2022-04-05T17:31:00.000Z"
                 data:
                   type: object
@@ -436,24 +432,24 @@ paths:
         - subscriptions
       description: |
         ### Overview
-        Use this endpoint to subscribe to healthcare-related signals. You can view details of the available signals on the [API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
+        Use this endpoint to subscribe to healthcare-related events. You can view details of the available events on the [API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
 
         ### Subscription filtering
-        You can filter the signals you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=gpreg-change-gp-req-1`
+        You can filter the events you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=gpreg-change-gp-req-1`
         this will mean that you receive all Validated GP Registration Request events. Depending on the event, additional filters are available, for example you can filter by `generalpractitioner`,`registrationencountercode` or `generalpractitioner_manufacturer_org` for `gpreg-change-gp-req-1` event.
         We are working with publishers and subscribers during private beta to identify any other useful filters for existing and future event types.
 
         For further information refer to the payload schema below.
 
         ### Subscription delivery
-        You can specify the endpoint you want signals delivered to using the `channel.endpoint` field in the payload. MNS currently only supports delivery to [AWS SQS](https://aws.amazon.com/sqs/) endpoints and
+        You can specify the endpoint you want events delivered to using the `channel.endpoint` field in the payload. MNS currently only supports delivery to [AWS SQS](https://aws.amazon.com/sqs/) endpoints and
         [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailboxes. We are working with users during private beta to identify other potential delivery endpoints.
         There may be further delivery endpoints available in future.
 
         You can make suggestions using [feature upvote](https://nhs-digital-api-management.featureupvote.com).
 
         #### SQS Delivery
-        Before signals can be delivered to your SQS queue, you will need to complete some configuration steps during onboarding e.g. policy and encryption setup. When you make a create subscription request, you must provide your
+        Before events can be delivered to your SQS queue, you will need to complete some configuration steps during onboarding e.g. policy and encryption setup. When you make a create subscription request, you must provide your
         full SQS ARN.
 
         #### MESH Delivery

@@ -1,5 +1,5 @@
 "$schema": http://json-schema.org/draft-07/schema#
-description: The PDS Death Signal. You will receive this object if you subscribe to `pds-death-notification-2` events with an `application/cloudevents+json` format.
+description: The PDS Death event. You will receive this object if you subscribe to `pds-death-notification-2` events with an `application/cloudevents+json` format.
 type: object
 properties:
   id:

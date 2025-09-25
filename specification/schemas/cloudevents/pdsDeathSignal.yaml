@@ -1,5 +1,5 @@
 type: "object"
-description: "(Version 1 Deprecated) The PDS Death Signal. You will receive this object if you subscribe to `pds-death-notification-1` events with an `application/json` format."
+description: "(Version 1 Deprecated) The PDS Death event. You will receive this object if you subscribe to `pds-death-notification-1` events with an `application/json` format."
 required:
   - "id"
   - "data"
@@ -13,14 +13,14 @@ properties:
     description: "UUID v4 format identifier."
   type:
     type: "string"
-    description: "A unique string representing the signal type."
+    description: "A unique string representing the event type."
   subject:
     type: "object"
     required:
       - "nhsNumber"
       - "familyName"
       - "dob"
-    description: "The NHS patient who is the subject of the signal."
+    description: "The NHS patient who is the subject of the event."
     properties:
       nhsNumber:
         type: "string"
@@ -37,7 +37,7 @@ properties:
     required:
       - "name"
       - "identifier"
-    description: "Organisation responsible for publishing the patient-related signal."
+    description: "Organisation responsible for publishing the patient-related event."
     properties:
       name:
         type: "string"
@@ -56,7 +56,7 @@ properties:
   time:
     type: "string"
     format: "date-time"
-    description: "The time at which the signal is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
+    description: "The time at which the event is published. This must be a compliant RFC3339 datetime in line with the FHIR standard for [system instants](https://hl7.org/fhir/R4/datatypes.html#instant). This means it can have seconds or milliseconds precision."
   data:
     type: "object"
     required:

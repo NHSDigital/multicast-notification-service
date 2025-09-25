@@ -38,7 +38,7 @@ content:
           description: |
             Criteria for the subscription. A valid criteria must contain a permitted value for `eventType`. 
             Additional criteria depends on the event and are documentated on our 
-            [Signal Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
+            [Event Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
             Examples: 'eventType=gpreg-change-gp-req-1' or 'eventType=gpreg-change-gp-req-1 AND generalpractitioner=XY11'
           # Separate examples are only supported in OpenAPI 3.1
           example: "eventType=gpreg-change-gp-req-1 AND generalpractitioner=XY11"
@@ -58,7 +58,7 @@ content:
             endpoint:
               type: "string"
               pattern: "^(mesh://[\\w]*\\?workflow_id=[\\w_.-]+|arn:aws:sqs:eu-west-2:\\d{0,12}:[\\w_.-]*)$"
-              description: "The endpoint which signals will be delivered to. MNS currently only supports delivery to [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailboxes and [AWS SQS](https://aws.amazon.com/sqs/) endpoints. Note: for MESH delivery you must provide the full mailbox ID and for SQS delivery you must provide the full SQS ARN of your desired queue."
+              description: "The endpoint which events will be delivered to. MNS currently only supports delivery to [MESH](https://digital.nhs.uk/services/message-exchange-for-social-care-and-health-mesh) mailboxes and [AWS SQS](https://aws.amazon.com/sqs/) endpoints. Note: for MESH delivery you must provide the full mailbox ID and for SQS delivery you must provide the full SQS ARN of your desired queue."
             payload:
               type: "string"
               description: "The mime type to send the payload in. MNS supports `application/json` and `application/fhir+json` (FHIR R4 Bundle)."
@@ -74,14 +74,14 @@ content:
           properties:
             enabled:
               type: "boolean"
-              description: "A flag to enable (true) or disable (false) signal hydration."
+              description: "A flag to enable (true) or disable (false) event hydration."
               example: true
             headers:
               type: object
-              description: "An optional dictionary of HTTP headers that will be sent in the request to the API endpoint specified in the signal."
+              description: "An optional dictionary of HTTP headers that will be sent in the request to the API endpoint specified in the event."
               additionalProperties:
                 type: string
-                description: "HTTP header that will be sent in the request to the API endpoint specified in the signal."
+                description: "HTTP header that will be sent in the request to the API endpoint specified in the event."
               example: 
                 custom_header_1: "custom_value_1"
                 custom_header_2: "custom_value_2"

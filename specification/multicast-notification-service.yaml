@@ -261,16 +261,7 @@ paths:
                   description: "A unique string representing the event type."
                   example: "pds-change-of-gp-1"
                 subject:
-                  type: "object"
-                  description: |
-                    The healthcare entity to which the event occurred. For example, this could be an NHS organisation or a person such as an NHS patient or member of staff.
-                    We currently only have a schema for a patient as a subject but will work with you to agree a new schema if you have a different use case.
-                  oneOf:
-                    - $ref: "schemas/cloudevents/eventSubjectPatientExample.yaml"
-                  example: 
-                    nhsNumber: "9912003888"
-                    familyName: "DAWKINS"
-                    dob: "2017-10-02"
+                  $ref: "schemas/cloudevents/eventSubjectPatientExample.yaml"
                 source:
                   type: "object"
                   required:

@@ -8,6 +8,8 @@ info:
     ## Overview
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/MNSOverview2.svg)
 
+    This page is about how to implement the API for the Multicast Notificaton Service, to find out more about this service itself and its uses visit our [Multicast Notification Service](https://digital.nhs.uk/services/multicast-notification-service) service page.
+    
     Use this API to publish or and subscribe to healthcare-related events. This API is currently only live with patient-related event. However, it is intended as a robust service that could support many types of future event e.g. changes related to healthcare organisations or staff.
 
     The events do not contain clinical information; they simply describe what type of event occurred to whom/what and where. A pointer is provided for retrieval of the data that the event refers to.
@@ -122,7 +124,7 @@ info:
     We currently don't have any open source client libraries or sample code and the source code for the MNS backend is not currently in the open. If you think this would be useful, [contact us](https://digital.nhs.uk/developer/help-and-support).
  
     ## Contact us
-    For help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).
+    For help connecting to our APIs see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support) and for support with MNS [join our developer community](https://developer.community.nhs.uk/c/multicast-notification-service/57).
   
   contact:
     name: 'multicast-notification-service API Support'

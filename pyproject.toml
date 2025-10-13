@@ -16,7 +16,7 @@ keywords = ["healthcare", "uk", "nhs", "events"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pytest-nhsd-apim = "^5.0.3"
+pytest-nhsd-apim = "^5.0.6"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.3.0"

@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@nestjs/common": "^11.1.6",
-    "@redocly/cli": "^2.0.3",
+    "@redocly/cli": "^2.5.1",
     "apigeetool": "^0.16.4",
     "license-checker": "^25.0.1",
     "react-is": "^19.1.1"

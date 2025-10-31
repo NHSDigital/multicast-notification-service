@@ -1,11 +1,11 @@
 {
     "resourceType": "Bundle",
-    "id": "685aec28-70bb-4763-853b-2bdc07a44415",
+    "id": "02db8069-c190-4e5f-8cd2-0a656563e439",
     "type": "history",
     "timestamp": "2020-06-01T13:00:00Z",
     "entry": [
       {
-        "fullUrl": "urn:uuid:685aec28-70bb-4763-853b-2bdc07a44415",
+        "fullUrl": "urn:uuid:02db8069-c190-4e5f-8cd2-0a656563e439",
         "resource": {
           "resourceType": "Parameters",
           "meta": {
@@ -13,7 +13,7 @@
               "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription-status-r4"
             ]
           },
-          "id": "685aec28-70bb-4763-853b-2bdc07a44415",
+          "id": "02db8069-c190-4e5f-8cd2-0a656563e439",
           "parameter": [
             {
               "name": "subscription",

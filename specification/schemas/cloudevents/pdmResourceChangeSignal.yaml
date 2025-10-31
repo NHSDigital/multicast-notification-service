@@ -1,0 +1,81 @@
+"$schema": http://json-schema.org/draft-07/schema#
+description: The NHS Number Change event. You will receive this object if you subscribe to `nhs-number-change-2` events with an `application/cloudevents+json` format.
+type: object
+properties:
+  id:
+    description: Identifies the event.
+    "$ref": "#/definitions/iddef"
+    examples:
+    - f4fa6652-076c-40d7-a3ff-e0d31f7b3f3e
+  source:
+    description: Identifies the producer of your event.
+    "$ref": "#/definitions/sourcedef"
+    examples:
+    - api.service.nhs.uk/patient-data-manager/FHIR/R4/
+  specversion:
+    description: The version of the CloudEvents specification which the event uses.
+    "$ref": "#/definitions/specversiondef"
+    examples:
+    - '1.0'
+  type:
+    description: Describes the occurrence; the name of the event.
+    "$ref": "#/definitions/typedef"
+    examples:
+    - pdm-resource-change-1
+  subject:
+    description: The NHS Number of the patient associated with the NHS number change
+    "$ref": "#/definitions/subjectdef"
+    examples:
+    - 9912003888
+  time:
+    description: Timestamp of when the occurrence happened. Must adhere to RFC 3339.
+    "$ref": "#/definitions/timedef"
+    examples:
+    - '2018-04-05T17:31:00Z'
+  dataref:
+    description: A link to the patient demographic information on the Personal Demographics Service API.
+    "$ref": "#/definitions/datarefdef"
+    examples:
+    - https://api.service.nhs.uk/patient-data-manager/FHIR/R4/9912003888/f5524783-e5d7-473e-b2a0-29582ff231da
+required:
+- id
+- source
+- specversion
+- type
+- time
+- subject
+definitions:
+  iddef:
+    type: string
+    minLength: 1
+  sourcedef:
+    type: string
+    format: uri-reference
+    minLength: 1
+  specversiondef:
+    type: string
+    minLength: 1
+  typedef:
+    type: string
+    minLength: 1
+  subjectdef:
+    type:
+    - string
+    minLength: 1
+  timedef:
+    type:
+    - string
+    format: date-time
+    minLength: 1
+  datarefdef:
+    type: string
+    format: uri
+    minLength: 1
+example:
+  specversion: '1.0'
+  id: f4fa6652-076c-40d7-a3ff-e0d31f7b3f3e
+  source: api.service.nhs.uk/patient-data-manager/FHIR/R4/
+  type: pdm-resource-change-1
+  time: '2020-06-01T13:00:00Z'
+  dataref: https://api.service.nhs.uk/patient-data-manager/FHIR/R4/9912003888/f5524783-e5d7-473e-b2a0-29582ff231da
+  subject: '9912003888'

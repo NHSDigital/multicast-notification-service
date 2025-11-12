@@ -255,7 +255,7 @@ paths:
                   dataref: https://api.service.nhs.uk/patient-data-manager/FHIR/R4/Appointment/f5524783-e5d7-473e-b2a0-29582ff231da
                   subject: '9912003888'
                   filtering:
-                    resource_type: '9912003888'
+                    resource_type: 'Appointment'
                     resource_action: 'Create'
                     product_ids: ['A.1', 'B.2']
                     nhs_number: '9912003888'

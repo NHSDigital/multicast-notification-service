@@ -43,7 +43,7 @@
                 {
                   "name": "focus",
                   "valueReference": {
-                    "reference": "https://api.service.nhs.uk/patient-data-manager/FHIR/R4/9912003888/f5524783-e5d7-473e-b2a0-29582ff231da"
+                    "reference": "https://api.service.nhs.uk/patient-data-manager/FHIR/R4/Appointment/f5524783-e5d7-473e-b2a0-29582ff231da"
                   }
                 }
               ]

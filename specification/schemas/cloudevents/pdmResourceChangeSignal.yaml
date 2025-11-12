@@ -36,7 +36,7 @@ properties:
     description: A link to the patient demographic information on the Personal Demographics Service API.
     "$ref": "#/definitions/datarefdef"
     examples:
-    - https://api.service.nhs.uk/patient-data-manager/FHIR/R4/9912003888/f5524783-e5d7-473e-b2a0-29582ff231da
+    - https://api.service.nhs.uk/patient-data-manager/FHIR/R4/Appointment/f5524783-e5d7-473e-b2a0-29582ff231da
 required:
 - id
 - source
@@ -77,5 +77,5 @@ example:
   source: api.service.nhs.uk/patient-data-manager/FHIR/R4/
   type: pdm-resource-change-1
   time: '2020-06-01T13:00:00Z'
-  dataref: https://api.service.nhs.uk/patient-data-manager/FHIR/R4/9912003888/f5524783-e5d7-473e-b2a0-29582ff231da
+  dataref: https://api.service.nhs.uk/patient-data-manager/FHIR/R4/Appointment/f5524783-e5d7-473e-b2a0-29582ff231da
   subject: '9912003888'

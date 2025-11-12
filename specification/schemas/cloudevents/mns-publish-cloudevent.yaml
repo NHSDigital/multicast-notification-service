@@ -45,9 +45,16 @@ properties:
       oneOf:
         - type: string
         - type: number
+        - type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
     example:
       filter_option_1: 'filter_value_1'
       filter_option_2: 42
+      filter_option_3: ['one', 'two', 'three']
+      filter_option_4: [1, 2, 3]
 required:
   - id
   - source

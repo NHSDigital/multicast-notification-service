@@ -6,7 +6,7 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    Before learning about the MNS API, we would reccomend reviewing MNS as a service on the [MNS Service Page](https://digital.nhs.uk/services/multicast-notification-service).
+    Before learning about the MNS API, we would recommend reviewing MNS as a service on the [MNS Service Page](https://digital.nhs.uk/services/multicast-notification-service).
     
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/MNSOverview2.svg)
 
@@ -107,7 +107,7 @@ info:
     improving it iteratively as we gather feedback from the first set of users.
 
     ## Events
-    Each event has it's own specifications, which can be viewed visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
+    Each event has its own specifications, which can be viewed by visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
 
     ## Errors
     We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:

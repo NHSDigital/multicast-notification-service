@@ -6,11 +6,14 @@ parameters:
     type: string
     default: make test
 
+  - name: python_version
+    type: string
+
 steps:
   - task: UsePythonVersion@0
-    displayName: "Use Python ${{ parameters.python_ver }}"
+    displayName: "Use Python ${{ parameters.python_version }}"
     inputs:
-      versionSpec: ${{ parameters.python_ver }}
+      versionSpec: ${{ parameters.python_version }}
 
   - bash: |
       make install-python

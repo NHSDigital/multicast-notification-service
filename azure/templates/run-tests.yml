@@ -8,9 +8,9 @@ parameters:
 
 steps:
   - task: UsePythonVersion@0
-    displayName: "Use Python 3.10"
+    displayName: "Use Python ${{ parameters.python_ver }}"
     inputs:
-      versionSpec: 3.10
+      versionSpec: ${{ parameters.python_ver }}
 
   - bash: |
       make install-python

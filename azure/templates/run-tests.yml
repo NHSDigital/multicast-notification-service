@@ -7,7 +7,7 @@ parameters:
     default: make test
 
   - name: python_version
-    type: string
+    type: float
     default: ""
 
 steps:

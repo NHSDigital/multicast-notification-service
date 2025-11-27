@@ -7,6 +7,5 @@ variables:
   - name: service_base_path
     value: multicast-notification-service
   - name: python_version
-    type: string
     value: 3.10
 

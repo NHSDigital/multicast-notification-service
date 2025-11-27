@@ -8,6 +8,7 @@ parameters:
 
   - name: python_version
     type: string
+    default: 3.10
 
 steps:
 

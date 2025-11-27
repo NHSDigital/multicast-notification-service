@@ -6,6 +6,8 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
+    Before learning about the MNS API, we would recommend reviewing MNS as a service on the [MNS Service Page](https://digital.nhs.uk/services/multicast-notification-service).
+    
     ![MNS High-level Diagram](https://raw.githubusercontent.com/NHSDigital/multicast-notification-service/master/assets/images/MNSOverview2.svg)
 
     This page is about how to implement the API for the Multicast Notificaton Service, to find out more about this service itself and its uses visit our [Multicast Notification Service](https://digital.nhs.uk/services/multicast-notification-service) service page.
@@ -104,6 +106,9 @@ info:
     During the planned private beta this service will only be available to NHS England product teams. The onboarding process is in development and we will be
     improving it iteratively as we gather feedback from the first set of users.
 
+    ## Events
+    Each event has its own specifications, which can be viewed by visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
+
     ## Errors
     We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
 
@@ -124,7 +129,10 @@ info:
     We currently don't have any open source client libraries or sample code and the source code for the MNS backend is not currently in the open. If you think this would be useful, [contact us](https://digital.nhs.uk/developer/help-and-support).
  
     ## Contact us
-    For help connecting to our APIs see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support) and for support with MNS [join our developer community](https://developer.community.nhs.uk/c/multicast-notification-service/57).
+    For help connecting to any NHS APIs see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support)
+    
+    For support with connecting to the MNS API [join our developer community](https://developer.community.nhs.uk/c/multicast-notification-service/57).
+    
   
   contact:
     name: 'multicast-notification-service API Support'

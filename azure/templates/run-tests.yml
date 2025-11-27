@@ -8,7 +8,6 @@ parameters:
 
   - name: python_version
     type: string
-    default: ""
 
 steps:
 

@@ -43,4 +43,3 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               test_command: make smoketest
-              python_version: ${{ variables.python_version }}

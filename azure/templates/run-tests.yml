@@ -6,7 +6,18 @@ parameters:
     type: string
     default: make test
 
+  - name: python_version
+    type: string
+    default: "3.10"
+
 steps:
+
+  - task: UsePythonVersion@0
+    displayName: ${{ format('Use Python {0}', parameters.python_version) }}
+    inputs:
+      versionSpec: ${{ format('{0}', parameters.python_version) }}
+
+
   - bash: |
       make install-python
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)

@@ -8,3 +8,4 @@ variables:
     value: multicast-notification-service
   - name: python_version
     value: 3.10
+

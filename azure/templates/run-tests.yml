@@ -13,7 +13,7 @@ parameters:
 steps:
 
   - task: UsePythonVersion@0
-    displayName: "Use Python '${{ parameters.python_version }}'"
+    displayName: "'Use Python ${{ parameters.python_version }}'"
     inputs:
       versionSpec: ${{ parameters.python_version }}
 

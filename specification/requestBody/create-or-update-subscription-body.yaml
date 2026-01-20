@@ -158,15 +158,3 @@ content:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                 payload: "application/fhir+json"
-          pdmResourceChangeSubscription:
-            description: "PDM resource change subscription"
-            value:
-              resourceType: "Subscription"
-              status: "requested"
-              end: "2022-04-05T17:31:00.000Z"
-              reason: "Business process A"
-              criteria: "eventType=pdm-resource-change-1"
-              channel:
-                type: "message"
-                endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
-                payload: "application/json"

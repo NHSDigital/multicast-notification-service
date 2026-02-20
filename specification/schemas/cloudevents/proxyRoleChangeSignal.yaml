@@ -1,0 +1,79 @@
+"$schema": http://json-schema.org/draft-07/schema#
+description: The VRS Proxy Role Change event. You will receiven this object if you subscribe to `proxy-role-change-1` events with an `application/cloudevents+json` format
+type: object
+properties:
+  id:
+    description: Identifies the event
+    "$ref": "#/definitions/iddef"
+    examples:
+    - 501c6aea-aff2-4431-b98e-1bf59192b045
+  source:
+    description: Identifies the producer of the event
+    "$ref": "#/definitions/sourcedef"
+    examples:
+    - uk.nhs.validated-relationships-service
+  specversion:
+    description: The version of the CloudEvents specification which the event uses
+    "$ref": "#/definitions/specversiondef"
+    examples:
+    - '1.0'
+  type:
+    description: Describes the occurrence; the name of the event
+    "$ref": "#/definitions/typedef"
+    examples:
+    - proxy-role-change-1
+  subject:
+    description: The NHS Number of the patient associated with the proxy role change
+    "$ref": "#/definitions/subjectdef"
+    examples:
+    - 9730676240
+  time:
+    description: Timestamp of when the occurrence happened. Must adhere to RFC 3339.
+    "$ref": "#/definitions/timedef"
+    examples:
+      - '2018-04-05T17:31:00Z'
+  dataref:
+    description: A link to the proxy role information on the Validated Relationships Service API.
+    "$ref": "#/definitions/datarefdef"
+    examples:
+      - https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
+required:
+- id
+- source
+- specversion
+- type
+- time
+- subject
+definitions:
+  iddef:
+    type: string
+    minLength: 1
+  sourcedef:
+    type: string
+    format: uri-reference
+    minLength: 1
+  specversiondef:
+    type: string
+    minLength: 1
+  typedef:
+    type: string
+    minLength: 1
+  subjectdef:
+    type: string
+    minLength: 1
+  timedef:
+    type: string
+    format: date-time
+    minLength: 1
+  datarefdef:
+    type: string
+    format: uri
+    minLength: 1
+  example:
+    specversion: '1.0'
+    id: 501c6aea-aff2-4431-b98e-1bf
+    source: uk.nhs.validated-relationships-service
+    type: proxy-role-change-1
+    time: '2018-04-05T17:31:00Z'
+    dataref: https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
+    subject: '9730676240'

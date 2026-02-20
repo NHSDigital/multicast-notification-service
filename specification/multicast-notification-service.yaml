@@ -195,6 +195,16 @@ paths:
             schema:
               $ref: "#/components/schemas/cloudevent"
             examples:
+              proxy-role-change-1:
+                description: "Create a proxy role change event"
+                value:
+                  specversion: '1.0'
+                  id: 501c6aea-aff2-4431-b98e-1bf59192b045
+                  source: uk.nhs.validated-relationships-service
+                  type: proxy-role-change-1
+                  time: '2020-06-01T13:00:00Z'
+                  dataref: https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
+                  subject: '9730676240'
               pds-death-notification-2:
                 description: "Create a patient death status event"
                 value:

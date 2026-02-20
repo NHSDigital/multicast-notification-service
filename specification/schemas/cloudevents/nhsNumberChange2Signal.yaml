@@ -8,7 +8,7 @@ properties:
     examples:
     - 1dd1f17a-599d-40b8-9ee9-2c92756e2bc9
   source:
-    description: Identifies the producer of your event.
+    description: Identifies the producer of the event.
     "$ref": "#/definitions/sourcedef"
     examples:
     - https://fhir.nhs.uk/Id/nhsSpineASID/477121000324

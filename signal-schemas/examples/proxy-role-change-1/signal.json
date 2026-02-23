@@ -49,7 +49,7 @@
           },
           {
             "name": "event-type",
-            "valueString": "proxy-role-change-1"
+            "valueString": "vrs-proxy-role-change-1"
           },
           {
             "name": "source",

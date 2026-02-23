@@ -1,5 +1,5 @@
 "$schema": http://json-schema.org/draft-07/schema#
-description: The VRS Proxy Role Change event. You will receiven this object if you subscribe to `proxy-role-change-1` events with an `application/cloudevents+json` format
+description: The VRS Proxy Role Change event. You will receiven this object if you subscribe to `vrs-proxy-role-change-1` events with an `application/cloudevents+json` format
 type: object
 properties:
   id:
@@ -21,7 +21,7 @@ properties:
     description: Describes the occurrence; the name of the event
     "$ref": "#/definitions/typedef"
     examples:
-    - proxy-role-change-1
+    - vrs-proxy-role-change-1
   subject:
     description: The NHS Number of the patient associated with the proxy role change
     "$ref": "#/definitions/subjectdef"
@@ -73,7 +73,7 @@ definitions:
     specversion: '1.0'
     id: 501c6aea-aff2-4431-b98e-1bf
     source: uk.nhs.validated-relationships-service
-    type: proxy-role-change-1
+    type: vrs-proxy-role-change-1
     time: '2018-04-05T17:31:00Z'
     dataref: https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
     subject: '9730676240'

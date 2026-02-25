@@ -1,0 +1,83 @@
+{
+  "resourceType": "Bundle",
+  "id": "b2b8cb8d-9ef3-4fd1-9574-18019c3849fa",
+  "type": "history",
+  "timestamp": "2026-02-25T15:49:24.902207+00:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:d3b52eb9-9146-46c1-bccc-eafed5ed7730",
+      "resource": {
+        "resourceType": "Parameters",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription-status-r4"
+          ]
+        },
+        "id": "d3b52eb9-9146-46c1-bccc-eafed5ed7730",
+        "parameter": [
+          {
+            "name": "subscription",
+            "valueReference": {
+              "reference": "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+            }
+          },
+          {
+            "name": "status",
+            "valueCode": "active"
+          },
+          {
+            "name": "type",
+            "valueCode": "event-notification"
+          },
+          {
+            "name": "notification-event",
+            "part": [
+              {
+                "name": "event-number",
+                "valueString": "1"
+              },
+              {
+                "name": "timestamp",
+                "valueInstant": "2026-02-25T15:49:24.902207+00:00"
+              },
+              {
+                "name": "focus",
+                "valueReference": {
+                  "reference": "https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41"
+                }
+              }
+            ]
+          },
+          {
+            "name": "additional-context",
+            "part": [
+              {
+                "name": "event-type",
+                "valueString": "vrs-proxy-role-change-1"
+              },
+              {
+                "name": "source",
+                "valueUri": "uk.nhs.validated-relationships-service"
+              },
+              {
+                "name": "subject",
+                "valueReference": {
+                  "identifier": {
+                    "value": "9912003888"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "GET",
+        "url": "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+      },
+      "response": {
+        "status": "200"
+      }
+    }
+  ]
+}

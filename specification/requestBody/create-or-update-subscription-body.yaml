@@ -122,6 +122,18 @@ content:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
                 payload: "application/json"
+          pdsRecordChangeSubscription:
+            description: "PDS record change subscription"
+            value:
+              resourceType: "Subscription"
+              status: "requested"
+              end: "2022-04-05T17:31:00.000Z"
+              reason: "Business process A"
+              criteria: "eventType=pds-record-change-2"
+              channel:
+                type: "message"
+                endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
+                payload: "application/json"
           pdsChangeofGPSubscription:
             description: "PDS change of GP subscription"
             value:

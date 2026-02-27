@@ -233,6 +233,20 @@ paths:
                   filtering:
                     patient_ods_code: 'M7Z0J'
                     proxy_ods_code: 'M7Z0J'
+              pds-record-change-2:
+                description: "Create a PDS record change event"
+                value:
+                  specversion: '1.0'
+                  id: 963b28e0-067a-4a3f-bee8-f613c23541b2
+                  source: https://fhir.nhs.uk/Id/nhsSpineASID/477121000324
+                  type: pds-record-change-2
+                  time: '2020-06-01T13:00:00Z'
+                  subject: '9912003888'
+                  versionid: 'W/"16"'
+                  filtering:
+                    changed_name: true
+                    registeredgpodscode: 'XY11'
+                    nhsnumber: '9912003888'
               pds-death-notification-2:
                 description: "Create a patient death status event"
                 value:

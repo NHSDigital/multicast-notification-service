@@ -195,13 +195,13 @@ paths:
             schema:
               $ref: "#/components/schemas/cloudevent"
             examples:
-              nhshco-healthcheck-complete-1:
+              nhshco-hc-complete-1:
                 description: "Create a health check complete event"
                 value:
                   specversion: '1.0'
                   id: 501c6aea-aff2-4431-b98e-1bf59192b045
                   source: uk.nhs.nhs-health-check-online
-                  type: nhshco-healthcheck-complete-1
+                  type: nhshco-hc-complete-1
                   time: '2020-06-01T13:00:00Z'
                   dataref: https://api.service.nhs.uk/patient-data-manager/FHIR/R4/Composition/b0b97bff-e3d7-4744-a09a-e55781886dd0/$document
                   subject: '9730676240'

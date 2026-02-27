@@ -207,7 +207,7 @@ paths:
                   subject: '9730676240'
                   filtering:
                     gppractice: 'XY11'
-              vrs-proxy-role0-deleted-1:
+              vrs-proxy-role-deleted-1:
                 description: "Create a proxy role deleted event"
                 value:
                   specversion: '1.0'

@@ -39,12 +39,18 @@ properties:
     format: uri
     minLength: 1
     example: https://api.service.nhs.uk/personal-demographics/FHIR/R4/Patient/9912003888
+  versionid:
+    description: Version identifier for the resource that the event relates to.
+    type: string
+    minLength: 1
+    example: "12"
   filtering:
     type: object
     additionalProperties:
       oneOf:
         - type: string
         - type: number
+        - type: boolean
         - type: array
           items:
             oneOf:

@@ -217,6 +217,9 @@ paths:
                   time: '2020-06-01T13:00:00Z'
                   dataref: https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
                   subject: '9730676240'
+                  filtering:
+                    patient_ods_code: 'M7Z0J'
+                    proxy_ods_code: 'M7Z0J'
               vrs-proxy-role-change-1:
                 description: "Create a proxy role change event"
                 value:
@@ -227,6 +230,9 @@ paths:
                   time: '2020-06-01T13:00:00Z'
                   dataref: https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
                   subject: '9730676240'
+                  filtering:
+                    patient_ods_code: 'M7Z0J'
+                    proxy_ods_code: 'M7Z0J'
               pds-death-notification-2:
                 description: "Create a patient death status event"
                 value:

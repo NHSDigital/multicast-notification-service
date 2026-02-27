@@ -53,7 +53,7 @@
             "part": [
               {
                 "name": "event-type",
-                "valueString": "vrs-proxy-role-change-1"
+                "valueString": "vrs-proxy-role-deleted-1"
               },
               {
                 "name": "source",

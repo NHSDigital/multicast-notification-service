@@ -36,8 +36,8 @@ content:
           type: "string"
           pattern: "^eventType=.*$"
           description: |
-            Criteria for the subscription. A valid criteria must contain a permitted value for `eventType`. 
-            Additional criteria depends on the event and are documentated on our 
+            Criteria for the subscription. A valid criteria must contain a permitted value for `eventType`.
+            Additional criteria depends on the event and are documentated on our
             [Event Catalogue page](https://digital.nhs.uk/developer/api-catalogue?query=mns+event+publish-subscribe).
             Examples: 'eventType=gpreg-change-gp-req-1' or 'eventType=gpreg-change-gp-req-1 AND generalpractitioner=XY11'
           # Separate examples are only supported in OpenAPI 3.1
@@ -82,10 +82,22 @@ content:
               additionalProperties:
                 type: string
                 description: "HTTP header that will be sent in the request to the API endpoint specified in the event."
-              example: 
+              example:
                 custom_header_1: "custom_value_1"
                 custom_header_2: "custom_value_2"
     examples:
+          healthCheckCompleteSubscription:
+            description: "Health check complete subscription"
+            value:
+              resourceType: "Subscription"
+              status: "requested"
+              end: "2022-04-05T17:31:00.000Z"
+              reason: "Business process A"
+              criteria: "eventType=nhshco-hc-complete-1"
+              channel:
+                type: "message"
+                endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
+                payload: "application/json"
           proxyRoleChangeSubscription:
             description: "VRS proxy role change"
             value:

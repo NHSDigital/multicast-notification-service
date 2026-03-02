@@ -207,6 +207,19 @@ paths:
                   subject: '9730676240'
                   filtering:
                     gppractice: 'XY11'
+              vrs-proxy-role-deleted-1:
+                description: "Create a proxy role deleted event"
+                value:
+                  specversion: '1.0'
+                  id: 898cc706-9156-4d67-941a-b37ca9a85861
+                  source: uk.nhs.validated-relationships-service
+                  type: vrs-proxy-role-deleted-1
+                  time: '2020-06-01T13:00:00Z'
+                  dataref: https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
+                  subject: '9730676240'
+                  filtering:
+                    patient_ods_code: 'M7Z0J'
+                    proxy_ods_code: 'M7Z0J'
               vrs-proxy-role-change-1:
                 description: "Create a proxy role change event"
                 value:
@@ -217,6 +230,9 @@ paths:
                   time: '2020-06-01T13:00:00Z'
                   dataref: https://api.service.nhs.uk/validated-relationships/FHIR/R4/Consent/ecc32c41
                   subject: '9730676240'
+                  filtering:
+                    patient_ods_code: 'M7Z0J'
+                    proxy_ods_code: 'M7Z0J'
               pds-record-change-2:
                 description: "Create a PDS record change event"
                 value:

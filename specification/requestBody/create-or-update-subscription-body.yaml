@@ -110,14 +110,14 @@ content:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"
                 payload: "application/json"
-          vrsProxyRoleChangeSubscription:
-            description: "VRS proxy role change"
+          vrsProxyRoleChangedSubscription:
+            description: "VRS proxy role changed"
             value:
               resourceType: "Subscription"
               status: "requested"
               end: "2022-04-05T17:31:00.000Z"
               reason: "Business process A"
-              criteria: "eventType=vrs-proxy-role-change-1"
+              criteria: "eventType=vrs-proxy-role-changed-1"
               channel:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue1"

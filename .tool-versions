@@ -1,4 +1,4 @@
-python 3.10.8
+python 3.13.2
 java openjdk-21
 nodejs 24.1.0
 poetry 2.1.3

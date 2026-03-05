@@ -23,6 +23,7 @@
       "postman-request": {
         "qs": "^6.14.1"
       }
-    }
+    },
+    "underscore": "1.13.8"
   }
 }

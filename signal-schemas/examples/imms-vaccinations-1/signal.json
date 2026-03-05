@@ -1,0 +1,83 @@
+{
+  "resourceType": "Bundle",
+  "id": "e0b3d12f-c64d-4b29-b23b-4a670941f572",
+  "type": "history",
+  "timestamp": "2026-03-04T16:45:49.054765+00:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:ea8ab860-1005-4f6a-a090-3e596f5af323",
+      "resource": {
+        "resourceType": "Parameters",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription-status-r4"
+          ]
+        },
+        "id": "ea8ab860-1005-4f6a-a090-3e596f5af323",
+        "parameter": [
+          {
+            "name": "subscription",
+            "valueReference": {
+              "reference": "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+            }
+          },
+          {
+            "name": "status",
+            "valueCode": "active"
+          },
+          {
+            "name": "type",
+            "valueCode": "event-notification"
+          },
+          {
+            "name": "notification-event",
+            "part": [
+              {
+                "name": "event-number",
+                "valueString": "1"
+              },
+              {
+                "name": "timestamp",
+                "valueInstant": "2026-03-04T16:45:49.054765+00:00"
+              },
+              {
+                "name": "focus",
+                "valueReference": {
+                  "reference": "https://int.api.service.nhs.uk/immunisation-fhir-api/Immunization/29dc4e84-7e72-11ee-b962-0242ac120002"
+                }
+              }
+            ]
+          },
+          {
+            "name": "additional-context",
+            "part": [
+              {
+                "name": "event-type",
+                "valueString": "imms-vaccination-1"
+              },
+              {
+                "name": "source",
+                "valueUri": "int.api.service.nhs.uk/immunisation-fhir-api"
+              },
+              {
+                "name": "subject",
+                "valueReference": {
+                  "identifier": {
+                    "value": "9912003888"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "GET",
+        "url": "https://api.service.nhs.uk/multicast-notification-service/subscriptions"
+      },
+      "response": {
+        "status": "200"
+      }
+    }
+  ]
+}

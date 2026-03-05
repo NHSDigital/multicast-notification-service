@@ -15,11 +15,8 @@
     "postman-runtime": "^7.51.0"
   },
   "devDependencies": {
-    "@nestjs/common": "^11.1.6",
-    "@redocly/cli": "^2.0.3",
-    "apigeetool": "^0.16.4",
-    "license-checker": "^25.0.1",
-    "react-is": "^19.1.1"
+    "@redocly/cli": "^2.20.3",
+    "license-checker": "^25.0.1"
   },
   "overrides": {
     "postman-runtime": {

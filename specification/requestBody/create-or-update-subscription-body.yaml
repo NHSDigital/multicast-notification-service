@@ -206,3 +206,15 @@ content:
                 type: "message"
                 endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
                 payload: "application/fhir+json"
+          pathologyLaboratoryReportingTestResultStoredSubscription:
+            description: "Pathology Laboratory Reporting Test Result Stored subscription"
+            value:
+              resourceType: "Subscription"
+              status: "requested"
+              end: "2022-04-05T17:31:00.000Z"
+              reason: "Business process A"
+              criteria: "eventType=pathology-laboratory-reporting-test-result-stored-1 AND requestingOrganisationODS_manufacturer_org=A12345"
+              channel:
+                type: "message"
+                endpoint: "arn:aws:sqs:eu-west-2:123456789012:queue2"
+                payload: "application/json"

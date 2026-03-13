@@ -43,7 +43,7 @@
               {
                 "name": "focus",
                 "valueReference": {
-                  "reference": "https://int.api.service.nhs.uk/immunisation-fhir-api/Immunization/29dc4e84-7e72-11ee-b962-0242ac120002"
+                  "reference": "https://int.api.service.nhs.uk/immunisation-fhir-api/FHIR/R4/Immunization/29dc4e84-7e72-11ee-b962-0242ac120002"
                 }
               }
             ]
@@ -53,11 +53,11 @@
             "part": [
               {
                 "name": "event-type",
-                "valueString": "imms-vaccination-1"
+                "valueString": "imms-vaccination-record-change-1"
               },
               {
                 "name": "source",
-                "valueUri": "int.api.service.nhs.uk/immunisation-fhir-api"
+                "valueUri": "uk.nhs.vaccinations-data-flow-management"
               },
               {
                 "name": "subject",

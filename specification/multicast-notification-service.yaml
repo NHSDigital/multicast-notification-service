@@ -206,8 +206,8 @@ paths:
                   dataref: https://api.service.nhs.uk/immunisation-fhir-api/FHIR/R4/Immunization/29dc4e84-7e72-11ee-b962-0242ac120002
                   subject: '9912003888'
                   filtering:
-                    generalpractitioner: 'M7Z0J'
-                    sourceorganisation: 'M7Z0J'
+                    generalpractitioner: 'FY4563'
+                    sourceorganisation: 'FT6786'
                     sourceapplication: 'RAVS'
                     subjectage: 17
                     immunisationtype: 'HPV'

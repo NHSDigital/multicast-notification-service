@@ -87,7 +87,7 @@ content:
                 custom_header_2: "custom_value_2"
     examples:
           immsVaccinationRecordChangeSubscription:
-            description: "Immunization vaccination record change subscription"
+            description: "Immunisation vaccination record change subscription"
             value:
               resourceType: "Subscription"
               status: "requested"

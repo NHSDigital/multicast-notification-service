@@ -195,6 +195,23 @@ paths:
             schema:
               $ref: "#/components/schemas/cloudevent"
             examples:
+              imms-vaccination-record-change-1:
+                description: "Create an immunisation vaccination record change event"
+                value:
+                  specversion: '1.0'
+                  id: e0b3d12f-c64d-4b29-b23b-4a670941f572
+                  source: uk.nhs.vaccinations-data-flow-management
+                  type: imms-vaccination-record-change-1
+                  time: '2020-06-01T13:00:00Z'
+                  dataref: https://api.service.nhs.uk/immunisation-fhir-api/FHIR/R4/Immunization/29dc4e84-7e72-11ee-b962-0242ac120002
+                  subject: '9912003888'
+                  filtering:
+                    generalpractitioner: 'FY4563'
+                    sourceorganisation: 'FT6786'
+                    sourceapplication: 'RAVS'
+                    subjectage: 17
+                    immunisationtype: 'HPV'
+                    action: 'CREATE'
               nhshco-hc-complete-1:
                 description: "Create a health check complete event"
                 value:

@@ -15,7 +15,7 @@
     "postman-runtime": "^7.52.0"
   },
   "devDependencies": {
-    "@redocly/cli": "^2.20.4",
+    "@redocly/cli": "^2.22.1",
     "license-checker": "^25.0.1"
   },
   "overrides": {

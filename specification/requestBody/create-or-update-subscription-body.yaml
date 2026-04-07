@@ -39,7 +39,7 @@ content:
             Criteria for the subscription. A valid criteria must contain a permitted value for `eventType`.
             Additional criteria depends on the event and is documented on our
             [Event Catalogue page](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
-            Examples: 'eventType="gpreg-change-gp-req-1"' or 'eventType="gpreg-change-gp-req-1" AND generalpractitioner="XY11"'
+            Examples: `eventType='gpreg-change-gp-req-1'`` or `eventType='gpreg-change-gp-req-1' AND generalpractitioner='XY11'`
           # Separate examples are only supported in OpenAPI 3.1
           example: "eventType='gpreg-change-gp-req-1' AND generalpractitioner='XY11'"
         channel:

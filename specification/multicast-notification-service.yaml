@@ -22,7 +22,7 @@ info:
       - Publish events.
       - Subscribe to events based on event type and optional corresponding criteria filter.
 
-    Available and in development events can be viewed visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
+    Available and in development events can be viewed by visiting the [Multicast Notification Service Events Catalogue](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/multicast-notification-service-events-catalogue).
 
     Data flow:
       1. An event occurs on an event publishers system. They publish the event to MNS, including a pointer to be used for retrieval of the event details.
@@ -107,7 +107,7 @@ info:
     improving it iteratively as we gather feedback from the first set of users.
 
     ## Events
-    Each event has its own specifications, which can be viewed by visiting the NHS API and integration catalogue and [filtering for publish-subscribe events](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
+    Each event has its own documentation, which can be viewed by visiting the [Multicast Notification Service Events Catalogue](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/multicast-notification-service-events-catalogue).
 
     ## Errors
     We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
@@ -523,7 +523,7 @@ paths:
         - subscriptions
       description: |
         ### Overview
-        Use this endpoint to subscribe to healthcare-related events. You can view details of the available events on the [API and integration catalogue](https://digital.nhs.uk/developer/api-catalogue/Taxonomies/publish-subscribe-events).
+        Use this endpoint to subscribe to healthcare-related events. You can view details of the available events on the [Multicast Notification Service Events Catalogue](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/multicast-notification-service-events-catalogue).
 
         ### Subscription filtering
         You can filter the events you want to receive using the `criteria` field in the payload. As a minimum, you must specify the event type. For example, if you provide `eventType=gpreg-change-gp-req-1`

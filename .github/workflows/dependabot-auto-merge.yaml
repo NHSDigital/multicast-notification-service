@@ -1,0 +1,57 @@
+name: Auto-merge Dependabot PRs
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - labeled
+
+# Intent:
+#   Dependabot PRs should be automatically approved and set to auto-merge.
+#   Auto-merge means GitHub will merge the PR as soon as all required checks pass.
+#
+#   If checks fail and a human intervenes by pushing a fix commit, the auto-approval
+#   should be invalidated - the PR must then be manually reviewed and approved before
+#   it can merge.
+#
+#   If checks fail and a human simply re-runs the workflow (no code change), the PR
+#   should re-approve and re-enable auto-merge on success - the human has decided to
+#   retry the original Dependabot change, so no fresh review is required.
+#
+# How the conditional satisfies this:
+#   `github.actor` is the user who triggered the *original* workflow run. Crucially,
+#   it is preserved across re-runs - if a human re-runs a Dependabot-triggered run,
+#   github.actor remains 'dependabot[bot]', so this job still fires and re-approves.
+#
+#   When a human pushes a commit to the branch, a new 'synchronize' event fires with
+#   github.actor set to that human - this job is skipped, the existing approval is
+#   dismissed by GitHub's branch protection (requires new review after new commits),
+#   and the PR must be manually approved before auto-merge can proceed.
+
+jobs:
+  enable-automerge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@ffa630c65fa7e0ecfa0625b5ceda64399aea1b36 # v3.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-approve Dependabot PR
+        uses: hmarr/auto-approve-action@8f929096a962e83ccdfa8afcf855f39f12d4dac7 # v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

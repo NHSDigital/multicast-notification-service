@@ -8,10 +8,31 @@ on:
       - ready_for_review
       - labeled
 
+# Intent:
+#   Dependabot PRs should be automatically approved and set to auto-merge.
+#   Auto-merge means GitHub will merge the PR as soon as all required checks pass.
+#
+#   If checks fail and a human intervenes by pushing a fix commit, the auto-approval
+#   should be invalidated - the PR must then be manually reviewed and approved before
+#   it can merge.
+#
+#   If checks fail and a human simply re-runs the workflow (no code change), the PR
+#   should re-approve and re-enable auto-merge on success - the human has decided to
+#   retry the original Dependabot change, so no fresh review is required.
+#
+# How the conditional satisfies this:
+#   `github.actor` is the user who triggered the *original* workflow run. Crucially,
+#   it is preserved across re-runs - if a human re-runs a Dependabot-triggered run,
+#   github.actor remains 'dependabot[bot]', so this job still fires and re-approves.
+#
+#   When a human pushes a commit to the branch, a new 'synchronize' event fires with
+#   github.actor set to that human - this job is skipped, the existing approval is
+#   dismissed by GitHub's branch protection (requires new review after new commits),
+#   and the PR must be manually approved before auto-merge can proceed.
+
 jobs:
   enable-automerge:
-    # Only run on PRs opened by Dependabot from this repository
-    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: write

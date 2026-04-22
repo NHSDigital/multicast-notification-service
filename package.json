@@ -6,13 +6,13 @@
     "lint": "redocly lint specification/multicast-notification-service.yaml",
     "publish": "mkdir -p build && redocly bundle specification/multicast-notification-service.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py > build/multicast-notification-service.json",
     "serve": "redocly build-docs build/multicast-notification-service.json -o build/index.html && python -m http.server 5000 --directory build",
-    "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL"
+    "check-licenses": "node_modules/.bin/license-checker-rseidelsohn --failOn GPL --failOn LGPL"
   },
   "author": "NHS Digital",
   "license": "MIT",
   "homepage": "https://github.com/NHSDigital/multicast-notification-service",
   "devDependencies": {
-    "@redocly/cli": "^2.27.1",
-    "license-checker": "^25.0.1"
+    "@redocly/cli": "^2.29.1",
+    "license-checker-rseidelsohn": "^4.4.2"
   }
 }
